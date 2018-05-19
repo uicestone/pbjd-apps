@@ -1,20 +1,20 @@
 <template lang="pug">
   div
-    audio(v-if="url.currentBlobUrl" controls ref="audio" :src="url.currentBlobUrl")
-    button(ref="record" @click="record") {{ status.isRecord ? "停止" : "录音" }}
+    audio(v-if="url.currentBlob" controls :src="url.currentBlob")
+    button( @click="record") {{ status.isRecord ? "停止" : "录音" }}
+    button(v-if="url.currentBlob" @click="upload") 上传
 </template>
 
 <script>
 export default {
-  name: "audio",
+  name: "EAudio",
   data() {
     return {
       status: {
         isRecord: false
       },
-      recorderOptions: {},
       url: {
-        currentBlobUrl: null
+        currentBlob: null
       }
     };
   },
@@ -23,18 +23,19 @@ export default {
       const isRecord = this.status.isRecord;
       this.status.isRecord = !isRecord;
       if (!isRecord) {
+        this.url.currentBlob = null;
         this.recorder.start();
       }
-
       if (isRecord) {
         this.recorder.stop();
       }
     },
     init() {
+      let options = {};
       if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
-        this.recorderOptions = { mimeType: "video/webm; codecs=vp9" };
+        options = { mimeType: "video/webm; codecs=vp9" };
       } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) {
-        this.recorderOptions = { mimeType: "video/webm; codecs=vp8" };
+        options = { mimeType: "video/webm; codecs=vp8" };
       } else {
         // ...
       }
@@ -42,16 +43,14 @@ export default {
       navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then(stream => {
-          this.stream = stream;
           const chunks = [];
-          const recorder = new MediaRecorder(stream, this.options);
+          const recorder = new MediaRecorder(stream, options);
           recorder.ondataavailable = e => {
-            console.log(chunks);
             chunks.push(e.data);
             if (recorder.state == "inactive") {
               const blob = new Blob(chunks, { type: "audio/webm" });
               const url = URL.createObjectURL(blob);
-              this.url.currentBlobUrl = url;
+              this.url.currentBlob = url;
             }
           };
           this.recorder = recorder;

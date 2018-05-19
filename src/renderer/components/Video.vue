@@ -7,10 +7,12 @@
 
 <script>
 export default {
-  name: "Canvas",
+  name: "EVideo",
   data() {
     return {
-      canvasData: null
+      url: {
+        canvasData: null
+      }
     };
   },
   methods: {
@@ -21,7 +23,7 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
-      this.canvasData = canvas.toDataURL("image/png");
+      this.url.canvasData = canvas.toDataURL("image/png");
     }
   },
   mounted() {
