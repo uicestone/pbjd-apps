@@ -7,8 +7,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "canvas",
-      component: require("@/components/Canvas").default
+      name: "home",
+      component: require("@/components/Audio").default
     },
     {
       path: "*",
