@@ -1,8 +1,7 @@
 <template lang="pug">
   div
-    audio(autoplay controls ref="audio")
-    button(ref="record" @click="record") 录音
-    button(ref="record-play" @click="record-play") 播放    
+    audio(v-if="url.currentBlobUrl" controls ref="audio" :src="url.currentBlobUrl")
+    button(ref="record" @click="record") {{ status.isRecord ? "停止" : "录音" }}
 </template>
 
 <script>
@@ -10,28 +9,60 @@ export default {
   name: "audio",
   data() {
     return {
-      stream: null,
-      mediaRecorder: null,
-      audioData: null
+      status: {
+        isRecord: false
+      },
+      recorderOptions: {},
+      url: {
+        currentBlobUrl: null
+      }
     };
   },
   methods: {
     record() {
-      const { audio } = this.$refs;
-      const recordBlobs = [];
+      const isRecord = this.status.isRecord;
+      this.status.isRecord = !isRecord;
+      if (!isRecord) {
+        this.recorder.start();
+      }
+
+      if (isRecord) {
+        this.recorder.stop();
+      }
+    },
+    init() {
+      if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
+        this.recorderOptions = { mimeType: "video/webm; codecs=vp9" };
+      } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) {
+        this.recorderOptions = { mimeType: "video/webm; codecs=vp8" };
+      } else {
+        // ...
+      }
+
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(stream => {
+          this.stream = stream;
+          const chunks = [];
+          const recorder = new MediaRecorder(stream, this.options);
+          recorder.ondataavailable = e => {
+            console.log(chunks);
+            chunks.push(e.data);
+            if (recorder.state == "inactive") {
+              const blob = new Blob(chunks, { type: "audio/webm" });
+              const url = URL.createObjectURL(blob);
+              this.url.currentBlobUrl = url;
+            }
+          };
+          this.recorder = recorder;
+        })
+        .catch(e => {
+          console.log(`navigator.getUserMedia error: ${e}`);
+        });
     }
   },
   mounted() {
-    const { audio, record } = this.$refs;
-    navigator.mediaDevices
-      .getUserMedia({ video: false, audio: true })
-      .then(stream => {
-        this.stream = stream;
-        audio.srcObject = stream;
-      })
-      .catch(e => {
-        console.log(`navigator.getUserMedia error: ${e}`);
-      });
+    this.init();
   }
 };
 </script>
