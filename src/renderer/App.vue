@@ -1,7 +1,7 @@
-<template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+<template lang="pug">
+  div#app
+    router-link(to="/") 返回
+    router-view
 </template>
 
 <script>
@@ -10,6 +10,8 @@ export default {
 };
 </script>
 
-<style>
-/* CSS */
+<style lang="less">
+@import "~iview/src/styles/index.less";
+
+@link-color: #000000;
 </style>

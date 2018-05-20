@@ -1,6 +1,15 @@
 import Vue from "vue";
 import axios from "axios";
 import adapter from "webrtc-adapter";
+// import './index.less'
+
+import {
+
+} from 'iview';
+const Cps = {}
+for (let [key, val] of Object.entries(Cps)) {
+  Vue.component(key, val)
+}
 
 import App from "./App";
 import router from "./router";
@@ -12,7 +21,9 @@ Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
+  components: {
+    App
+  },
   router,
   store,
   template: "<App/>"
