@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style lang="less">
+// https://github.com/iview/iview/blob/2.0/src/styles/custom.less
 @import "~iview/src/styles/index.less";
 
 @link-color: #000000;

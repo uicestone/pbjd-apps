@@ -4,9 +4,21 @@ import adapter from "webrtc-adapter";
 // import './index.less'
 
 import {
-
+  Input,
+  Button,
+  Card,
+  Row,
+  Col,
+  Table
 } from 'iview';
-const Cps = {}
+const Cps = {
+  Input,
+  Button,
+  Card,
+  Row,
+  Col,
+  Table
+}
 for (let [key, val] of Object.entries(Cps)) {
   Vue.component(key, val)
 }
