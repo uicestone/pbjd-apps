@@ -7,14 +7,14 @@
     div.user-list
       div
         div.user-item(v-if="index < 5" v-for="(value,index) in currentUser")
-          span.index {{formatNumber(index)}}
+          span.index {{index | dt}}
           span.name {{value.name}}
           span.name {{value.addr}}
           
           button >
       div
         div.user-item(v-if="index >= 5 && index <= 10" v-for="(value,index) in currentUser")
-          span.index {{formatNumber(index)}}
+          span.index {{index | dt}}
           span.name {{value.name}}
           span.name {{value.addr}}
           
@@ -60,36 +60,25 @@ export default {
       if (this.currentIndex < this.users.length - 1) {
         this.currentIndex += 1;
       }
-    },
-    formatNumber(index) {
-      if (index < 10) {
-        index = "0" + index;
-      }
-      return index;
     }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.user-list {
-  display: flex;
-  justify-content: space-around;
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-between;
-}
-
+.user-list
+  display flex
+  justify-content space-around
+.pagination
+  display flex
+  justify-content space-between
 // .user-item {
 // display: flex;
 // justify-content: space-between;
 // }
-.menu-list {
-  width: 60vw;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-around;
-}
+.menu-list
+  width 60vw
+  margin 0 auto
+  display flex
+  justify-content space-around
 </style>

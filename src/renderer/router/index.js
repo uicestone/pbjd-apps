@@ -4,30 +4,48 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: "/",
       name: "home",
-      component: require("@/views/home").default
+      component: require("@/views/test").default
     },
     {
-      path: "/video",
-      name: "home",
-      component: require("@/views/video").default
+      path: "/movie",
+      name: "movie",
+      component: require("@/views/movie").default
     },
     {
       path: "/motto",
-      name: "home",
+      name: "motto",
       component: require("@/views/motto").default
     },
     {
       path: "/history",
-      name: "home",
+      name: "history",
       component: require("@/views/history").default
     },
     {
-      path: "/audio",
-      name: "home",
-      component: require("@/views/audio").default
+      path: "/speak",
+      name: "speak",
+      component: require("@/views/speak").default
+    },
+    {
+      path: "/join",
+      name: "join",
+      component: require("@/views/join/join").default,
+      children: [
+        {
+          path: "index",
+          name: "joinIndex",
+          component: require("@/views/join/index").default
+        },
+        {
+          path: "detail",
+          name: "joinDetail",
+          component: require("@/views/join/detail").default
+        }
+      ]
     },
     {
       path: "*",

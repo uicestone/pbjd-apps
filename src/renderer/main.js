@@ -3,25 +3,22 @@ import axios from "axios";
 import adapter from "webrtc-adapter";
 // import './index.less'
 
-import {
-  Input,
-  Button,
-  Card,
-  Row,
-  Col,
-  Table
-} from 'iview';
+import { Input, Button, Card, Row, Col, Table, Select, Option } from "iview";
 const Cps = {
   Input,
   Button,
   Card,
   Row,
   Col,
-  Table
-}
+  Table,
+  Select,
+  Option
+};
 for (let [key, val] of Object.entries(Cps)) {
-  Vue.component(key, val)
+  Vue.component(key, val);
 }
+
+Vue.filter("dt", (val, format) => (val > 10 ? val : "0" + val));
 
 import App from "./App";
 import router from "./router";

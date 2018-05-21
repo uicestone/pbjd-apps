@@ -2,9 +2,10 @@
   div
     ul.menu-list
       router-link(to="/movie") 红色电影配音
-      router-link(to="/audio") 我要对党说..
+      router-link(to="/speak") 我要对党说..
       router-link(to="/motto") 我的座右铭
-      router-link(to="/history") 往期精选            
+      router-link(to="/history") 往期精选  
+      router-link(to="/join/index") 加入                         
 </template>
 
 <script>

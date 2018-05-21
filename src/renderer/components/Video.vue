@@ -41,13 +41,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-}
+*
+  box-sizing border-box
+  margin 0
+  padding 0
+body
+  font-family 'Source Sans Pro', sans-serif
 </style>
