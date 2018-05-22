@@ -3,6 +3,7 @@
     p 已有<span>2135689</span>人次参与
     p 输入你想了解的那一天
     div
+      //- DatePicker(type="date" v-model="date.date" style="width: 200px")
       Input(v-model="date.year" size="small" type="text" style="width:100px")
       span 年
       Input(v-model="date.month" size="small" type="text" style="width:100px")      
@@ -13,7 +14,7 @@
       span 日期类型
       Select(v-model="date.type" style="width:200px")
         Option(v-for="item in dateTypes" :value="item.value" :key="item.value" :label="item.label")
-      button(@click="join") 立即参与
+      Button(@click="join" :disabled="finish") 立即参与
 
 </template>
 
@@ -37,12 +38,19 @@ export default {
         }
       ],
       date: {
+        date: "",
         type: "",
         year: "",
         month: "",
         day: ""
       }
     };
+  },
+  computed: {
+    finish() {
+      const { type, year, month, day } = this.date;
+      return type && year && month && day ? false : true;
+    }
   },
   methods: {
     join() {

@@ -29,7 +29,7 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
-      this.url.canvasData = canvas.toDataURL("image/png");
+      this.photoUrl = canvas.toDataURL("image/png");
     }
   },
   mounted() {
