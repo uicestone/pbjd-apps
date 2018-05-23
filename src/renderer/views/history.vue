@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     prev() {
-      console.log(this.currentIndex);
       if (this.currentIndex > 0) {
         this.currentIndex -= 1;
       }

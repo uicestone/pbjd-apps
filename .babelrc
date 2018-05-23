@@ -3,33 +3,42 @@
   "env": {
     "main": {
       "presets": [
-        ["env", {
-          "targets": {
-            "node": 7
+        [
+          "env",
+          {
+            "targets": {
+              "node": 7
+            }
           }
-        }],
+        ],
         "stage-0"
       ]
     },
     "renderer": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0"
-      ],
-      "plugins": [
-        ["import", {
-          "libraryName": "iview",
-          "libraryDirectory": "src/components"
-        }]
       ]
+      // "plugins": [
+      //   ["import", {
+      //     "libraryName": "iview",
+      //     "libraryDirectory": "src/components"
+      //   }]
+      // ]
     },
     "web": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0"
       ]
     }

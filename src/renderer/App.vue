@@ -15,4 +15,8 @@ export default {
 @import "~iview/src/styles/index.less";
 
 @link-color: #000000;
+
+body {
+  font-size: 10px;
+}
 </style>

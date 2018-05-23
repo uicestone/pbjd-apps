@@ -30,6 +30,7 @@ export default new Router({
       name: "speak",
       component: require("@/views/speak").default
     },
+    // join
     {
       path: "/join",
       name: "join",
@@ -46,6 +47,12 @@ export default new Router({
           component: require("@/views/join/detail").default
         }
       ]
+    },
+    // map
+    {
+      path: "/map",
+      name: "map",
+      component: require("@/views/map").default
     },
     {
       path: "*",
