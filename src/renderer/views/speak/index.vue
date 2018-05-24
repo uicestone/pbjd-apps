@@ -4,7 +4,7 @@
       div 选择片段
         Select(v-model="videoSelect"  style="width:200px")
           Option(v-for="item in videoOptions" :value="item.value" :key="item.value" :label="item.label")
-      video(controls ref="video" :src="currentOption.url" width=480 heigh=320)
+      video(controls ref="video")
     div.button-group
       audio(controls ref="audio" :src="audioUrl")    
       Button.record(@click="record" shape="circle" icon="mic-a" size="large")
@@ -21,8 +21,7 @@ export default {
       videoOptions: [
         {
           value: "1",
-          label: "小兵张嘎",
-          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+          label: "我爱你中国"
         }
       ],
       videoSelect: "",
@@ -32,11 +31,6 @@ export default {
       },
       audioUrl: ""
     };
-  },
-  computed: {
-    currentOption() {
-      return this.videoOptions.find(i => i.value === this.videoSelect) || {};
-    }
   },
   mounted() {
     this.init();
@@ -57,7 +51,9 @@ export default {
       const { audio, video } = this.$refs;
       audio.play();
     },
-    upload() {},
+    upload() {
+      this.$router.push({ name: "speakDetail" });
+    },
     init() {
       let options = {};
       if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {

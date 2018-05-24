@@ -13,12 +13,36 @@ export default new Router({
     {
       path: "/movie",
       name: "movie",
-      component: require("@/views/movie").default
+      component: require("@/views/movie/root").default,
+      children: [
+        {
+          path: "index",
+          name: "movieIndex",
+          component: require("@/views/movie/index").default
+        },
+        {
+          path: "detail",
+          name: "movieDetail",
+          component: require("@/views/movie/detail").default
+        }
+      ]
     },
     {
       path: "/motto",
       name: "motto",
-      component: require("@/views/motto").default
+      component: require("@/views/motto/root").default,
+      children: [
+        {
+          path: "index",
+          name: "mottoIndex",
+          component: require("@/views/motto/index").default
+        },
+        {
+          path: "detail",
+          name: "mottoDetail",
+          component: require("@/views/motto/detail").default
+        }
+      ]
     },
     {
       path: "/history",
@@ -28,13 +52,25 @@ export default new Router({
     {
       path: "/speak",
       name: "speak",
-      component: require("@/views/speak").default
+      component: require("@/views/speak/root").default,
+      children: [
+        {
+          path: "index",
+          name: "speakIndex",
+          component: require("@/views/speak/index").default
+        },
+        {
+          path: "detail",
+          name: "speakDetail",
+          component: require("@/views/speak/detail").default
+        }
+      ]
     },
     // join
     {
       path: "/join",
       name: "join",
-      component: require("@/views/join/join").default,
+      component: require("@/views/join/root").default,
       children: [
         {
           path: "index",
