@@ -41,9 +41,9 @@ export default {
     div.main-title 往期精选
     div.content    
       ul.menu-list
-        router-link.button4(to="/video") 红色电影配音
-        router-link.button4(to="/audio") 我要对党说..
-        router-link.button4(to="/motto") 我的座右铭
+        Button.button4 红色电影配音
+        Button.button4 我要对党说..
+        Button.button4 我的座右铭
       div.user-list
         div.list-item
           div.user-item(v-if="index < 5" v-for="(value,index) in currentUser")
@@ -110,6 +110,7 @@ export default {
   display flex
   flex-direction column
 .button4
+  border none
   color white
   width 50%
   height 50%

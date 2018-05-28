@@ -2,19 +2,37 @@
 export default {
   data() {
     return {
-      videoOptions: [
-        {
-          value: "1",
-          label: "我爱你中国"
-        }
-      ],
-      videoSelect: "",
       recorder: null,
       status: {
         isRecord: false
       },
       audioUrl: ""
     };
+  },
+  computed: {
+    videos: {
+      get() {
+        return this.$store.state.Speak.videos;
+      },
+      set(currentIndex) {
+        this.$store.commit("SET_SPEAK_STATE", {
+          currentIndex
+        });
+      }
+    },
+    currentIndex: {
+      get() {
+        return this.$store.state.Speak.currentIndex;
+      },
+      set(currentIndex) {
+        this.$store.commit("SET_SPEAK_STATE", {
+          currentIndex
+        });
+      }
+    },
+    currentVideo() {
+      return this.videos.find(i => i.value === this.currentIndex) || {};
+    }
   },
   mounted() {
     this.init();
@@ -77,9 +95,9 @@ export default {
     div.content
       div
         div 选择背景音乐
-          Select(v-model="videoSelect"  style="width:200px")
-            Option(v-for="item in videoOptions" :value="item.value" :key="item.value" :label="item.label")
-        video(controls ref="video")
+          Select(v-model="currentIndex"  style="width:200px")
+            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
+        video(controls ref="video" :src="currentVideo.url")
       div.button-group
         //- audio(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")

@@ -1,13 +1,19 @@
 const state = {
-  audioUrl: null
+  videos: [
+    {
+      value: "1",
+      label: "小兵张嘎",
+      url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+    }
+  ],
+  currentIndex: 0
 };
 
 const mutations = {
-  DECREMENT_MAIN_COUNTER(state) {
-    state.main--;
-  },
-  INCREMENT_MAIN_COUNTER(state) {
-    state.main++;
+  SET_MOVIE_STATE(state, payload) {
+    for (let [k, v] of Object.entries(payload)) {
+      state[k] = v;
+    }
   }
 };
 

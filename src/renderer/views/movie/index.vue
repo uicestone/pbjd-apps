@@ -2,14 +2,6 @@
 export default {
   data() {
     return {
-      videoOptions: [
-        {
-          value: "1",
-          label: "小兵张嘎",
-          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-        }
-      ],
-      videoSelect: "",
       recorder: null,
       status: {
         isRecord: false
@@ -18,8 +10,28 @@ export default {
     };
   },
   computed: {
-    currentOption() {
-      return this.videoOptions.find(i => i.value === this.videoSelect) || {};
+    videos: {
+      get() {
+        return this.$store.state.Movie.videos;
+      },
+      set(currentIndex) {
+        this.$store.commit("SET_MOVIE_STATE", {
+          currentIndex
+        });
+      }
+    },
+    currentIndex: {
+      get() {
+        return this.$store.state.Movie.currentIndex;
+      },
+      set(currentIndex) {
+        this.$store.commit("SET_MOVIE_STATE", {
+          currentIndex
+        });
+      }
+    },
+    currentVideo() {
+      return this.videos.find(i => i.value === this.currentIndex) || {};
     }
   },
   mounted() {
@@ -83,9 +95,9 @@ export default {
     div.content
       div
         div 选择片段
-          Select(v-model="videoSelect"  style="width:200px")
-            Option(v-for="item in videoOptions" :value="item.value" :key="item.value" :label="item.label")
-        video(controls ref="video")
+          Select(v-model="currentIndex"  style="width:200px")
+            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
+        video(controls ref="video" :src="currentVideo.url")
       div.button-group
         //- audio(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")

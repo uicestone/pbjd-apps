@@ -1,11 +1,15 @@
 <template lang="pug">
-  div.movie-detail
-    div
-      p.motto-preview-text {{motto}}    
-      img(:src="photoUrl")
-    div.qrcode-group
-      img.qrcode-image(src="http://via.placeholder.com/100x50")
-      p.qrcode-text 收藏到<br/>我的微官网
+  div.page-movie-detail
+    div.main-title 我
+    Row.content
+      Col.motto-content(span="12")
+        p.motto-preview-text {{motto}}
+        p.motto-preview-name --{{name}}      
+        img.motto-preview-photo(:src="photoUrl")           
+      Col.form(span="12")
+        div.qrcode-group
+          img.qrcode-image(src="http://via.placeholder.com/100x50")
+          p.qrcode-text 收藏到<br/>我的微官网
       
 </template>
 
@@ -25,6 +29,11 @@ export default {
         return this.$store.state.Motto.motto;
       }
     },
+    name: {
+      get() {
+        return this.$store.state.Motto.name;
+      }
+    },
     photoUrl: {
       get() {
         return this.$store.state.Motto.photoUrl;
@@ -36,15 +45,71 @@ export default {
 
 
 <style lang="stylus" scoped>
-.movie-detail
-  display flex
+.page-movie-detail
+  height 100vh
+  background url('~/static/image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
 .qrcode-group
   display flex
   flex-direction column
   justify-content center
   align-items center
   text-align center
+.main-title
+  color white
+  width 10rem
+  background rgba(255, 0, 0, 0.5)
+  border-bottom 2px solid red
+  padding 0.5rem 2rem
+  text-align center
+  font-size 1rem
+.motto-preview-photo
+  transform rotate(-10deg)
+  position absolute
+  right 20%
+  top 30%
+.motto-preview-text
+  width 5rem
+  font-size 1.5rem
+  font-family Guoxiang
+  position absolute
+  left 20%
+  top 30%
+.motto-preview-name
+  font-size 1rem
+  font-family Guoxiang
+  position absolute
+  left 30%
+  bottom 30%
+.content
+  height 60vh
+.video
+  visibility hidden
+.capture
+  display flex
+  align-items center
+.form
+  display flex
+  flex-direction column
+  justify-content space-around
+  height 100%
+  width 40vw
+  flex 0
 .motto-preview-text
   font-size 1.5rem
   font-family Guoxiang
+.motto-content
+  flex 1
+  height 100%
+  background url('~/static/image/book.png') no-repeat
+  background-size cover
+.main-title
+  color white
+  width 10rem
+  background rgba(255, 0, 0, 0.5)
+  border-bottom 2px solid red
+  padding 0.5rem 2rem
+  text-align center
+  font-size 1rem
 </style>

@@ -69,13 +69,13 @@ export default {
     Row.content
       Col.motto-content(span="12")
         p.motto-preview-text {{motto}}
-        p.motto-preview-text --{{name}}      
-        video.video(autoplay ref="video" width=100 height=100) 
-        canvas(ref="canvas" width=100 height=100)              
+        p.motto-preview-name --{{name}}      
+        video.motto-preview-photo(autoplay :class='{hidden: photoUrl}' ref="video" width=100 height=100) 
+        canvas.motto-preview-photo(ref="canvas" :class='{hidden: !photoUrl}' width=100 height=100)              
       Col.form(span="12")
-        p 我的座右铭
+        div 我的座右铭
         Input(v-model="motto" type="textarea")
-        p 我的名字
+        div 我的名字
         Input(v-model="name")
         div.capture
           div 我要拍照
@@ -92,7 +92,8 @@ export default {
   padding 1rem 0
 .content
   height 60vh
-.video
+  position relative
+.hidden
   visibility hidden
 .capture
   display flex
@@ -104,9 +105,24 @@ export default {
   height 100%
   width 40vw
   flex 0
+.motto-preview-photo
+  transform rotate(-10deg)
+  position absolute
+  right 20%
+  top 35%
 .motto-preview-text
+  width 5rem
   font-size 1.5rem
   font-family Guoxiang
+  position absolute
+  left 20%
+  top 30%
+.motto-preview-name
+  font-size 1rem
+  font-family Guoxiang
+  position absolute
+  left 30%
+  bottom 30%
 .motto-content
   flex 1
   height 100%
