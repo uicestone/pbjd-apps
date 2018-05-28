@@ -1,4 +1,4 @@
-# map
+# project-party
 
 > An electron-vue project
 
