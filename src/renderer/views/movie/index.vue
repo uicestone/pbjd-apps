@@ -99,7 +99,7 @@ export default {
             Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
         video(controls ref="video" :src="currentVideo.url")
       div.button-group
-        //- audio(controls ref="audio" :src="audioUrl")    
+        audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         Button.play(@click="play" shape="circle" icon="play" size="large")   
       div.upload   
@@ -126,8 +126,8 @@ export default {
   padding 0.5rem 2rem
   text-align center
   font-size 1rem
-.audio
-  overflow hidden
+.hidden
+  visibility hidden
 .button-group
   display flex
   justify-content center
