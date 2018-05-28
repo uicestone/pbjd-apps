@@ -1,6 +1,6 @@
 <template lang="pug">
   div#app
-    a(@click="$router.go(-1)") 返回
+    a.button-back(@click="$router.go(-1)") 返回
     router-view
 </template>
 
@@ -18,5 +18,9 @@ export default {
 @link-color: #000000;
 body {
   font-size: 10px;
+}
+.button-back {
+  position: absolute;
+  right: 0;
 }
 </style>

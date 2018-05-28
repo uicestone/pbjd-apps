@@ -1,4 +1,5 @@
 const state = {
+  name: "",
   motto: "",
   photoUrl: ""
 };

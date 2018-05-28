@@ -1,6 +1,7 @@
 <template lang="pug">
   div
     ul.menu-list
+      router-link(to="/home") 党建声音首页
       router-link(to="/movie/index") 红色电影配音
       router-link(to="/speak/index") 我要对党说..
       router-link(to="/motto/index") 我的座右铭

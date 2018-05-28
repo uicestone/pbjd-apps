@@ -1,19 +1,3 @@
-<template lang="pug">
-  div.voice-page
-    div
-      div 选择片段
-        Select(v-model="videoSelect"  style="width:200px")
-          Option(v-for="item in videoOptions" :value="item.value" :key="item.value" :label="item.label")
-      video(controls ref="video" :src="currentOption.url" width=480 heigh=320)
-    div.button-group
-      audio(controls ref="audio" :src="audioUrl")    
-      Button.record(@click="record" shape="circle" icon="mic-a" size="large")
-      Button.play(@click="play" shape="circle" icon="play" size="large")   
-    div.upload   
-      Button(@click="upload" size="large") 我要上传
-</template>
-
-
 <script>
 export default {
   data() {
@@ -93,13 +77,45 @@ export default {
 };
 </script>
 
+<template lang="pug">
+  div.page-speak-index
+    div.main-title 红色电影配音
+    div.content
+      div
+        div 选择片段
+          Select(v-model="videoSelect"  style="width:200px")
+            Option(v-for="item in videoOptions" :value="item.value" :key="item.value" :label="item.label")
+        video(controls ref="video")
+      div.button-group
+        //- audio(controls ref="audio" :src="audioUrl")    
+        Button.record(@click="record" shape="circle" icon="mic-a" size="large")
+        Button.play(@click="play" shape="circle" icon="play" size="large")   
+      div.upload   
+        Button(@click="upload" size="large") 我要上传
+</template>
+
 
 <style lang="stylus" scoped>
-.audio
-  overflow hidden
-.voice-page
+.page-speak-index
+  height 100vh
+  background url('~/static/image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+.content
   display flex
   align-content center
+  justify-content space-around
+  padding 1rem 0
+.main-title
+  color white
+  width 10rem
+  background rgba(255, 0, 0, 0.5)
+  border-bottom 2px solid red
+  padding 0.5rem 2rem
+  text-align center
+  font-size 1rem
+.audio
+  overflow hidden
 .button-group
   display flex
   justify-content center

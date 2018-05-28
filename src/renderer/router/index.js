@@ -6,8 +6,13 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/",
+      path: "/home",
       name: "home",
+      component: require("@/views/home").default
+    },
+    {
+      path: "/",
+      name: "test",
       component: require("@/views/test").default
     },
     {
