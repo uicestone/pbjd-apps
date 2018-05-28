@@ -38,8 +38,8 @@ export default {
   methods: {
     record() {
       const { video } = this.$refs;
-      const isRecord = this.status.isRecord;
-      this.status.isRecord = !isRecord;
+      const isRecord = this.isRecord;
+      this.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
         this.recorder.start();
@@ -52,6 +52,8 @@ export default {
     },
     play() {
       const { audio, video } = this.$refs;
+      video.currentTime = 0;
+      video.play();
       audio.play();
     },
     upload() {
