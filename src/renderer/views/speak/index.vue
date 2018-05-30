@@ -3,9 +3,7 @@ export default {
   data() {
     return {
       recorder: null,
-      status: {
-        isRecord: false
-      },
+      isRecord: false,
       audioUrl: ""
     };
   },
@@ -39,18 +37,23 @@ export default {
   },
   methods: {
     record() {
-      const isRecord = this.status.isRecord;
-      this.status.isRecord = !isRecord;
+      const { video } = this.$refs;
+      const isRecord = this.isRecord;
+      this.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
         this.recorder.start();
+        video.play();
       }
       if (isRecord) {
         this.recorder.stop();
+        video.pause();
       }
     },
     play() {
       const { audio, video } = this.$refs;
+      video.currentTime = 0;
+      video.play();
       audio.play();
     },
     upload() {
@@ -97,7 +100,7 @@ export default {
         div 选择背景音乐
           Select(v-model="currentIndex"  style="width:200px")
             Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
-        video(controls ref="video" :src="currentVideo.url")
+        video(poster="http://via.placeholder.com/400x200" controls ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")

@@ -3,7 +3,7 @@ const state = {
     {
       value: "1",
       label: "我爱你中国",
-      url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+      url: require("../../assets/test.mp3")
     }
   ],
   currentIndex: 0
