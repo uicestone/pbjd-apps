@@ -13,6 +13,7 @@ export default {
 <style lang="less">
 // https://github.com/iview/iview/blob/2.0/src/styles/custom.less
 @import "~iview/src/styles/index.less";
+@import "~leaflet/dist/leaflet.css";
 @import "./assets/fonts/Guoxiang.css";
 
 @link-color: #000000;

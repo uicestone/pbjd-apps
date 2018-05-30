@@ -1,7 +1,9 @@
 <template lang="pug">
   div
     Button(type="primary" @click="modal1 = true") Display dialog box
-    svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")
+    //- svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")
+    div#map
+    li(v-for="(value, key) in layers" @click="currentLayer = key") {{key}}
     div(v-if="currentData.type==0")
       Modal(v-model="modal1" :title="currentData.title")
         p {{currentData.content}}    
@@ -22,24 +24,37 @@
               Button(type="text") 实时连线
               Button(type="text") 导航到此地
         div.modal-footer(slot="footer")
+        
           
 </template>
 
 
 <script>
-import geojson2svg from "geojson2svg";
-import reproject from "reproject";
-import proj4 from "proj4";
 import geoJson from "@/assets/json/geo.json";
 import rawJson from "@/assets/json/raw.json";
+import L from "leaflet";
+global.L = L;
 
 export default {
   data() {
     return {
       raw: rawJson,
       geo: geoJson,
+      geojson: {},
+      map: {},
+      features: {
+        test1: L.featureGroup([])
+      },
+      layers: {
+        test1: L.layerGroup([]).setZIndex(10),
+        test2: L.layerGroup([]).setZIndex(10),
+        test3: L.layerGroup([]).setZIndex(10),
+        test4: L.layerGroup([]).setZIndex(10)
+      },
+      currentLayer: "",
       configs: {
         华亭镇: {
+          points: [31.413630999999999, 121.24348000000001],
           style: `stroke:#006600; fill: #F0F8FF; stroke-width:0.5px;`
         },
         徐行镇: {
@@ -88,6 +103,15 @@ export default {
       }))
     };
   },
+  watch: {
+    currentLayer(val) {
+      const layer = this.layers[val];
+      Object.values(this.layers).forEach(layer => {
+        this.map.removeLayer(layer);
+      });
+      this.map.addLayer(layer);
+    }
+  },
   computed: {
     currentData() {
       return this.datas[this.currentIndex] || {};
@@ -108,64 +132,94 @@ export default {
     cancel() {},
     parseSVG(s) {
       var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
-      div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + s + "</svg>";
+      div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
       var frag = document.createDocumentFragment();
       while (div.firstChild.firstChild)
         frag.appendChild(div.firstChild.firstChild);
       return frag;
+    },
+    highlightFeature(e) {
+      let layer = e.target;
+
+      layer.setStyle({
+        weight: 5,
+        color: "#666",
+        dashArray: "",
+        fillOpacity: 0.7
+      });
+
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+      }
+    },
+    resetHighlight(e) {
+      this.geojson.resetStyle(e.target);
+    },
+    zoomToFeature(e) {
+      this.map.fitBounds(e.target.getBounds());
+    },
+    onEachFeature(feature, layer) {
+      // layer.on({
+      //   mouseover: this.highlightFeature,
+      //   mouseout: this.resetHighlight
+      //   // click: this.zoomToFeature
+      // });
     }
   },
   mounted() {
-    let geo = this.geo;
-    geo.features.forEach(g => {
-      const config = this.configs[g.properties.Name];
-      if (config) {
-        g.properties = { ...g.properties, ...config };
+    let layers = Object.values(this.layers);
+    let features = Object.values(this.features);
+    // let Icon = L.icon({
+    //   iconUrl: "a.png",
+    //   iconSize: [50, 50]
+    // });
+    // L.marker([31.413630999999999, 121.24348000000001], {
+    //   icon: Icon
+    // }).addTo(this.map);
+    this.geo.features.forEach(feature => {
+      let coords = feature.geometry.coordinates[0];
+      const [y, x] = coords[Math.floor(Math.random() * coords.length)];
+      if (!Array.isArray(x) && !Array.isArray(y)) {
+        let layer = L.circle([x, y], {
+          color: "red",
+          fillColor: "#f03",
+          fillOpacity: 1,
+          radius: 500
+        });
+
+        features[Math.floor(Math.random() * features.length)].addLayer(layer);
+        layers[Math.floor(Math.random() * layers.length)].addLayer(layer);
       }
     });
-    var geojson3857 = reproject.reproject(
-      geo,
-      "EPSG:4326",
-      "EPSG:3857",
-      proj4.defs
-    );
-    var convertor = geojson2svg({
-      viewportSize: { width: 800, height: 700 },
-      attributes: [
-        {
-          property: "properties.Name",
-          type: "dynamic",
-          key: "name"
-        },
-        {
-          property: "properties.style",
-          type: "dynamic",
-          key: "style"
-        },
-        {
-          property: "vector-effect",
-          type: "static",
-          value: "non-scaling-stroke"
-        }
-      ],
-      explode: false,
-      mapExtent: {
-        left: 13481300,
-        right: 13508425,
-        bottom: 3666700,
-        top: 3697700
-      }
+
+    this.map = L.map("map", {
+      center: [31.413630999999999, 121.24348000000001],
+      zoom: 10
     });
-    const svgElements = convertor.convert(geojson3857);
-    svgElements.forEach(svgStr => {
-      let svg = this.parseSVG(svgStr);
-      this.$refs.map.appendChild(svg);
+    const getColor = () =>
+      "#" + Math.floor(Math.random() * 16777215).toString(16);
+    this.geojson = L.geoJSON(this.geo.features, {
+      style: () => ({
+        color: "white",
+        fillColor: getColor(),
+        weight: 2,
+        opacity: 0.65
+      }),
+      onEachFeature: this.onEachFeature
+    }).addTo(this.map);
+    features.forEach(feature => {
+      feature.on("click", () => (this.modal1 = true));
+    });
+    layers.forEach(layer => {
+      this.map.addLayer(layer);
     });
   }
 };
 </script>
 
 <style lang="stylus" scoped>
+#map
+  height 100vh
 .modal-footer
   display flex
   justify-content space-between
