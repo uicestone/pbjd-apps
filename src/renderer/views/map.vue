@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     Button(type="primary" @click="modal1 = true") Display dialog box
-    
+    svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")
     div(v-if="currentData.type==0")
       Modal(v-model="modal1" :title="currentData.title")
         p {{currentData.content}}    
@@ -27,9 +27,56 @@
 
 
 <script>
+import geojson2svg from "geojson2svg";
+import reproject from "reproject";
+import proj4 from "proj4";
+import geoJson from "@/assets/json/geo.json";
+import rawJson from "@/assets/json/raw.json";
+
 export default {
   data() {
     return {
+      raw: rawJson,
+      geo: geoJson,
+      configs: {
+        华亭镇: {
+          style: `stroke:#006600; fill: #F0F8FF; stroke-width:0.5px;`
+        },
+        徐行镇: {
+          style: `stroke:#006600; fill: #233; stroke-width:0.5px;`
+        },
+        南翔镇: {
+          style: `stroke:#006600; fill: #456; stroke-width:0.5px;`
+        },
+        真新街道: {
+          style: `stroke:#006600; fill: #789; stroke-width:0.5px;`
+        },
+        外冈镇: {
+          style: `stroke:#006600; fill: #123; stroke-width:0.5px;`
+        },
+        江桥镇: {
+          style: `stroke:#006600; fill: #987; stroke-width:0.5px;`
+        },
+        安亭镇: {
+          style: `stroke:#006600; fill: #654; stroke-width:0.5px;`
+        },
+        马陆镇: {
+          style: `stroke:#006600; fill: #543; stroke-width:0.5px;`
+        },
+        新成路街道: {
+          style: `stroke:#006600; fill: #321; stroke-width:0.5px;`
+        },
+        嘉定镇街道: {
+          style: `stroke:#006600; fill: #abc; stroke-width:0.5px;`
+        },
+        菊园新区管委会: {
+          style: `stroke:#006600; fill: #ddd; stroke-width:0.5px;`
+        },
+        嘉定工业区: {
+          style: `stroke:#006600; fill: #666; stroke-width:0.5px;`
+        }
+      },
+      svgElements: [],
       modal1: false,
       currentIndex: 0,
       datas: new Array(10).fill("").map((k, i) => ({
@@ -58,7 +105,62 @@ export default {
       }
     },
     ok() {},
-    cancel() {}
+    cancel() {},
+    parseSVG(s) {
+      var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+      div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + s + "</svg>";
+      var frag = document.createDocumentFragment();
+      while (div.firstChild.firstChild)
+        frag.appendChild(div.firstChild.firstChild);
+      return frag;
+    }
+  },
+  mounted() {
+    let geo = this.geo;
+    geo.features.forEach(g => {
+      const config = this.configs[g.properties.Name];
+      if (config) {
+        g.properties = { ...g.properties, ...config };
+      }
+    });
+    var geojson3857 = reproject.reproject(
+      geo,
+      "EPSG:4326",
+      "EPSG:3857",
+      proj4.defs
+    );
+    var convertor = geojson2svg({
+      viewportSize: { width: 800, height: 700 },
+      attributes: [
+        {
+          property: "properties.Name",
+          type: "dynamic",
+          key: "name"
+        },
+        {
+          property: "properties.style",
+          type: "dynamic",
+          key: "style"
+        },
+        {
+          property: "vector-effect",
+          type: "static",
+          value: "non-scaling-stroke"
+        }
+      ],
+      explode: false,
+      mapExtent: {
+        left: 13481300,
+        right: 13508425,
+        bottom: 3666700,
+        top: 3697700
+      }
+    });
+    const svgElements = convertor.convert(geojson3857);
+    svgElements.forEach(svgStr => {
+      let svg = this.parseSVG(svgStr);
+      this.$refs.map.appendChild(svg);
+    });
   }
 };
 </script>

@@ -3,9 +3,7 @@ export default {
   data() {
     return {
       recorder: null,
-      status: {
-        isRecord: false
-      },
+      isRecord: false,
       audioUrl: ""
     };
   },
@@ -39,14 +37,17 @@ export default {
   },
   methods: {
     record() {
+      const { video } = this.$refs;
       const isRecord = this.status.isRecord;
       this.status.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
         this.recorder.start();
+        video.play();
       }
       if (isRecord) {
         this.recorder.stop();
+        video.pause();
       }
     },
     play() {
@@ -101,7 +102,7 @@ export default {
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")
-        Button.play(@click="play" shape="circle" icon="play" size="large")   
+        Button.play(:disabled= "isRecord" @click="play" shape="circle" icon="play" size="large")   
       div.upload   
         Button(@click="upload" size="large") 我要上传
 </template>
