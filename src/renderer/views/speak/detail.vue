@@ -59,12 +59,13 @@ export default {
   padding 1rem 0
 .main-title
   color white
-  width 10rem
-  background rgba(255, 0, 0, 0.5)
+  width 30vw
+  background #DE2230
   border-bottom 2px solid red
-  padding 0.5rem 2rem
+  margin-top 2vh
+  padding 1vh 2vw
   text-align center
-  font-size 1rem
+  font-size 3vw
 .qrcode-group
   display flex
   flex-direction column

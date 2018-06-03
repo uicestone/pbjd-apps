@@ -58,12 +58,13 @@ export default {
   text-align center
 .main-title
   color white
-  width 10rem
-  background rgba(255, 0, 0, 0.5)
+  width 30vw
+  background #DE2230
   border-bottom 2px solid red
-  padding 0.5rem 2rem
+  margin-top 2vh
+  padding 1vh 2vw
   text-align center
-  font-size 1rem
+  font-size 3vw
 .motto-preview-photo
   transform rotate(-10deg)
   position absolute
@@ -104,12 +105,4 @@ export default {
   height 100%
   background url('~/static/image/book.png') no-repeat
   background-size cover
-.main-title
-  color white
-  width 10rem
-  background rgba(255, 0, 0, 0.5)
-  border-bottom 2px solid red
-  padding 0.5rem 2rem
-  text-align center
-  font-size 1rem
 </style>

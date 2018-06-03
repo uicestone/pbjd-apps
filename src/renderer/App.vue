@@ -17,11 +17,23 @@ export default {
 @import "./assets/fonts/Guoxiang.css";
 
 @link-color: #000000;
-body {
+html {
   font-size: 10px;
 }
 .button-back {
   position: absolute;
   right: 0;
+}
+.ivu-select-selection{
+  all: unset;
+  i {
+    display: none !important
+  }
+}
+.ivu-select{
+  all: unset
+}
+.ivu-select-dropdown{
+  overflow: hidden!important
 }
 </style>

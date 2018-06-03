@@ -100,13 +100,14 @@ export default {
         div 选择背景音乐
           Select(v-model="currentIndex"  style="width:200px")
             Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
-        video(poster="http://via.placeholder.com/400x200" controls ref="video" :src="currentVideo.url")
+        video(poster="http://via.placeholder.com/400x200"  ref="video" :src="currentVideo.url")
       div.button-group
-        audio.hidden(controls ref="audio" :src="audioUrl")    
+        //- audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         Button.play(@click="play" shape="circle" icon="play" size="large")   
       div.upload   
         Button(@click="upload" size="large") 我要上传
+    img.logo(src="static/image/sound.png") 
 </template>
 
 
@@ -117,18 +118,20 @@ export default {
   background-size cover
   padding 1rem 0
 .content
+  height 50vw
   display flex
   align-content center
   justify-content space-around
   padding 1rem 0
 .main-title
   color white
-  width 10rem
-  background rgba(255, 0, 0, 0.5)
+  width 30vw
+  background #DE2230
   border-bottom 2px solid red
-  padding 0.5rem 2rem
+  margin-top 2vh
+  padding 1vh 2vw
   text-align center
-  font-size 1rem
+  font-size 3vw
 .hidden
   visibility hidden
 .button-group
@@ -138,4 +141,9 @@ export default {
 .upload
   display flex
   align-items center
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>

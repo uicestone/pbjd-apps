@@ -4,22 +4,19 @@
     img.title(src="static/image/title.png")
     p.subtitle 输入你想了解的那一天
     div.form
-      div
-        //- DatePicker(type="date" v-model="date.date" style="width: 200px")
-        Select(v-model="date.year" style="width:100px")
-          Option(v-for="item in yearList" :value="item.value" :key="item.value") 
-        span 年
-        Select(v-model="date.month" style="width:50px")
-          Option(v-for="item in monthList" :value="item.value" :key="item.value")   
-        span 月
-        Select(v-model="date.day" style="width:50px")
-          Option(v-for="item in dayList" :value="item.value" :key="item.value")   
-          span 日
-      div
-        span 日期类型
-        Select(v-model="date.type" style="width:200px")
-          Option(v-for="item in dateTypes" :value="item.value" )
-        Button(@click="join" :disabled="finish") 立即参与
+      Select.selectYear(v-model="date.year")
+        Option(v-for="item in yearList" :value="item.value" :key="item.value") 
+      span 年
+      Select.selectMonth(v-model="date.month" )
+        Option(v-for="item in monthList" :value="item.value" :key="item.value")   
+      span 月
+      Select.selectMonth(v-model="date.day")
+        Option(v-for="item in dayList" :value="item.value" :key="item.value")   
+        span 日
+      span 日期类型
+      Select.selectType(v-model="date.type")
+        Option(v-for="item in dateTypes" :value="item.value" )
+      button.button4(@click="join" :disabled="finish") 立即参与
 
 </template>
 
@@ -76,15 +73,82 @@ export default {
 
 <style lang="stylus" scoped>
 .title
-  width 40vw
+  margin-top 4vh
+  width 80vw
+.subtitle
+  color black 
+  font-size 2rem
+  font-weight 600
+  margin 2rem 0
+.select
+  unset all
 .page-join-index
   display flex
   flex-direction column
   align-items center
   height 100vh
-  background url('~/static/image/history_bg_home.png') no-repeat center center fixed
+  background url('~/static/image/history_bg_home.png')  center center no-repeat
   background-size cover
 .form
   display flex
+  align-items center
+  justify-content center
+  width 80vw
+.form-box
+  display flex
+  align-items center
+.join-count
+  position absolute
+  top 4vh
+  font-size 2.5rem
+  color black
+  font-weight 600
+  span 
+    font-size 4rem
+    font-weight 600
+    color #E60012
+.button4
+  border none
+  width 100%
+  height 100%
+  background url('~/static/image/button_blue_4.png') center center no-repeat
+  background-size cover
+  text-align center
+  color white
+.selectYear
+  border none
+  width 100%
+  height 100%
+  background url('~/static/image/select_4.png') center center no-repeat
+  background-size cover
+  font-size 0.8rem
+  line-height 5rem
+  text-align center
+  display flex
+  align-items center
+  justify-content center
+.selectMonth
+  border none
+  width 100%
+  height 100%
+  background url('~/static/image/select_2.png') center center no-repeat
+  background-size cover
+  font-size 0.8rem
+  text-align center
+  display flex
+  align-items center
+  justify-content center
+.selectType
+  border none
+  width 100%
+  height 100%
+  background url('~/static/image/select_arrow.png') center center no-repeat
+  background-size cover
+  font-size 0.8rem
+  text-align center
+  display flex
+  align-items center
+  justify-content center
+  
 </style>
 

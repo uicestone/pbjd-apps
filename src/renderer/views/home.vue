@@ -30,7 +30,7 @@ export default {};
   height 100%
   padding 0.2rem 0.8rem
   background url('~/static/image/button_blue_5.png') no-repeat
-  background-size cover
+  background-size contain
   font-size 1rem
   text-align center
 .button4

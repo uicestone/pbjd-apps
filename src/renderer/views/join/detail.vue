@@ -47,7 +47,7 @@ export default {
       img.title(src="static/image/title.png")              
       div.content
         div.content-header
-          span 您的{{text[date.type]}}为 {{date.year}} 年 {{date.month | dt }} 月{{date.day | dt}} 日
+          span 您的{{text[date.type]}}为 <span class="highlight">{{date.year}}</span> 年 <span class="highlight">{{date.month | dt }}</span> 月<span class="highlight">{{date.day | dt}}</span> 日
         div.content-footer(v-if="date.type=='partyday'")
           p 截止到参加活动时
           p 您已经入党了{{partyDate.year}}年 {{partyDate.month}}月 {{partyDate.day}}天{{partyDate.hour}}时 {{partyDate.minute}}分 {{partyDate.second}}秒
@@ -74,6 +74,7 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
+
 .page-join-detail
   padding 2rem 4rem
   display flex
@@ -115,13 +116,23 @@ export default {
   right 10px
   top 10px
 .content-header
-  background rgba(0, 0, 0, 0.1)
-  padding 1rem 2rem
-  border-radius 0.5rem 0.5rem 0 0
+  background #EA5514
+  color black
+  padding 1.5rem 
+  font-size 1.5rem
+  border-radius 1rem 1rem 0 0
+  display flex
+  justify-content center
+  .highlight
+    color red
+    font-size 2.2rem
 .content-footer
-  background rgba(0, 0, 0, 0.1)
+  background #F8B62D
+  color black  
   padding 1rem 2rem
-  border-radius 0 0 0.5rem 0.5rem
+  border-radius 0 0 1rem 1rem
+  display flex
+  justify-content center
 </style>
 
 

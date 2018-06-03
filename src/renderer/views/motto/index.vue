@@ -74,9 +74,9 @@ export default {
         canvas.motto-preview-photo(ref="canvas" :class='{hidden: !photoUrl}' width=100 height=100)              
       Col.form(span="12")
         div 我的座右铭
-        Input(v-model="motto" type="textarea")
+        Input.input-motto(v-model="motto" type="textarea")
         div 我的名字
-        Input(v-model="name")
+        Input.input-name(v-model="name")
         div.capture
           div 我要拍照
             Button(@click="snapshot" icon="camera" size="large")
@@ -111,18 +111,18 @@ export default {
   right 20%
   top 35%
 .motto-preview-text
-  width 5rem
-  font-size 1.5rem
+  width 15vw
+  font-size 2vw
   font-family Guoxiang
   position absolute
-  left 20%
+  left 15%
   top 30%
 .motto-preview-name
-  font-size 1rem
+  font-size 1vw
   font-family Guoxiang
   position absolute
   left 30%
-  bottom 30%
+  bottom 20%
 .motto-content
   flex 1
   height 100%
@@ -130,10 +130,14 @@ export default {
   background-size cover
 .main-title
   color white
-  width 10rem
-  background rgba(255, 0, 0, 0.5)
+  width 30vw
+  background #DE2230
   border-bottom 2px solid red
-  padding 0.5rem 2rem
+  margin-top 2vh
+  padding 1vh 2vw
   text-align center
-  font-size 1rem
+  font-size 3vw
+.input-motto
+  textarea
+    height 40vh !important
 </style>
