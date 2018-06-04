@@ -38,8 +38,8 @@ export default {
   methods: {
     snapshot() {
       const { video, canvas } = this.$refs;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // canvas.width = video.videoWidth;
+      // canvas.height = video.videoHeight;
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -52,7 +52,7 @@ export default {
   mounted() {
     const { video, snapshot, canvas } = this.$refs;
     navigator.mediaDevices
-      .getUserMedia({ video: { width: 100, height: 100 }, audio: false })
+      .getUserMedia({ video: { width: 150, height: 100 }, audio: false })
       .then(stream => {
         video.srcObject = stream;
       })
@@ -70,8 +70,8 @@ export default {
       Col.motto-content(span="12")
         p.motto-preview-text {{motto}}
         p.motto-preview-name --{{name}}      
-        video.motto-preview-photo(autoplay :class='{hidden: photoUrl}' ref="video" width=100 height=100) 
-        canvas.motto-preview-photo(ref="canvas" :class='{hidden: !photoUrl}' width=100 height=100)              
+        video.motto-preview-photo(autoplay :class='{hidden: photoUrl}' ref="video") 
+        canvas.motto-preview-photo(ref="canvas" :class='{hidden: !photoUrl}')              
       Col.form(span="12")
         div 我的座右铭
         Input.input-motto(v-model="motto" type="textarea")
@@ -106,37 +106,30 @@ export default {
   width 40vw
   flex 0
 .motto-preview-photo
-  transform rotate(-10deg)
+  width 16vw
+  height 16vh
+  transform rotate(-8deg)
   position absolute
-  right 20%
-  top 35%
+  right 3vw
+  top 14vw
 .motto-preview-text
   width 15vw
   font-size 2vw
   font-family Guoxiang
   position absolute
-  left 15%
-  top 30%
+  left 10vw
+  top 15vh
 .motto-preview-name
   font-size 1vw
   font-family Guoxiang
   position absolute
-  left 30%
-  bottom 20%
+  left 20vw
+  bottom 15vh
 .motto-content
   flex 1
   height 100%
   background url('~/static/image/book.png') no-repeat
   background-size cover
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .input-motto
   textarea
     height 40vh !important

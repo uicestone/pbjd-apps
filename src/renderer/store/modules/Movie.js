@@ -1,12 +1,12 @@
 const state = {
-  videos: [
-    {
+  videos: {
+    "1": {
       value: "1",
       label: "小兵张嘎",
       url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
     }
-  ],
-  currentIndex: 0
+  },
+  currentIndex: "1"
 };
 
 const mutations = {

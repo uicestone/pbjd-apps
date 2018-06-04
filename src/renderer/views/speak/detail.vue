@@ -3,7 +3,7 @@
     div.main-title 我要对党说
     div.content
       div
-        video(controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
+        video(poster="http://via.placeholder.com/400x200" controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
         //- audio(controls ref="audio" :src="audioUrl") 
       div.qrcode-group
         img.qrcode-image(src="http://via.placeholder.com/100x50")
@@ -23,8 +23,18 @@ export default {
         return this.$store.state.Speak.videos;
       },
       set(currentIndex) {
-        this.$store.commit("SET_MOVIE_STATE", {
+        this.$store.commit("SET_SPEAK_STATE", {
           currentIndex
+        });
+      }
+    },
+    audioUrl: {
+      get() {
+        return this.$store.state.Speak.audioUrl;
+      },
+      set(audioUrl) {
+        this.$store.commit("SET_SPEAK_STATE", {
+          audioUrl
         });
       }
     },
@@ -33,13 +43,13 @@ export default {
         return this.$store.state.Speak.currentIndex;
       },
       set(currentIndex) {
-        this.$store.commit("SET_MOVIE_STATE", {
+        this.$store.commit("SET_SPEAK_STATE", {
           currentIndex
         });
       }
     },
     currentVideo() {
-      return this.videos.find(i => i.value === this.currentIndex) || {};
+      return this.videos[this.currentIndex] || {};
     }
   }
 };
@@ -57,15 +67,6 @@ export default {
   align-content center
   justify-content space-around
   padding 1rem 0
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .qrcode-group
   display flex
   flex-direction column

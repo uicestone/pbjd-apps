@@ -56,20 +56,13 @@ export default {
   justify-content center
   align-items center
   text-align center
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .motto-preview-photo
-  transform rotate(-10deg)
+  width 16vw
+  height 16vh
+  transform rotate(-8deg)
   position absolute
-  right 20%
-  top 30%
+  right 3vw
+  top 14vw
 .motto-preview-text
   width 5rem
   font-size 1.5rem

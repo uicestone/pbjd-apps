@@ -4,7 +4,7 @@
     div.content
       div
         video(controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
-        //- audio(controls ref="audio" :src="audioUrl") 
+        audio(controls ref="audio" :src="audioUrl") 
       div.qrcode-group
         img.qrcode-image(src="http://via.placeholder.com/100x50")
         p.qrcode-text 收藏到<br/>我的微官网
@@ -21,10 +21,15 @@ export default {
     videos: {
       get() {
         return this.$store.state.Movie.videos;
+      }
+    },
+    audioUrl: {
+      get() {
+        return this.$store.state.Movie.audioUrl;
       },
-      set(currentIndex) {
+      set(audioUrl) {
         this.$store.commit("SET_MOVIE_STATE", {
-          currentIndex
+          audioUrl
         });
       }
     },
@@ -39,7 +44,7 @@ export default {
       }
     },
     currentVideo() {
-      return this.videos.find(i => i.value === this.currentIndex) || {};
+      return this.videos[this.currentIndex] || {};
     }
   }
 };
@@ -57,15 +62,6 @@ export default {
   align-content center
   justify-content space-around
   padding 1rem 0
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .qrcode-group
   display flex
   flex-direction column

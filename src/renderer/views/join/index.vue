@@ -5,17 +5,17 @@
     p.subtitle 输入你想了解的那一天
     div.form
       Select.selectYear(v-model="date.year")
-        Option(v-for="item in yearList" :value="item.value" :key="item.value") 
+        Option(v-for="item in yearList" :value="item.value" :key="item.value") {{item.value}}
       span 年
       Select.selectMonth(v-model="date.month" )
-        Option(v-for="item in monthList" :value="item.value" :key="item.value")   
+        Option(v-for="item in monthList" :value="item.value" :key="item.value") {{item.value}}   
       span 月
       Select.selectMonth(v-model="date.day")
-        Option(v-for="item in dayList" :value="item.value" :key="item.value")   
+        Option(v-for="item in dayList" :value="item.value" :key="item.value") {{item.value}} 
         span 日
       span 日期类型
       Select.selectType(v-model="date.type")
-        Option(v-for="item in dateTypes" :value="item.value" )
+        Option(v-for="item in dateTypes" :value="item.value" ) {{item.value}}
       button.button4(@click="join" :disabled="finish") 立即参与
 
 </template>
@@ -76,7 +76,7 @@ export default {
   margin-top 4vh
   width 80vw
 .subtitle
-  color black 
+  color black
   font-size 2rem
   font-weight 600
   margin 2rem 0
@@ -87,7 +87,7 @@ export default {
   flex-direction column
   align-items center
   height 100vh
-  background url('~/static/image/history_bg_home.png')  center center no-repeat
+  background url('~/static/image/history_bg_home.png') center center no-repeat
   background-size cover
 .form
   display flex
@@ -103,7 +103,7 @@ export default {
   font-size 2.5rem
   color black
   font-weight 600
-  span 
+  span
     font-size 4rem
     font-weight 600
     color #E60012
@@ -149,6 +149,5 @@ export default {
   display flex
   align-items center
   justify-content center
-  
 </style>
 

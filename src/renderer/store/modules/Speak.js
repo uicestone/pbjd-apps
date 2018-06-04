@@ -1,12 +1,12 @@
 const state = {
-  videos: [
-    {
+  videos: {
+    "1": {
       value: "1",
       label: "我爱你中国",
       url: require("../../assets/test.mp3")
     }
-  ],
-  currentIndex: 0
+  },
+  currentIndex: "1"
 };
 
 const mutations = {

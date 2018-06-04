@@ -74,7 +74,6 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
-
 .page-join-detail
   padding 2rem 4rem
   display flex
@@ -116,9 +115,9 @@ export default {
   right 10px
   top 10px
 .content-header
-  background #EA5514
+  background rgba(245, 170, 134, 0.9)
   color black
-  padding 1.5rem 
+  padding 1rem
   font-size 1.5rem
   border-radius 1rem 1rem 0 0
   display flex
@@ -127,8 +126,8 @@ export default {
     color red
     font-size 2.2rem
 .content-footer
-  background #F8B62D
-  color black  
+  background rgba(250, 213, 159, 0.9)
+  color black
   padding 1rem 2rem
   border-radius 0 0 1rem 1rem
   display flex

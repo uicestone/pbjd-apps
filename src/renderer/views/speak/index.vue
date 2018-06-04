@@ -29,11 +29,12 @@ export default {
       }
     },
     currentVideo() {
-      return this.videos.find(i => i.value === this.currentIndex) || {};
+      return this.videos[this.currentIndex] || {};
     }
   },
   mounted() {
     this.init();
+    this.currentIndex = "1";
   },
   methods: {
     record() {
@@ -99,10 +100,10 @@ export default {
       div
         div 选择背景音乐
           Select(v-model="currentIndex"  style="width:200px")
-            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
-        video(poster="http://via.placeholder.com/400x200"  ref="video" :src="currentVideo.url")
+            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
+        video(poster="http://via.placeholder.com/400x200"   controls ref="video" :src="currentVideo.url")
       div.button-group
-        //- audio.hidden(controls ref="audio" :src="audioUrl")    
+        audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         Button.play(@click="play" shape="circle" icon="play" size="large")   
       div.upload   
@@ -118,22 +119,13 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 50vw
   display flex
+  flex 1
   align-content center
   justify-content space-around
   padding 1rem 0
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .hidden
-  visibility hidden
+  display none
 .button-group
   display flex
   justify-content center

@@ -74,15 +74,6 @@ export default {
   background url('~/static/image/sound_bg.png') no-repeat
   background-size cover
   padding 1rem 0
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .user-list
   display flex
   justify-content center

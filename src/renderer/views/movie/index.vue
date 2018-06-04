@@ -29,7 +29,7 @@ export default {
       }
     },
     currentVideo() {
-      return this.videos.find(i => i.value === this.currentIndex) || {};
+      return this.videos[this.currentIndex] || {};
     }
   },
   mounted() {
@@ -99,7 +99,7 @@ export default {
       div
         div 选择片段
           Select(v-model="currentIndex"  style="width:200px")
-            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label")
+            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
         video(controls ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
@@ -121,15 +121,6 @@ export default {
   align-content center
   justify-content space-around
   padding 1rem 0
-.main-title
-  color white
-  width 30vw
-  background #DE2230
-  border-bottom 2px solid red
-  margin-top 2vh
-  padding 1vh 2vw
-  text-align center
-  font-size 3vw
 .hidden
   visibility hidden
 .button-group

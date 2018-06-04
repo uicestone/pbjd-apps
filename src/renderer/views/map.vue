@@ -1,16 +1,15 @@
 <template lang="pug">
-  div
-    Button(type="primary" @click="modal1 = true") Display dialog box
-    //- svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")
+  div.map
+    //- svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")  
     div#map
-    li(v-for="(value, key) in layers" @click="currentLayer = key") {{key}}
+    div.menu
+      li(v-if="!currentLayerData.menu && value.label !== undefined" v-for="(value, key) in layers" @click="setLayer(key,value)") {{value.label}}  
+      li(v-if="currentLayerData.menu " @click="modal1 = true") 中心简介
     div(v-if="currentData.type==0")
       Modal(v-model="modal1" :title="currentData.title")
         p {{currentData.content}}    
         div.modal-footer(slot="footer")
           div.modal-footer-left
-            span(@click="prev") < 上一页
-            span(@click="next") 下一页 >
           div.modal-footer-right
             Button(type="text") 实时连线
             Button(type="text") 导航到此地
@@ -43,53 +42,106 @@ export default {
       geojson: {},
       map: {},
       features: {
-        test1: L.featureGroup([])
+        type1: L.featureGroup([]),
+        type2: L.featureGroup([])
       },
       layers: {
-        test1: L.layerGroup([]).setZIndex(10),
-        test2: L.layerGroup([]).setZIndex(10),
-        test3: L.layerGroup([]).setZIndex(10),
-        test4: L.layerGroup([]).setZIndex(10)
+        0: {
+          label: "党建服务中心",
+          type: "type1",
+          layer: L.layerGroup([]).setZIndex(10),
+          children: {}
+        },
+        1: {
+          label: "街镇社区党建服务中心",
+          type: "type1",
+          layer: L.layerGroup([]).setZIndex(10)
+        },
+        2: {
+          label: "组织生活现场开放点",
+          type: "type1",
+          layer: L.layerGroup([]).setZIndex(10)
+        },
+        3: {
+          label: "党性教育基地",
+          type: "type1",
+          layer: L.layerGroup([]).setZIndex(10)
+        },
+        4: {
+          type: "type2",
+          menu: {
+            desc: {}
+          },
+          layer: L.layerGroup([]).setZIndex(10)
+        }
       },
+      defaultLayer: 0,
       currentLayer: "",
-      configs: {
+      customDatas: {
         华亭镇: {
-          points: [31.413630999999999, 121.24348000000001],
-          style: `stroke:#006600; fill: #F0F8FF; stroke-width:0.5px;`
+          type: "type2",
+          layer: 4
         },
         徐行镇: {
-          style: `stroke:#006600; fill: #233; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         南翔镇: {
-          style: `stroke:#006600; fill: #456; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         真新街道: {
-          style: `stroke:#006600; fill: #789; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         外冈镇: {
-          style: `stroke:#006600; fill: #123; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         江桥镇: {
-          style: `stroke:#006600; fill: #987; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         安亭镇: {
-          style: `stroke:#006600; fill: #654; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         马陆镇: {
-          style: `stroke:#006600; fill: #543; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         新成路街道: {
-          style: `stroke:#006600; fill: #321; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         嘉定镇街道: {
-          style: `stroke:#006600; fill: #abc; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         菊园新区管委会: {
-          style: `stroke:#006600; fill: #ddd; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         },
         嘉定工业区: {
-          style: `stroke:#006600; fill: #666; stroke-width:0.5px;`
+          style: {
+            fillColor: "#000"
+          }
         }
+      },
+      config: {
+        lat: 31.313630999999999,
+        lng: 121.24348000000001,
+        zoom: 10
       },
       svgElements: [],
       modal1: false,
@@ -105,31 +157,28 @@ export default {
   },
   watch: {
     currentLayer(val) {
-      const layer = this.layers[val];
-      Object.values(this.layers).forEach(layer => {
-        this.map.removeLayer(layer);
-      });
+      const layer = this.layers[val].layer;
+      this.resetLayers(this.layers);
       this.map.addLayer(layer);
-    }
+    },
+    switchLayer(val, prev) {}
   },
   computed: {
+    currentLayerData() {
+      return this.layers[this.currentLayer] || {};
+    },
     currentData() {
       return this.datas[this.currentIndex] || {};
     }
   },
   methods: {
-    prev() {
-      if (this.currentIndex > 0) {
-        this.currentIndex -= 1;
-      }
-    },
-    next() {
-      if (this.currentIndex < this.datas.length - 1) {
-        this.currentIndex += 1;
-      }
-    },
     ok() {},
     cancel() {},
+    setLayer(key, value) {
+      const { type } = value;
+      this.resetMap();
+      this.currentLayer = key;
+    },
     parseSVG(s) {
       var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
       div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
@@ -155,15 +204,37 @@ export default {
     resetHighlight(e) {
       this.geojson.resetStyle(e.target);
     },
-    zoomToFeature(e) {
+    zoomToFeature(e, { layer }) {
       this.map.fitBounds(e.target.getBounds());
+      // this.resetLayers(this.layers);
+      layer && (this.currentLayer = layer);
+    },
+    resetMap() {
+      this.map.setView(
+        {
+          lat: this.config.lat,
+          lng: this.config.lng
+        },
+        this.config.zoom
+      );
+      this.currentLayer = 0;
+    },
+    resetLayers(layers) {
+      Object.values(layers).forEach(obj => {
+        const { layer } = obj;
+        this.map.removeLayer(layer);
+      });
     },
     onEachFeature(feature, layer) {
-      // layer.on({
-      //   mouseover: this.highlightFeature,
-      //   mouseout: this.resetHighlight
-      //   // click: this.zoomToFeature
-      // });
+      const { Name } = feature.properties;
+      const { type, layer: _layer } = this.customDatas[Name] || {};
+      if (type == "type2") {
+        layer.on({
+          // mouseover: this.highlightFeature,
+          // mouseout: this.resetHighlight,
+          click: e => this.zoomToFeature(e, { layer: _layer })
+        });
+      }
     }
   },
   mounted() {
@@ -180,21 +251,22 @@ export default {
       let coords = feature.geometry.coordinates[0];
       const [y, x] = coords[Math.floor(Math.random() * coords.length)];
       if (!Array.isArray(x) && !Array.isArray(y)) {
-        let layer = L.circle([x, y], {
+        let circle = L.circle([x, y], {
           color: "red",
           fillColor: "#f03",
           fillOpacity: 1,
           radius: 500
         });
-
-        features[Math.floor(Math.random() * features.length)].addLayer(layer);
-        layers[Math.floor(Math.random() * layers.length)].addLayer(layer);
+        this.features.type1.addLayer(circle);
+        layers[Math.floor(Math.random() * layers.length)].layer.addLayer(
+          circle
+        );
       }
     });
 
     this.map = L.map("map", {
-      center: [31.413630999999999, 121.24348000000001],
-      zoom: 10
+      center: [this.config.lat, this.config.lng],
+      zoom: this.config.zoom
     });
     const getColor = () =>
       "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -203,23 +275,38 @@ export default {
         color: "white",
         fillColor: getColor(),
         weight: 2,
-        opacity: 0.65
+        opacity: 1,
+        boxShadow: "-5px -5px 5px #888",
+        className: "map-shadow"
       }),
       onEachFeature: this.onEachFeature
     }).addTo(this.map);
-    features.forEach(feature => {
-      feature.on("click", () => (this.modal1 = true));
+    this.features.type1.on("click", () => (this.modal1 = true));
+    this.map.on("dblclick", () => {
+      this.resetMap();
     });
-    layers.forEach(layer => {
-      this.map.addLayer(layer);
-    });
+    this.setLayer(this.defaultLayer, this.layers[this.defaultLayer]);
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-#map
+.map
   height 100vh
+  background url('~/static/image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+#map
+  width 100vw
+  height 100vh
+  background transparent
+.map-shadow
+  box-shadow -5px -5px 5px #888
+.menu
+  position absolute
+  top 50vh
+  left 10vw
+  z-index 10000
 .modal-footer
   display flex
   justify-content space-between

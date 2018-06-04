@@ -20,20 +20,34 @@ export default {
 html {
   font-size: 10px;
 }
+li {
+  list-style-type: none;
+}
 .button-back {
   position: absolute;
   right: 0;
+  z-index: 10000;
 }
-.ivu-select-selection{
+.ivu-select-selection {
   all: unset;
   i {
-    display: none !important
+    display: none !important;
   }
 }
-.ivu-select{
-  all: unset
+.ivu-select {
+  all: unset;
 }
-.ivu-select-dropdown{
-  overflow: hidden!important
+.ivu-select-dropdown {
+  overflow: hidden !important;
+}
+.main-title {
+  color: white;
+  width: 30vw;
+  background: #de2230;
+  border-bottom: 4px solid rgb(146, 35, 44);
+  margin-top: 2vh;
+  padding: 1vh 2vw;
+  text-align: center;
+  font-size: 3vw;
 }
 </style>
