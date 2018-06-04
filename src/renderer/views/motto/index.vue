@@ -82,6 +82,8 @@ export default {
             Button(@click="snapshot" icon="camera" size="large")
           div 我要上传
             Button(@click="upload" icon="camera" size="large")
+    button.button-back(@click="$router.go(-1)") 返回
+    
 </template>
 
 <style lang="stylus" scoped>

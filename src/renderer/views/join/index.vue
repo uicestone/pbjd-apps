@@ -4,18 +4,18 @@
     img.title(src="static/image/title.png")
     p.subtitle 输入你想了解的那一天
     div.form
-      Select.selectYear(v-model="date.year")
-        Option(v-for="item in yearList" :value="item.value" :key="item.value") {{item.value}}
+      select.selectYear(v-model="date.year" placeholder="null")
+        option(v-for="item in yearList" :value="item.value" :key="item.value") {{item.value}}
       span 年
-      Select.selectMonth(v-model="date.month" )
-        Option(v-for="item in monthList" :value="item.value" :key="item.value") {{item.value}}   
+      select.selectMonth(v-model="date.month" )
+        option(v-for="item in monthList" :value="item.value" :key="item.value") {{item.value}}   
       span 月
-      Select.selectMonth(v-model="date.day")
-        Option(v-for="item in dayList" :value="item.value" :key="item.value") {{item.value}} 
+      select.selectMonth(v-model="date.day")
+        option(v-for="item in dayList" :value="item.value" :key="item.value") {{item.value}} 
         span 日
       span 日期类型
-      Select.selectType(v-model="date.type")
-        Option(v-for="item in dateTypes" :value="item.value" ) {{item.value}}
+      select.selectType(v-model="date.type")
+        option(v-for="item in dateTypes" :value="item.value" ) {{item.label}}
       button.button4(@click="join" :disabled="finish") 立即参与
 
 </template>
@@ -46,15 +46,15 @@ export default {
       })),
       date: {
         date: "",
-        type: "",
-        year: "",
-        month: "",
-        day: ""
+        type: "partyday",
+        year: 1980,
+        month: 1,
+        day: 1
       }
     };
   },
   mounted() {
-    this.date.year = 1980;
+    // this.date.year = 1980;
   },
   computed: {
     finish() {
@@ -71,80 +71,81 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.title
-  margin-top 4vh
-  width 80vw
-.subtitle
-  color black
-  font-size 2rem
-  font-weight 600
-  margin 2rem 0
-.select
-  unset all
+<style lang="stylus">
 .page-join-index
   display flex
   flex-direction column
   align-items center
+  justify-content flex-start !important
   height 100vh
   background url('~/static/image/history_bg_home.png') center center no-repeat
   background-size cover
-.form
-  display flex
-  align-items center
-  justify-content center
-  width 80vw
-.form-box
-  display flex
-  align-items center
-.join-count
-  position absolute
-  top 4vh
-  font-size 2.5rem
-  color black
-  font-weight 600
-  span
-    font-size 4rem
+  select
+    overflow hidden !important
+  .title
+    margin-top 4vh
+    width 80vw
+  .subtitle
+    color black
+    font-size 2rem
     font-weight 600
-    color #E60012
-.button4
-  border none
-  width 100%
-  height 100%
-  background url('~/static/image/button_blue_4.png') center center no-repeat
-  background-size cover
-  text-align center
-  color white
-.selectYear
-  border none
-  width 100%
-  height 100%
-  background url('~/static/image/select_4.png') center center no-repeat
-  background-size cover
-  font-size 0.8rem
-  line-height 5rem
-  text-align center
+    margin 2rem 0
+  .select
+    unset all
+  .form
+    display flex
+    align-items center
+    justify-content space-around
+    font-size 2rem
+    font-weight 600
+    width 80vw
+  .form-box
+    display flex
+    align-items center
+  .join-count
+    position absolute
+    top 4vh
+    font-size 2.5rem
+    color black
+    font-weight 600
+    span
+      font-size 4rem
+      font-weight 600
+      color #E60012
+  .button4
+    border none
+    padding 1.2vw 5vw
+    font-size 2rem  
+    background url('~/static/image/button_blue_4.png') center center no-repeat
+    background-size cover
+    text-align center
+    color white
+  .selectYear
+    border none
+    padding 2vw 4.2vw
+    background url('~/static/image/select_4.png') center center no-repeat
+    background-size cover
+    font-size 2rem
+    text-align center
   display flex
   align-items center
   justify-content center
 .selectMonth
   border none
-  width 100%
-  height 100%
+  padding 2vw 1.6vw
   background url('~/static/image/select_2.png') center center no-repeat
   background-size cover
-  font-size 0.8rem
+  font-size 2rem
   text-align center
   display flex
   align-items center
   justify-content center
 .selectType
   border none
-  width 100%
-  height 100%
+  padding 2vw 6.5vw
   background url('~/static/image/select_arrow.png') center center no-repeat
   background-size cover
-  font-size 0.8rem
+  font-size 2rem
   text-align center
   display flex
   align-items center

@@ -99,7 +99,9 @@ export default {
           span.count(v-for="(value,index) in users" @click="currentIndex = index", :class="{'count-active': index == currentIndex }") ·
         p(@click="next()") 
           span 下一页         
-          img.icon-arrow(:src="images.arrow_right")        
+          img.icon-arrow(:src="images.arrow_right")
+    button.button-back(@click="$router.go(-1)") 返回
+            
 </template>
 
 <style lang="stylus" scoped>
@@ -142,11 +144,11 @@ export default {
     display flex
     align-items center
 .menu-list
-  margin 40px auto 10px
+  margin 20px auto 10px
   .button5
     margin 0 40px
 .content
-  height 80vh
+  height 65vh
   display flex
   flex-direction column
 .button5
@@ -159,7 +161,7 @@ export default {
   font-weight 600
   text-align center
 .count
-  font-size 8vw
+  font-size 2vw
   color rgba(245, 185, 155, 1)
 .count-active
   color rgba(235, 90, 50, 1)

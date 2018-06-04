@@ -3,19 +3,26 @@
     div.main-title 我要对党说
     div.content
       div
-        video(poster="http://via.placeholder.com/400x200" controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
+        video.video(:poster="images.poster_play" controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
         //- audio(controls ref="audio" :src="audioUrl") 
       div.qrcode-group
         img.qrcode-image(src="http://via.placeholder.com/100x50")
         p.qrcode-text 收藏到<br/>我的微官网
-      
+    button.button-back(@click="$router.go(-1)") 返回
+    img.logo(src="static/image/sound.png") 
+    
 </template>
 
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      images: {
+        poster_play: "static/image/music_bg_play.png",
+        poster: "static/image/music_bg.png",        
+      }
+    };
   },
   computed: {
     videos: {
@@ -67,10 +74,21 @@ export default {
   align-content center
   justify-content space-around
   padding 1rem 0
+.video
+  width 50vw
 .qrcode-group
   display flex
   flex-direction column
   justify-content center
   align-items center
   text-align center
+.qrcode-text
+  font-size 2vw
+  font-weight 600
+  color black
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>

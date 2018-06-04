@@ -1,6 +1,7 @@
 <template lang="pug">
   div#app
-    a.button-back(@click="$router.go(-1)") 返回
+    div
+      //- div.button-back(@click="$router.go(-1)") 返回
     router-view
 </template>
 
@@ -23,11 +24,11 @@ html {
 li {
   list-style-type: none;
 }
-.button-back {
-  position: absolute;
-  right: 0;
-  z-index: 10000;
-}
+// .button-back {  
+//   position: absolute;
+//   right: 0;
+//   z-index: 10000;
+// }
 .ivu-select-selection {
   all: unset;
   i {
@@ -42,12 +43,33 @@ li {
 }
 .main-title {
   color: white;
+  height: 12vh;
   width: 30vw;
   background: #de2230;
   border-bottom: 4px solid rgb(146, 35, 44);
   margin-top: 2vh;
-  padding: 1vh 2vw;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 3vw;
+}
+.button-back{
+  border: none;
+  z-index: 10000;
+  color: white;
+  padding: .5vw 1.2vw;
+  background: url('~/static/image/button_blue_2.png') center center no-repeat;
+  background-size: cover;
+  font-size: 1.6rem;
+  display: flex;
+  letter-spacing: 10px;
+  text-indent: 10px;
+  text-align: center;
+  margin: 3vw auto;
+
+}
+
+.ivu-select-single .ivu-select-selection .ivu-select-placeholder, .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
+  all: unset
 }
 </style>

@@ -8,6 +8,7 @@
       div.qrcode-group
         img.qrcode-image(src="http://via.placeholder.com/100x50")
         p.qrcode-text 收藏到<br/>我的微官网
+    button.button-back(@click="$router.go(-1)") 返回
       
 </template>
 

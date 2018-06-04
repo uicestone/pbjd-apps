@@ -5,7 +5,11 @@ export default {
       recorder: null,
       isRecord: false,
       RecordSuccess: false,
-      audioUrl: ""
+      audioUrl: "",
+      images: {
+        button_record: "static/image/button_record.png",
+        button_play:  "static/image/button_play.png",
+      }
     };
   },
   computed: {
@@ -55,6 +59,7 @@ export default {
       }
     },
     play() {
+      if(!this.RecordSuccess || this.isRecord) return;
       const { audio, video } = this.$refs;
       video.currentTime = 0;
       video.play();
@@ -107,10 +112,15 @@ export default {
         video(controls ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
-        Button.record(@click="record" shape="circle" icon="mic-a" size="large")
-        Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
+        img.record(@click="record" :src="images.button_record")
+        img.play( @click="play" :src="images.button_play")
+        
+        //- Button.record(@click="record" shape="circle" icon="mic-a" size="large")
+        //- Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
       div.upload   
-        Button(@click="upload" size="large") 我要上传
+        button.button4(@click="upload") 我要上传
+    button.button-back(@click="$router.go(-1)") 返回
+    
 </template>
 
 
@@ -121,12 +131,13 @@ export default {
   background-size cover
   padding 1rem 0
 .content
+  height 65vh
   display flex
   align-content center
   justify-content space-around
   padding 1rem 0
 .hidden
-  visibility hidden
+  display none
 .button-group
   display flex
   justify-content center
@@ -134,4 +145,15 @@ export default {
 .upload
   display flex
   align-items center
+.button4
+  border none
+  color white
+  padding .75vw 4.5vw
+  background url('~/static/image/button_blue_4.png') center center no-repeat
+  background-size cover
+  font-size 3rem
+  text-align center
+.record,.play
+  margin 2vw 0
+
 </style>
