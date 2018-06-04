@@ -110,8 +110,8 @@ export default {
   height 16vh
   transform rotate(-8deg)
   position absolute
-  right 3vw
-  top 14vw
+  left 28vw
+  top 13vw
 .motto-preview-text
   width 15vw
   font-size 2vw
@@ -119,18 +119,19 @@ export default {
   position absolute
   left 10vw
   top 15vh
+  word-wrap break-word
 .motto-preview-name
-  font-size 1vw
+  font-size 1.5vw
   font-family Guoxiang
   position absolute
-  left 20vw
-  bottom 15vh
+  left 15vw
+  top 20vw
 .motto-content
   flex 1
   height 100%
   background url('~/static/image/book.png') no-repeat
   background-size cover
 .input-motto
-  textarea
-    height 40vh !important
+  /deep/ textarea
+    height 30vh
 </style>

@@ -4,6 +4,7 @@ export default {
     return {
       recorder: null,
       isRecord: false,
+      RecordSuccess: false,
       audioUrl: ""
     };
   },
@@ -39,6 +40,8 @@ export default {
     record() {
       const { video } = this.$refs;
       const isRecord = this.isRecord;
+      video.currentTime = 0;
+      this.RecordSuccess = false;
       this.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
@@ -48,6 +51,7 @@ export default {
       if (isRecord) {
         this.recorder.stop();
         video.pause();
+        this.RecordSuccess = true;
       }
     },
     play() {
@@ -104,7 +108,7 @@ export default {
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         Button.record(@click="record" shape="circle" icon="mic-a" size="large")
-        Button.play(:disabled= "isRecord" @click="play" shape="circle" icon="play" size="large")   
+        Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
       div.upload   
         Button(@click="upload" size="large") 我要上传
 </template>

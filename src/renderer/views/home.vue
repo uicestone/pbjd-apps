@@ -19,26 +19,22 @@ export default {};
   .menu-list
     position absolute
     top 10vh
-    right 10vw
+    right 5vw
     display flex
     flex-direction column
-    .button5
-      margin 0.5rem 0
+    justify-content space-around
+    height 60vh
 .button5
   color white
-  width 100%
-  height 100%
-  padding 0.2rem 0.8rem
-  background url('~/static/image/button_blue_5.png') no-repeat
-  background-size contain
-  font-size 1rem
+  padding 0.75vw 3vw
+  background url('~/static/image/button_blue_5.png') center center no-repeat
+  background-size cover
+  font-size 2.4rem
   text-align center
 .button4
   color white
-  width 50%
-  height 50%
   padding 0.2rem
-  background url('~/static/image/button_blue_4.png') no-repeat
+  background url('~/static/image/button_blue_4.png') center center no-repeat
   background-size cover
   font-size 0.8rem
   text-align center
