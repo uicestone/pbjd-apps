@@ -1,12 +1,12 @@
 const state = {
-  videos: {
-    "1": {
-      value: "1",
-      label: "我爱你中国",
-      url: require("../../assets/test.mp3")
-    }
-  },
-  currentIndex: "1"
+  // videos: {
+  //   "1": {
+  //     value: "1",
+  //     label: "我爱你中国",
+  //     url: require("../../assets/media/test.mp3")
+  //   }
+  // },
+  // currentIndex: "1"
 };
 
 const mutations = {

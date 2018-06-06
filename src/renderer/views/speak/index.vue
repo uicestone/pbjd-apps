@@ -6,35 +6,43 @@ export default {
       isRecord: false,
       RecordSuccess: false,
       audioUrl: "",
+      videos: {
+        "1": {
+          value: "1",
+          label: "我爱你中国",
+          url: "static/media/test.mp3"
+        }
+      },
+      currentIndex: "1",
       images: {
         button_record: "static/image/button_record.png",
-        button_play:  "static/image/button_play.png",
+        button_play: "static/image/button_play.png",
         poster_play: "static/image/music_bg_play.png",
-        poster: "static/image/music_bg.png",        
+        poster: "static/image/music_bg.png"
       }
     };
   },
   computed: {
-    videos: {
-      get() {
-        return this.$store.state.Speak.videos;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_SPEAK_STATE", {
-          currentIndex
-        });
-      }
-    },
-    currentIndex: {
-      get() {
-        return this.$store.state.Speak.currentIndex;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_SPEAK_STATE", {
-          currentIndex
-        });
-      }
-    },
+    // videos: {
+    //   get() {
+    //     return this.$store.state.Speak.videos;
+    //   },
+    //   set(currentIndex) {
+    //     this.$store.commit("SET_SPEAK_STATE", {
+    //       currentIndex
+    //     });
+    //   }
+    // },
+    // currentIndex: {
+    //   get() {
+    //     return this.$store.state.Speak.currentIndex;
+    //   },
+    //   set(currentIndex) {
+    //     this.$store.commit("SET_SPEAK_STATE", {
+    //       currentIndex
+    //     });
+    //   }
+    // },
     currentVideo() {
       return this.videos[this.currentIndex] || {};
     }
@@ -62,7 +70,7 @@ export default {
       }
     },
     play() {
-      if(!this.RecordSuccess || this.isRecord) return;
+      if (!this.RecordSuccess || this.isRecord) return;
       const { audio, video } = this.$refs;
       video.currentTime = 0;
       video.play();
@@ -153,7 +161,7 @@ export default {
 .button4
   border none
   color white
-  padding .75vw 4.5vw
+  padding 0.75vw 4.5vw
   background url('~/static/image/button_blue_4.png') center center no-repeat
   background-size cover
   font-size 3rem
@@ -163,6 +171,6 @@ export default {
   width 20vw
   right 10px
   top 10px
-.record,.play
+.record, .play
   margin 2vw 0
 </style>
