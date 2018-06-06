@@ -5,11 +5,7 @@ export default {
       recorder: null,
       isRecord: false,
       RecordSuccess: false,
-      audioUrl: "",
-      images: {
-        button_record: "static/image/button_record.png",
-        button_play:  "static/image/button_play.png",
-      }
+      audioUrl: ""
     };
   },
   computed: {
@@ -112,8 +108,8 @@ export default {
         video(controls ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
-        img.record(@click="record" :src="images.button_record")
-        img.play( @click="play" :src="images.button_play")
+        img.record(@click="record" src="~@/assets/image/button_record.png")
+        img.play( @click="play" src="~@/assets/image/button_play.png")
         
         //- Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         //- Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
@@ -127,7 +123,7 @@ export default {
 <style lang="stylus" scoped>
 .page-speak-index
   height 100vh
-  background url('~/static/image/sound_bg.png') no-repeat
+  background url('~@/assets//image/sound_bg.png') no-repeat
   background-size cover
   padding 1rem 0
 .content
@@ -149,7 +145,7 @@ export default {
   border none
   color white
   padding .75vw 4.5vw
-  background url('~/static/image/button_blue_4.png') center center no-repeat
+  background url('~@/assets//image/button_blue_4.png') center center no-repeat
   background-size cover
   font-size 3rem
   text-align center

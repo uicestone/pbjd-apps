@@ -122,8 +122,7 @@ let rendererConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
-    publicPath: "/",
-    filename: "assets/scripts/[name].js",
+    filename: "[name].js",
     libraryTarget: "commonjs2",
     path: path.join(__dirname, "../dist/electron")
   },

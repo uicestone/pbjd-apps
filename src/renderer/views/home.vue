@@ -14,7 +14,7 @@ export default {};
 <style lang="stylus" scoped>
 .page-home
   height 100vh
-  background url('~/static/image/sound_bg_home.png') no-repeat center center fixed
+  background url('~@/assets/image/sound_bg_home.png') no-repeat center center fixed
   background-size cover
   .menu-list
     position absolute
@@ -27,14 +27,14 @@ export default {};
 .button5
   color white
   padding 0.75vw 3vw
-  background url('~/static/image/button_blue_5.png') center center no-repeat
+  background url('~@/assets/image/button_blue_5.png') center center no-repeat
   background-size cover
   font-size 2.4rem
   text-align center
 .button4
   color white
   padding 0.2rem
-  background url('~/static/image/button_blue_4.png') center center no-repeat
+  background url('~@/assets/image/button_blue_4.png') center center no-repeat
   background-size cover
   font-size 0.8rem
   text-align center

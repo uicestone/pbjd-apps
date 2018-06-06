@@ -1,7 +1,7 @@
 <template lang="pug">
   div#app
     div
-      //- div.button-back(@click="$router.go(-1)") 返回
+      div.button-back(@click="$router.go(-1)") 返回
     router-view
 </template>
 
@@ -58,7 +58,7 @@ li {
   z-index: 10000;
   color: white;
   padding: .5vw 1.2vw;
-  background: url('~/static/image/button_blue_2.png') center center no-repeat;
+  background: url('~@/assets/image/button_blue_2.png') center center no-repeat;
   background-size: cover;
   font-size: 1.6rem;
   display: flex;

@@ -78,7 +78,7 @@ export default {
   padding 8vw 6vw
   display flex
   height 100vh
-  background url('~/static/image/history_bg_home.png') no-repeat center center fixed
+  background url('~@/assets//image/history_bg_home.png') no-repeat center center fixed
   background-size cover
   justify-content space-around
 .left
@@ -158,7 +158,7 @@ export default {
   z-index: 10000;
   color: white;
   padding: .25vw .6vw;
-  background: url('~/static/image/button_blue_2.png') center center no-repeat;
+  background: url('~@/assets//image/button_blue_2.png') center center no-repeat;
   background-size: cover;
   font-size: 1.2rem;
   display: flex;

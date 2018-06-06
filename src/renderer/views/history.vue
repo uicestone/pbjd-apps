@@ -22,11 +22,6 @@ export default {
         movie: [],
         speak: [],
         motto: []
-      },
-      images: {
-        arrow_left: "static/image/arrow_left.png",
-        arrow_right: "static/image/arrow_right.png",
-        arrow_blue: "static/image/arrow_blue.png"
       }
     };
   },
@@ -82,7 +77,7 @@ export default {
               span.index {{index | dt}}
               span.name {{value.name}}
             //- span.name {{value.addr}}
-            img.icon-arrow-blue(:src="images.arrow_blue")
+            img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")
         div.list-item
           div.user-item(v-if="index >= 5 && index <= 10" v-for="(value,index) in currentUser")
             div
@@ -90,16 +85,16 @@ export default {
               span.name {{value.name}}
             //- span.name {{value.addr}}
             
-            img.icon-arrow-blue(:src="images.arrow_blue")            
+            img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")            
       div.pagination
         p(@click="prev()") 
-          img.icon-arrow(:src="images.arrow_left")
+          img.icon-arrow(src="~@/assets/image/arrow_left.png")
           span 上一页
         div
           span.count(v-for="(value,index) in users" @click="currentIndex = index", :class="{'count-active': index == currentIndex }") ·
         p(@click="next()") 
           span 下一页         
-          img.icon-arrow(:src="images.arrow_right")
+          img.icon-arrow(src="~@/assets/image/arrow_right.png")
     button.button-back(@click="$router.go(-1)") 返回
             
 </template>
@@ -107,7 +102,7 @@ export default {
 <style lang="stylus" scoped>
 .page-history-index
   height 100vh
-  background url('~/static/image/sound_bg.png') no-repeat
+  background url('~@/assets/image/sound_bg.png') no-repeat
   background-size cover
   padding 1rem 0
 .user-list
@@ -155,7 +150,7 @@ export default {
   border none
   color white
   padding 0.5vw 3vw
-  background url('~/static/image/button_blue_5.png') no-repeat
+  background url('~@/assets//image/button_blue_5.png') no-repeat
   background-size cover
   font-size 2rem
   font-weight 600

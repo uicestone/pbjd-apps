@@ -78,7 +78,7 @@ export default {
   align-items center
   justify-content flex-start !important
   height 100vh
-  background url('~/static/image/history_bg_home.png') center center no-repeat
+  background url('~@/assets//image/history_bg_home.png') center center no-repeat
   background-size cover
   select
     overflow hidden !important
@@ -116,14 +116,14 @@ export default {
     border none
     padding 1.2vw 5vw
     font-size 2rem  
-    background url('~/static/image/button_blue_4.png') center center no-repeat
+    background url('~@/assets//image/button_blue_4.png') center center no-repeat
     background-size cover
     text-align center
     color white
   .selectYear
     border none
     padding 2vw 4.2vw
-    background url('~/static/image/select_4.png') center center no-repeat
+    background url('~@/assets//image/select_4.png') center center no-repeat
     background-size cover
     font-size 2rem
     text-align center
@@ -133,7 +133,7 @@ export default {
 .selectMonth
   border none
   padding 2vw 1.6vw
-  background url('~/static/image/select_2.png') center center no-repeat
+  background url('~@/assets//image/select_2.png') center center no-repeat
   background-size cover
   font-size 2rem
   text-align center
@@ -143,7 +143,7 @@ export default {
 .selectType
   border none
   padding 2vw 6.5vw
-  background url('~/static/image/select_arrow.png') center center no-repeat
+  background url('~@/assets//image/select_arrow.png') center center no-repeat
   background-size cover
   font-size 2rem
   text-align center

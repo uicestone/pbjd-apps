@@ -3,8 +3,9 @@
     //- svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")  
     div#map
     div.menu
-      li(v-if="!currentLayerData.menu && value.label !== undefined" v-for="(value, key) in layers" @click="setLayer(key,value)") {{value.label}}  
-      li(v-if="currentLayerData.menu " @click="modal1 = true") 中心简介
+      li(v-if="!currentLayerData.type && value.label !== undefined" v-for="(value, key) in OptionLayers" @click="setLayer(key,value)")
+        img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
+      img.menu-img(v-if="currentLayerData.type " @click="modal1 = true" src="static/images/map_button_5.png")
     div(v-if="currentData.type==0")
       Modal(v-model="modal1" :title="currentData.title")
         p {{currentData.content}}    
@@ -45,37 +46,47 @@ export default {
         type1: L.featureGroup([]),
         type2: L.featureGroup([])
       },
-      layers: {
+      OptionLayers: {
         0: {
           label: "党建服务中心",
+          images: {
+            select: "static/images/map_button_1.png",
+            unselect: "static/images/map_button_1a.png"
+          },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10),
           children: {}
         },
         1: {
           label: "街镇社区党建服务中心",
+          images: {
+            select: "static/images/map_button_2.png",
+            unselect: "static/images/map_button_2a.png"
+          },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
         },
         2: {
           label: "组织生活现场开放点",
+          images: {
+            select: "static/images/map_button_3.png",
+            unselect: "static/images/map_button_3a.png"
+          },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
         },
         3: {
           label: "党性教育基地",
-          type: "type1",
-          layer: L.layerGroup([]).setZIndex(10)
-        },
-        4: {
-          type: "type2",
-          menu: {
-            desc: {}
+          images: {
+            select: "static/images/map_button_4.png",
+            unselect: "static/images/map_button_4a.png"
           },
+          type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
         }
       },
       defaultLayer: 0,
+      currentOptionLayer: "",
       currentLayer: "",
       customDatas: {
         华亭镇: {
@@ -83,65 +94,76 @@ export default {
           layer: 4
         },
         徐行镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         南翔镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         真新街道: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         外冈镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         江桥镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         安亭镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         马陆镇: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         新成路街道: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         嘉定镇街道: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         菊园新区管委会: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         },
         嘉定工业区: {
+          type: "type2",
           style: {
             fillColor: "#000"
           }
         }
       },
       config: {
-        lat: 31.313630999999999,
-        lng: 121.24348000000001,
-        zoom: 10
+        lat: 31.373630999999999,
+        lng: 121.14348000000001,
+        zoom: 12
       },
       svgElements: [],
       modal1: false,
@@ -156,16 +178,21 @@ export default {
     };
   },
   watch: {
-    currentLayer(val) {
-      const layer = this.layers[val].layer;
-      this.resetLayers(this.layers);
-      this.map.addLayer(layer);
+    currentOptionLayer(val) {
+      this.resetLayers(this.OptionLayers);
+      if (val) {
+        const layer = this.OptionLayers[val].layer;
+        this.map.addLayer(layer);
+      }
     },
     switchLayer(val, prev) {}
   },
   computed: {
+    currentOptionLayerData() {
+      return this.OptionLayers[this.currentOptionLayer] || {};
+    },
     currentLayerData() {
-      return this.layers[this.currentLayer] || {};
+      return this.customDatas[this.currentLayer] || {};
     },
     currentData() {
       return this.datas[this.currentIndex] || {};
@@ -177,7 +204,7 @@ export default {
     setLayer(key, value) {
       const { type } = value;
       this.resetMap();
-      this.currentLayer = key;
+      this.currentOptionLayer = key;
     },
     parseSVG(s) {
       var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
@@ -191,10 +218,10 @@ export default {
       let layer = e.target;
 
       layer.setStyle({
-        weight: 5,
+        weight: 10,
         color: "#666",
         dashArray: "",
-        fillOpacity: 0.7
+        fillOpacity: 1
       });
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -204,10 +231,11 @@ export default {
     resetHighlight(e) {
       this.geojson.resetStyle(e.target);
     },
-    zoomToFeature(e, { layer }) {
+    zoomToFeature(e, { Name }) {
       this.map.fitBounds(e.target.getBounds());
-      // this.resetLayers(this.layers);
-      layer && (this.currentLayer = layer);
+      // this.resetLayers(this.OptionLayers);
+      this.currentOptionLayer = "";
+      Name && (this.currentLayer = Name);
     },
     resetMap() {
       this.map.setView(
@@ -217,7 +245,8 @@ export default {
         },
         this.config.zoom
       );
-      this.currentLayer = 0;
+      this.currentOptionLayer = 0;
+      this.currentLayer = "";
     },
     resetLayers(layers) {
       Object.values(layers).forEach(obj => {
@@ -227,18 +256,22 @@ export default {
     },
     onEachFeature(feature, layer) {
       const { Name } = feature.properties;
-      const { type, layer: _layer } = this.customDatas[Name] || {};
-      if (type == "type2") {
-        layer.on({
-          // mouseover: this.highlightFeature,
-          // mouseout: this.resetHighlight,
-          click: e => this.zoomToFeature(e, { layer: _layer })
-        });
+      let data = this.customDatas[Name];
+      if (data) {
+        data.layer = layer;
+        const { type } = data || {};
+        if (type == "type2") {
+          layer.on({
+            // mouseover: this.highlightFeature,
+            // mouseout: this.resetHighlight,
+            click: e => this.zoomToFeature(e, { Name })
+          });
+        }
       }
     }
   },
   mounted() {
-    let layers = Object.values(this.layers);
+    let layers = Object.values(this.OptionLayers);
     let features = Object.values(this.features);
     // let Icon = L.icon({
     //   iconUrl: "a.png",
@@ -274,8 +307,8 @@ export default {
       style: () => ({
         color: "white",
         fillColor: getColor(),
-        weight: 2,
-        opacity: 1,
+        weight: 6,
+        fillOpacity: 1,
         boxShadow: "-5px -5px 5px #888",
         className: "map-shadow"
       }),
@@ -285,49 +318,74 @@ export default {
     this.map.on("dblclick", () => {
       this.resetMap();
     });
-    this.setLayer(this.defaultLayer, this.layers[this.defaultLayer]);
+    this.setLayer(this.defaultLayer, this.OptionLayers[this.defaultLayer]);
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.map
-  height 100vh
-  background url('~/static/image/sound_bg.png') no-repeat
-  background-size cover
-  padding 1rem 0
-#map
-  width 100vw
-  height 100vh
-  background transparent
-.map-shadow
-  box-shadow -5px -5px 5px #888
-.menu
-  position absolute
-  top 50vh
-  left 10vw
-  z-index 10000
-.modal-footer
-  display flex
-  justify-content space-between
-  align-items center
-.modal-footer-left
-  width 6rem
-  display flex
-  justify-content space-between
-.modal-footer-right
-  display flex
-  justify-content space-between
-.modal2-content
-  display flex
-  justify-content space-between
-.modal2-content-left
-  width 60%
-.modal2-content-right
-  width 35%
-  display flex
-  flex-direction column
-div.modal2-footer-right
-  display flex
-  justify-content flex-start
+.map {
+  height: 100vh;
+  background: url('~@/assets//image/map_bg.png') center center no-repeat;
+  background-size: cover;
+  padding: 1rem 0;
+}
+
+#map {
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+}
+
+.map-shadow {
+  box-shadow: -5px -5px 5px #888;
+}
+
+.menu {
+  position: absolute;
+  top: 60vh;
+  left: 10vw;
+  z-index: 10000;
+}
+
+.menu-img {
+  width: 20vw;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-footer-left {
+  width: 6rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-footer-right {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal2-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal2-content-left {
+  width: 60%;
+}
+
+.modal2-content-right {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+div.modal2-footer-right {
+  display: flex;
+  justify-content: flex-start;
+}
 </style>

@@ -89,7 +89,7 @@ export default {
 <style lang="stylus" scoped>
 .page-motto-index
   height 100vh
-  background url('~/static/image/sound_bg.png') no-repeat
+  background url('~@/assets//image/sound_bg.png') no-repeat
   background-size cover
   padding 1rem 0
 .content
@@ -131,7 +131,7 @@ export default {
 .motto-content
   flex 1
   height 100%
-  background url('~/static/image/book.png') no-repeat
+  background url('~@/assets//image/book.png') no-repeat
   background-size cover
 .input-motto
   /deep/ textarea

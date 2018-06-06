@@ -3,13 +3,13 @@
     div.main-title 我要对党说
     div.content
       div
-        video.video(:poster="images.poster_play" controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
+        video.video(poster="~@/assets/image/music_bg_play.png" controls ref="video" :src="currentVideo.url" width=480 heigh=320)    
         //- audio(controls ref="audio" :src="audioUrl") 
       div.qrcode-group
         img.qrcode-image(src="http://via.placeholder.com/100x50")
         p.qrcode-text 收藏到<br/>我的微官网
     button.button-back(@click="$router.go(-1)") 返回
-    img.logo(src="static/image/sound.png") 
+    img.logo(src="~@/assets/image/sound.png") 
     
 </template>
 
@@ -18,33 +18,17 @@
 export default {
   data() {
     return {
-      images: {
-        poster_play: "static/image/music_bg_play.png",
-        poster: "static/image/music_bg.png",        
-      }
+      videos: {
+        "1": {
+          value: "1",
+          label: "我爱你中国",
+          url: "static/media/test.mp3"
+        }
+      },
+      currentIndex: "1"
     };
   },
   computed: {
-    videos: {
-      get() {
-        return this.$store.state.Speak.videos;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_SPEAK_STATE", {
-          currentIndex
-        });
-      }
-    },
-    audioUrl: {
-      get() {
-        return this.$store.state.Speak.audioUrl;
-      },
-      set(audioUrl) {
-        this.$store.commit("SET_SPEAK_STATE", {
-          audioUrl
-        });
-      }
-    },
     currentIndex: {
       get() {
         return this.$store.state.Speak.currentIndex;
@@ -66,7 +50,7 @@ export default {
 <style lang="stylus" scoped>
 .page-movie-detail
   height 100vh
-  background url('~/static/image/sound_bg.png') no-repeat
+  background url('~@/assets//image/sound_bg.png') no-repeat
   background-size cover
   padding 1rem 0
 .content
