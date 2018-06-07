@@ -7,7 +7,7 @@
       router-link(to="/motto/index") 我的座右铭
       router-link(to="/history") 往期精选  
       router-link(to="/join/index") 加入
-      router-link(to="/map") 地图                                                      
+      router-link(to="/map/index") 地图                                                      
 </template>
 
 <script>
@@ -15,7 +15,8 @@ export default {};
 </script>
 
 <style lang="stylus" scoped>
-.menu-list
-  display flex
-  flex-direction column
+.menu-list {
+  display: flex;
+  flex-direction: column;
+}
 </style>

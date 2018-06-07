@@ -1,7 +1,7 @@
 <template lang="pug">
   div.page-join-index
     p.join-count 已有<span>2135689</span>人次参与
-    img.title(src="static/image/title.png")
+    img.title(src="~@/assets/image/title.png")
     p.subtitle 输入你想了解的那一天
     div.form
       select.selectYear(v-model="date.year" placeholder="null")
@@ -72,83 +72,116 @@ export default {
 </script>
 
 <style lang="stylus">
-.page-join-index
-  display flex
-  flex-direction column
-  align-items center
-  justify-content flex-start !important
-  height 100vh
-  background url('~@/assets//image/history_bg_home.png') center center no-repeat
-  background-size cover
-  select
-    overflow hidden !important
-  .title
-    margin-top 4vh
-    width 80vw
-  .subtitle
-    color black
-    font-size 2rem
-    font-weight 600
-    margin 2rem 0
-  .select
-    unset all
-  .form
-    display flex
-    align-items center
-    justify-content space-around
-    font-size 2rem
-    font-weight 600
-    width 80vw
-  .form-box
-    display flex
-    align-items center
-  .join-count
-    position absolute
-    top 4vh
-    font-size 2.5rem
-    color black
-    font-weight 600
-    span
-      font-size 4rem
-      font-weight 600
-      color #E60012
-  .button4
-    border none
-    padding 1.2vw 5vw
-    font-size 2rem  
-    background url('~@/assets//image/button_blue_4.png') center center no-repeat
-    background-size cover
-    text-align center
-    color white
-  .selectYear
-    border none
-    padding 2vw 4.2vw
-    background url('~@/assets//image/select_4.png') center center no-repeat
-    background-size cover
-    font-size 2rem
-    text-align center
-  display flex
-  align-items center
-  justify-content center
-.selectMonth
-  border none
-  padding 2vw 1.6vw
-  background url('~@/assets//image/select_2.png') center center no-repeat
-  background-size cover
-  font-size 2rem
-  text-align center
-  display flex
-  align-items center
-  justify-content center
-.selectType
-  border none
-  padding 2vw 6.5vw
-  background url('~@/assets//image/select_arrow.png') center center no-repeat
-  background-size cover
-  font-size 2rem
-  text-align center
-  display flex
-  align-items center
-  justify-content center
+.page-join-index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start !important;
+  height: 100vh;
+  background: url('~@/assets//image/history_bg_home.png') center center no-repeat;
+  background-size: cover;
+
+  select {
+    overflow: hidden !important;
+  }
+
+  .title {
+    width: 80vw;
+  }
+
+  .subtitle {
+    color: black;
+    font-size: 2vw;
+    font-weight: 600;
+    margin: 2vw 0 2vw -600px;
+  }
+
+  .select {
+    unset: all;
+  }
+
+  .form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 2rem;
+    font-weight: 600;
+    width: 80vw;
+  }
+
+  .form-box {
+    display: flex;
+    align-items: center;
+  }
+
+  .join-count {
+    position: absolute;
+    top: 4vh;
+    font-size: 2vw;
+    color: black;
+    font-weight: 600;
+
+    span {
+      font-size: 3vw;
+      font-weight: 600;
+      color: #E60012;
+    }
+  }
+
+  .button4 {
+    border: none;
+    width: 16vw;
+    height: 4.4vw;
+    text-align-last: center;
+    font-size: 2rem;
+    background: url('~@/assets//image/button_blue_4.png') center center no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: white;
+  }
+
+  .selectYear {
+    border: none;
+    width: 10vw;
+    height: 4.4vw;
+    text-align-last: center;
+    background: url('~@/assets//image/select_4.png') center center no-repeat;
+    background-size: cover;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectMonth {
+  border: none;
+  text-align-last: center;
+  width: 4.9vw;
+  height: 4.4vw;
+  background: url('~@/assets//image/select_2.png') center center no-repeat;
+  background-size: cover;
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectType {
+  border: none;
+  width: 15vw;
+  height: 4.4vw;
+  text-align-last: center;
+  background: url('~@/assets//image/select_arrow.png') center center no-repeat;
+  background-size: cover;
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 

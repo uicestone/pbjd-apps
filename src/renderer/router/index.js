@@ -4,8 +4,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: "/home",
       name: "home",
       component: require("@/views/home").default
@@ -19,8 +18,7 @@ export default new Router({
       path: "/movie",
       name: "movie",
       component: require("@/views/movie/root").default,
-      children: [
-        {
+      children: [{
           path: "index",
           name: "movieIndex",
           component: require("@/views/movie/index").default
@@ -36,8 +34,7 @@ export default new Router({
       path: "/motto",
       name: "motto",
       component: require("@/views/motto/root").default,
-      children: [
-        {
+      children: [{
           path: "index",
           name: "mottoIndex",
           component: require("@/views/motto/index").default
@@ -58,8 +55,7 @@ export default new Router({
       path: "/speak",
       name: "speak",
       component: require("@/views/speak/root").default,
-      children: [
-        {
+      children: [{
           path: "index",
           name: "speakIndex",
           component: require("@/views/speak/index").default
@@ -76,8 +72,7 @@ export default new Router({
       path: "/join",
       name: "join",
       component: require("@/views/join/root").default,
-      children: [
-        {
+      children: [{
           path: "index",
           name: "joinIndex",
           component: require("@/views/join/index").default
@@ -93,7 +88,18 @@ export default new Router({
     {
       path: "/map",
       name: "map",
-      component: require("@/views/map").default
+      component: require("@/views/map/root").default,
+      children: [{
+          path: "index",
+          name: "mapIndex",
+          component: require("@/views/map/index").default
+        },
+        {
+          path: "detail",
+          name: "mapDetail",
+          component: require("@/views/map/detail").default
+        }
+      ]
     },
     {
       path: "*",

@@ -55,7 +55,7 @@ export default {
       }
     },
     play() {
-      if(!this.RecordSuccess || this.isRecord) return;
+      if (!this.RecordSuccess || this.isRecord) return;
       const { audio, video } = this.$refs;
       video.currentTime = 0;
       video.play();
@@ -102,10 +102,10 @@ export default {
     div.main-title 红色电影配音
     div.content
       div
-        div 选择片段
-          Select(v-model="currentIndex"  style="width:200px")
-            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
-        video(controls ref="video" :src="currentVideo.url")
+        div.selectGrop 选择片段
+          select.select(v-model="currentIndex")
+            option.option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
+        video.video( ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         img.record(@click="record" src="~@/assets/image/button_record.png")
@@ -121,35 +121,73 @@ export default {
 
 
 <style lang="stylus" scoped>
-.page-speak-index
-  height 100vh
-  background url('~@/assets//image/sound_bg.png') no-repeat
-  background-size cover
-  padding 1rem 0
-.content
-  height 65vh
-  display flex
-  align-content center
-  justify-content space-around
-  padding 1rem 0
-.hidden
-  display none
-.button-group
-  display flex
-  justify-content center
-  flex-direction column
-.upload
-  display flex
-  align-items center
-.button4
-  border none
-  color white
-  padding .75vw 4.5vw
-  background url('~@/assets//image/button_blue_4.png') center center no-repeat
-  background-size cover
-  font-size 3rem
-  text-align center
-.record,.play
-  margin 2vw 0
+.page-speak-index {
+  height: 100vh;
+  background: url('~@/assets//image/sound_bg.png') no-repeat;
+  background-size: cover;
+  padding: 1rem 0;
+}
 
+.content {
+  height: 65vh;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.hidden {
+  display: none;
+}
+
+.video {
+  width: 40vw;
+}
+
+.selectGrop {
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2vw 0;
+
+  .select {
+    flex: 1;
+    text-align: center;
+    margin: 0 0 0 20px;
+    padding: 0 0 0 15px;
+    font-weight: 600;
+    font-size: 1.4vw;
+    border: none;
+    height: 6.5vh;
+    background: url('~@/assets//image/select.png') center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.upload {
+  display: flex;
+  align-items: center;
+}
+
+.button4 {
+  border: none;
+  color: white;
+  padding: 0.75vw 4.5vw;
+  background: url('~@/assets//image/button_blue_4.png') center center no-repeat;
+  background-size: cover;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.record, .play {
+  margin: 2vw 0;
+}
 </style>

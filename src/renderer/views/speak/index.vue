@@ -2,6 +2,7 @@
 export default {
   data() {
     return {
+      playing: false,
       recorder: null,
       isRecord: false,
       RecordSuccess: false,
@@ -17,13 +18,17 @@ export default {
     };
   },
   computed: {
+    poster() {
+      return this.playing
+        ? "static/images/music_bg_play.png"
+        : "static/images/music_bg.png";
+    },
     currentVideo() {
       return this.videos[this.currentIndex] || {};
     }
   },
   mounted() {
     this.init();
-    this.currentIndex = "1";
   },
   methods: {
     record() {
@@ -32,8 +37,10 @@ export default {
       video.currentTime = 0;
       this.isRecord = !isRecord;
       this.RecordSuccess = false;
+
       if (!isRecord) {
         this.audioUrl = null;
+        this.playing = true;
         this.recorder.start();
         video.play();
       }
@@ -41,10 +48,12 @@ export default {
         this.recorder.stop();
         video.pause();
         this.RecordSuccess = true;
+        this.playing = false;
       }
     },
     play() {
       if (!this.RecordSuccess || this.isRecord) return;
+      this.playing = true;
       const { audio, video } = this.$refs;
       video.currentTime = 0;
       video.play();
@@ -91,10 +100,10 @@ export default {
     div.main-title 我要对党说  
     div.content
       div
-        div 选择背景音乐
-          Select(v-model="currentIndex"  style="width:200px")
-            Option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
-        video.video(poster="~@/assets/image/music_bg_play.png" controls ref="video" :src="currentVideo.url")
+        div.selectGrop 选择背景音乐
+          select.select(v-model="currentIndex")
+            option.option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
+        video.video(:poster="poster" ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         img.record(@click="record" src="~@/assets/image/button_record.png")
@@ -109,42 +118,82 @@ export default {
 
 
 <style lang="stylus" scoped>
-.page-speak-index
-  height 100vh
-  background url('~@/assets//image/sound_bg.png') no-repeat
-  background-size cover
-  padding 1rem 0
-.content
-  height 65vh
-  display flex
-  flex 1
-  align-content center
-  justify-content space-around
-  padding 1rem 0
-.video
-  width 40vw
-.hidden
-  display none
-.button-group
-  display flex
-  justify-content center
-  flex-direction column
-.upload
-  display flex
-  align-items center
-.button4
-  border none
-  color white
-  padding 0.75vw 4.5vw
-  background url('~@/assets//image/button_blue_4.png') center center no-repeat
-  background-size cover
-  font-size 3rem
-  text-align center
-.logo
-  position absolute
-  width 20vw
-  right 10px
-  top 10px
-.record, .play
-  margin 2vw 0
+.page-speak-index {
+  height: 100vh;
+  background: url('~@/assets//image/sound_bg.png') no-repeat;
+  background-size: cover;
+  padding: 1rem 0;
+}
+
+.content {
+  height: 65vh;
+  display: flex;
+  flex: 1;
+  align-content: center;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.video {
+  width: 40vw;
+}
+
+.hidden {
+  display: none;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.selectGrop {
+  font-size: 1.2vw;
+  font-weight: 600;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2vw 0;
+
+  .select {
+    flex: 1;
+    text-align: center;
+    margin: 0 0 0 20px;
+    padding: 0 0 0 15px;
+    font-weight: 600;
+    font-size: 1.4vw;
+    border: none;
+    height: 6vh;
+    background: url('~@/assets//image/select.png') center center no-repeat;
+    background-size: contain;
+  }
+}
+
+.upload {
+  display: flex;
+  align-items: center;
+}
+
+.button4 {
+  border: none;
+  color: white;
+  padding: 0.75vw 4.5vw;
+  background: url('~@/assets//image/button_blue_4.png') center center no-repeat;
+  background-size: cover;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  width: 20vw;
+  right: 10px;
+  top: 10px;
+}
+
+.record, .play {
+  margin: 2vw 0;
+}
 </style>

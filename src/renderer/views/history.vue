@@ -91,7 +91,7 @@ export default {
           img.icon-arrow(src="~@/assets/image/arrow_left.png")
           span 上一页
         div
-          span.count(v-for="(value,index) in users" @click="currentIndex = index", :class="{'count-active': index == currentIndex }") ·
+          div.count(v-for="(value,index) in users" @click="currentIndex = index", :class="{'count-active': index == currentIndex }") 
         p(@click="next()") 
           span 下一页         
           img.icon-arrow(src="~@/assets/image/arrow_right.png")
@@ -100,71 +100,108 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
-.page-history-index
-  height 100vh
-  background url('~@/assets/image/sound_bg.png') no-repeat
-  background-size cover
-  padding 1rem 0
-.user-list
-  display flex
-  justify-content center
-  .list-item
-    width 40vw
-    .user-item
-      font-size 2vw
-      font-weight 600
-      display flex
-      justify-content space-between
-      align-items center
-      margin 8px 16px
-      padding 10px 20px 10px 0
-      border-bottom solid 2px rgba(152, 130, 52, 1)
-      background rgba(227, 188, 52, 1)
-      .name
-        color black
-        font-weight 400
-        margin-left 20px
-      .index
-        padding 12px
-        color white
-        background rgba(203, 172, 56, 1)
-.pagination
-  margin 0 auto
-  display flex
-  width 80vw
-  font-size 2vw
-  justify-content space-between
-  align-items center
-  p
-    display flex
-    align-items center
-.menu-list
-  margin 20px auto 10px
-  .button5
-    margin 0 40px
-.content
-  height 65vh
-  display flex
-  flex-direction column
-.button5
-  border none
-  color white
-  padding 0.5vw 3vw
-  background url('~@/assets//image/button_blue_5.png') no-repeat
-  background-size cover
-  font-size 2rem
-  font-weight 600
-  text-align center
-.count
-  font-size 2vw
-  color rgba(245, 185, 155, 1)
-.count-active
-  color rgba(235, 90, 50, 1)
-.icon-arrow
-  margin 0 5px
-  width 15px
-  height 15px
-.icon-arrow-blue
-  width 20px
-  height 20px
+.page-history-index {
+  height: 100vh;
+  background: url('~@/assets/image/sound_bg.png') no-repeat;
+  background-size: cover;
+  padding: 1rem 0;
+}
+
+.user-list {
+  display: flex;
+  justify-content: center;
+
+  .list-item {
+    width: 40vw;
+
+    .user-item {
+      font-size: 2vw;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 16px;
+      padding: 10px 20px 10px 0;
+      border-bottom: solid 3px rgba(152, 130, 52, 1);
+      background: rgba(227, 188, 52, 1);
+
+      .name {
+        color: black;
+        font-weight: 400;
+        margin-left: 20px;
+      }
+
+      .index {
+        padding: 16px;
+        color: white;
+        background: rgba(203, 172, 56, 1);
+      }
+    }
+  }
+}
+
+.pagination {
+  margin: 30px auto 0;
+  display: flex;
+  width: 80vw;
+  font-size: 2vw;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.menu-list {
+  margin: 20px auto 10px;
+
+  .button5 {
+    margin: 0 40px;
+  }
+}
+
+.content {
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.button5 {
+  border: none;
+  color: white;
+  width: 15vw;
+  height: 3.8vw;
+  background: url('~@/assets//image/button_blue_5.png') no-repeat;
+  background-size: cover;
+  font-size: 1.6vw;
+  font-weight: 400;
+  text-align: center;
+}
+
+.count {
+  font-size: 2vw;
+  background: rgba(245, 185, 155, 1);
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.count-active {
+  background: rgba(235, 90, 50, 1);
+}
+
+.icon-arrow {
+  margin: 0 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.icon-arrow-blue {
+  width: 30px;
+  height: 30px;
+}
 </style>
