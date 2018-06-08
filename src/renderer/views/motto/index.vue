@@ -90,97 +90,70 @@ export default {
 </template>
 
 <style lang="stylus" scoped>
-.page-motto-index {
-  height: 100vh;
-  background: url('~@/assets//image/sound_bg.png') no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
-}
-
-.content {
-  height: 60vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.content p {
-  margin-bottom: 10px;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.capture {
-  display: flex;
-  align-items: center;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
-  width: 35vw;
-  font-size: 1.5vw;
-  font-weight: 600;
-  color: black;
-}
-
-.motto-preview-photo {
-  width: 16vw;
-  height: 16vh;
-  transform: rotate(-8deg);
-  position: absolute;
-  left: 28vw;
-  top: 13vw;
-}
-
-.motto-preview-text {
-  width: 15vw;
-  font-size: 2vw;
-  font-family: Guoxiang;
-  position: absolute;
-  left: 10vw;
-  top: 22vh;
-  word-wrap: break-word;
-  color: #604C3F;
-}
-
-.motto-preview-name {
-  font-size: 1.5vw;
-  font-family: Guoxiang;
-  position: absolute;
-  left: 18vw;
-  top: 20vw;
-}
-
-.motto-content {
-  width: 55vw;
-  height: 100%;
-  background: url('~@/assets//image/book.png') no-repeat;
-  background-size: cover;
-}
-
-.input-motto {
-  width: 100%;
-  height: 15vh;
-  padding: 20px;
-}
-
-.input-name {
-  width: 100%;
-  height: 8vh;
-  padding: 20px;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-}
-
-.snapshot {
-  height: 100%;
-}
+.page-motto-index
+  height 100vh
+  background url('~@/assets//image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+.content
+  height 60vh
+  position relative
+  display flex
+  align-items center
+.content p
+  margin-bottom 10px
+.hidden
+  visibility hidden
+.capture
+  display flex
+  align-items center
+.form
+  display flex
+  flex-direction column
+  justify-content space-around
+  height 100%
+  width 35vw
+  font-size 1.5vw
+  font-weight 600
+  color black
+.motto-preview-photo
+  width 16vw
+  height 16vh
+  transform rotate(-8deg)
+  position absolute
+  left 30vw
+  top 15vw
+.motto-preview-text
+  width 15vw
+  font-size 2vw
+  font-family Guoxiang
+  position absolute
+  left 10vw
+  top 22vh
+  word-wrap break-word
+  color #604C3F
+.motto-preview-name
+  font-size 1.5vw
+  font-family Guoxiang
+  position absolute
+  left 18vw
+  top 20vw
+.motto-content
+  width 55vw
+  height 100%
+  background url('~@/assets//image/book.png') no-repeat
+  background-size cover
+.input-motto
+  width 100%
+  height 15vh
+  padding 20px
+.input-name
+  width 100%
+  height 8vh
+  padding 20px
+.actions
+  display flex
+  align-items center
+.snapshot
+  height 100%
 </style>
