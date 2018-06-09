@@ -15,10 +15,21 @@
 
 
 <script>
+import * as request from "../../utils/request";
+
 export default {
   data() {
     return {
-      playing: false
+      playing: false,
+      videos: {
+        "1": {
+          value: "1",
+          label: "小兵张嘎",
+          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+        }
+      },
+      audioUrl: "",
+      currentIndex: "1"
     };
   },
   methods: {
@@ -30,85 +41,55 @@ export default {
     }
   },
   computed: {
-    videos: {
-      get() {
-        return this.$store.state.Movie.videos;
-      }
-    },
-    audioUrl: {
-      get() {
-        return this.$store.state.Movie.audioUrl;
-      },
-      set(audioUrl) {
-        this.$store.commit("SET_MOVIE_STATE", {
-          audioUrl
-        });
-      }
-    },
-    currentIndex: {
-      get() {
-        return this.$store.state.Movie.currentIndex;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_MOVIE_STATE", {
-          currentIndex
-        });
-      }
-    },
     currentVideo() {
       return this.videos[this.currentIndex] || {};
     }
+  },
+  async mounted() {
+    const { query } = this.$route;
+    const { id } = query;
+    let data = await request.getSpeechMove({ id });
+    console.log(data);
+    const { bgid, audioUrl } = data;
+
+    this.currentIndex = bgid;
+    this.audioUrl = audioUrl;
   }
 };
 </script>
 
 
 <style lang="stylus" scoped>
-.page-movie-detail {
-  height: 100vh;
-  background: url('~@/assets/image/sound_bg.png') no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
-}
-
-.video-container {
-  position: relative;
-}
-
-.button-play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -102px 0 0 -102px;
-}
-
-.content {
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
-  padding: 1rem 0;
-  margin: 2vw 0;
-}
-
-.hidden {
-  display: none;
-}
-
-.qrcode-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.qrcode-text {
-  font-weight: 600;
-  font-size: 1.8vw;
-  color: black;
-}
-
-.video {
-  width: 60vw;
-}
+.page-movie-detail
+  height 100vh
+  background url('~@/assets/image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+.video-container
+  position relative
+.button-play
+  position absolute
+  left 50%
+  top 50%
+  margin -102px 0 0 -102px
+.content
+  display flex
+  align-content center
+  justify-content space-around
+  padding 1rem 0
+  margin 2vw 0
+.hidden
+  display none
+.qrcode-group
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  text-align center
+.qrcode-text
+  font-weight 600
+  font-size 1.8vw
+  color black
+.video
+  width 60vw
 </style>

@@ -16,6 +16,8 @@
 
 
 <script>
+import * as request from "../../utils/request";
+
 export default {
   data() {
     return {
@@ -27,7 +29,9 @@ export default {
           url: "static/media/test.mp3"
         }
       },
-      currentIndex: "1"
+      audioUrl: "",
+      currentIndex: "1",
+      qrcodeUrl: ""
     };
   },
   methods: {
@@ -47,63 +51,57 @@ export default {
     currentVideo() {
       return this.videos[this.currentIndex] || {};
     }
+  },
+  async mounted() {
+    const { query } = this.$route;
+    const { id, qrcodeUrl } = query;
+    let data = await request.getSpeechMove({ id });
+    console.log(data);
+    const { bgid, audioUrl } = data;
+
+    this.qrcodeUrl = qrcodeUrl;
+    this.currentIndex = bgid;
+    this.audioUrl = audioUrl;
   }
 };
 </script>
 
 
 <style lang="stylus" scoped>
-.page-movie-detail {
-  height: 100vh;
-  background: url('~@/assets//image/sound_bg.png') no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
-}
-
-.content {
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
-  margin: 2vw 0;
-}
-
-.video-container {
-  position: relative;
-}
-
-.hidden {
-  display: none;
-}
-
-.button-play {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: -102px 0 0 -102px;
-}
-
-.video {
-  width: 60vw;
-}
-
-.qrcode-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.qrcode-text {
-  font-size: 1.8vw;
-  font-weight: 600;
-  color: black;
-}
-
-.logo {
-  position: absolute;
-  width: 20vw;
-  right: 10px;
-  top: 10px;
-}
+.page-movie-detail
+  height 100vh
+  background url('~@/assets//image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+.content
+  display flex
+  align-content center
+  justify-content space-around
+  margin 2vw 0
+.video-container
+  position relative
+.hidden
+  display none
+.button-play
+  position absolute
+  left 50%
+  top 50%
+  margin -102px 0 0 -102px
+.video
+  width 60vw
+.qrcode-group
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  text-align center
+.qrcode-text
+  font-size 1.8vw
+  font-weight 600
+  color black
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>

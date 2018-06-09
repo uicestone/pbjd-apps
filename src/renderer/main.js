@@ -7,6 +7,7 @@ import iView from "iview";
 import App from "./App";
 import router from "./router";
 import store from "./store";
+import "./utils/recorder.js";
 
 Vue.filter("dt", (val, format) => (val > 10 ? val : "0" + val));
 

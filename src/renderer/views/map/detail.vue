@@ -7,23 +7,30 @@
         img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
       img.menu-img-detail(v-if="currentLayer " @click="modal1 = true" src="static/images/map_button_5.png")
     div(v-if="currentData.type==0")
-      Modal(v-model="modal1" :title="currentData.title")
-        p {{currentData.content}}    
+      Modal.modal1(v-model="modal1" :title="currentData.title" )
+        p.modal1-content {{currentData.content}}    
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
-            Button(type="text") 实时连线
-            Button(type="text") 导航到此地
+            div 
+              img.modal-icon(src="~@/assets/image/map_icon_1.png")
+              span 实时连线
+            div
+              img.modal-icon(src="~@/assets/image/map_icon_2.png")
+              span 导航到此地
     div(v-if="currentData.type==1")
-      Modal(v-model="modal1" :title="currentData.title" width="750")
+      Modal.modal2(v-model="modal1" :title="currentData.title")
         div.modal2-content
           img.modal2-content-left(:src="currentData.img")
           div.modal2-content-right
-            p {{currentData.content}}    
+            p.modal2-content {{currentData.content}}    
             div.modal2-footer-right
-              Button(type="text") 实时连线
-              Button(type="text") 导航到此地
-        div.modal-footer(slot="footer")
+              div 
+                img.modal-icon(src="~@/assets/image/map_icon_1.png")
+                span 实时连线
+              div
+                img.modal-icon(src="~@/assets/image/map_icon_2.png")
+                span 导航到此地
     img.logo(src="~@/assets/image/map_title.png")
     img.back_menu(@click="back" src="~@/assets/image/map_back.png")
     
@@ -345,7 +352,7 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .map
   height 100vh
   background url('~@/assets//image/map_bg.png') center center no-repeat
@@ -360,35 +367,116 @@ export default {
   position absolute
   top 40vh
   left 10vw
-  z-index 10000
+  z-index 1000
 .menu-img
   width 25vw
   margin 10px 0
+.modal1
+  z-index 10001
+  .ivu-modal-header-inner
+    font-size 1.5vw
+    color rgb(211, 5, 32)
+    height 20px
+    display flex
+    align-items center
+    padding 0 0 0 10px
+  .ivu-modal
+    width 55vw !important
+  .ivu-modal-header
+    background white
+    border-radius 10px 10px 0 0
+  .ivu-modal-body
+    background white
+    border 1px solid rgba(255, 0, 0, 0.7)
+  .ivu-modal-footer
+    border 1px solid rgba(255, 0, 0, 0.7)
+    background rgb(247, 231, 230)
+    border-radius 0 0 10px 10px
+  .ivu-modal-content
+    background transparent
+    box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
+  .ivu-icon-ios-close-empty
+    color red
+    border-radius 2px
+    border 1px solid red
+    padding 0 8px
+    top 0
+    font-size 45px
+    line-height 30px
+  .modal1-content
+    height 600px
+    padding 3vw
+    font-size 1vw
+  .modal-footer
+    display flex
+    justify-content space-between
+    align-items center
+  .modal-footer-left
+    width 6rem
+    display flex
+    justify-content space-between
+  .modal-footer-right
+    font-size 1vw
+    display flex
+    justify-content space-between
+    div
+      display flex
+      align-items center
+      padding 0 20px
 .menu-img-detail
   width 15vw
-.modal-footer
-  display flex
-  justify-content space-between
-  align-items center
-.modal-footer-left
-  width 6rem
-  display flex
-  justify-content space-between
-.modal-footer-right
-  display flex
-  justify-content space-between
-.modal2-content
-  display flex
-  justify-content space-between
-.modal2-content-left
-  width 60%
-.modal2-content-right
-  width 35%
-  display flex
-  flex-direction column
-div.modal2-footer-right
-  display flex
-  justify-content flex-start
+.modal2
+  z-index 10001
+  .ivu-modal-header-inner
+    font-size 1.5vw
+    color rgb(211, 5, 32)
+    height 20px
+    display flex
+    align-items center
+    padding 0 0 0 10px
+  .ivu-modal-header
+    border 1px solid rgba(255, 0, 0, 0.7)
+    background white
+    border-radius 10px 10px 0 0
+  .ivu-modal-body
+    background white
+    border-radius 0 0 10px 10px
+  .ivu-modal
+    width 90vw !important
+    height 90vh
+  .modal2-content
+    height 75vh
+    padding 2vw
+    display flex
+    justify-content space-between
+    font-size 1vw
+  .ivu-modal-content
+    background transparent
+    box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
+  .modal2-content-left
+    width 60%
+  .modal2-content-right
+    width 35%
+    display flex
+    flex-direction column
+  .modal2-footer-right
+    font-size 1.2vw
+    display flex
+    justify-content flex-start
+    div
+      padding 0 20px
+      display flex
+      align-items center
+  .ivu-icon-ios-close-empty
+    color red
+    border-radius 2px
+    border 1px solid red
+    padding 0 8px
+    top 0
+    font-size 45px
+    line-height 30px
+  .ivu-modal-footer
+    display none
 .logo
   position absolute
   top 50px
@@ -400,4 +488,7 @@ div.modal2-footer-right
   right 50px
   width 150px
   z-index 10000
+.modal-icon
+  width 45px
+  margin 0 10px
 </style>

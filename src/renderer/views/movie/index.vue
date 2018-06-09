@@ -1,40 +1,32 @@
 <script>
+import * as request from "../../utils/request";
+import uuid from "uuid";
+
 export default {
   data() {
     return {
-      recorder: null,
+      rec: new Recorder(),
       isRecord: false,
       RecordSuccess: false,
-      audioUrl: ""
+      audioFile: [],
+      audioUrl: "",
+      videos: {
+        "1": {
+          value: "1",
+          label: "小兵张嘎",
+          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+        }
+      },
+      currentIndex: "1"
     };
   },
   computed: {
-    videos: {
-      get() {
-        return this.$store.state.Movie.videos;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_MOVIE_STATE", {
-          currentIndex
-        });
-      }
-    },
-    currentIndex: {
-      get() {
-        return this.$store.state.Movie.currentIndex;
-      },
-      set(currentIndex) {
-        this.$store.commit("SET_MOVIE_STATE", {
-          currentIndex
-        });
-      }
-    },
     currentVideo() {
       return this.videos[this.currentIndex] || {};
     }
   },
   mounted() {
-    this.init();
+    this.rec.open();
   },
   methods: {
     record() {
@@ -45,11 +37,16 @@ export default {
       this.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
-        this.recorder.start();
+        this.rec.start();
         video.play();
       }
       if (isRecord) {
-        this.recorder.stop();
+        this.rec.stop(blob => {
+          this.audioUrl = URL.createObjectURL(blob);
+          let file = new File([blob], `${uuid.v1()}.mp3`);
+          this.audioFile = file;
+          this.rec.close();
+        });
         video.pause();
         this.RecordSuccess = true;
       }
@@ -61,37 +58,15 @@ export default {
       video.play();
       audio.play();
     },
-    upload() {
-      this.$router.push({ name: "movieDetail" });
-    },
-    init() {
-      let options = {};
-      if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
-        options = { mimeType: "video/webm; codecs=vp9" };
-      } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) {
-        options = { mimeType: "video/webm; codecs=vp8" };
-      } else {
-        // ...
+    async upload() {
+      const data = await request.UploadSpeechMovie({
+        bgid: this.currentVideo.value,
+        audio: this.audioFile
+      });
+      const { id, qrcodeUrl } = data;
+      if (id) {
+        this.$router.push({ name: "movieDetail", query: { id, qrcodeUrl } });
       }
-
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(stream => {
-          const chunks = [];
-          const recorder = new MediaRecorder(stream, options);
-          recorder.ondataavailable = e => {
-            chunks.push(e.data);
-            if (recorder.state == "inactive") {
-              const blob = new Blob(chunks, { type: "audio/webm" });
-              const url = URL.createObjectURL(blob);
-              this.audioUrl = url;
-            }
-          };
-          this.recorder = recorder;
-        })
-        .catch(e => {
-          console.log(`navigator.getUserMedia error: ${e}`);
-        });
     }
   }
 };
@@ -121,73 +96,54 @@ export default {
 
 
 <style lang="stylus" scoped>
-.page-speak-index {
-  height: 100vh;
-  background: url('~@/assets//image/sound_bg.png') no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
-}
-
-.content {
-  height: 65vh;
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
-}
-
-.hidden {
-  display: none;
-}
-
-.video {
-  width: 40vw;
-}
-
-.selectGrop {
-  font-size: 1.2vw;
-  font-weight: 600;
-  color: black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 2vw 0;
-
-  .select {
-    flex: 1;
-    text-align: center;
-    margin: 0 0 0 20px;
-    padding: 0 0 0 15px;
-    font-weight: 600;
-    font-size: 1.4vw;
-    border: none;
-    height: 6.5vh;
-    background: url('~@/assets//image/select.png') center center no-repeat;
-    background-size: contain;
-  }
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.upload {
-  display: flex;
-  align-items: center;
-}
-
-.button4 {
-  border: none;
-  color: white;
-  padding: 0.75vw 4.5vw;
-  background: url('~@/assets//image/button_blue_4.png') center center no-repeat;
-  background-size: cover;
-  font-size: 3rem;
-  text-align: center;
-}
-
-.record, .play {
-  margin: 2vw 0;
-}
+.page-speak-index
+  height 100vh
+  background url('~@/assets//image/sound_bg.png') no-repeat
+  background-size cover
+  padding 1rem 0
+.content
+  height 65vh
+  display flex
+  align-content center
+  justify-content space-around
+.hidden
+  display none
+.video
+  width 40vw
+.selectGrop
+  font-size 1.2vw
+  font-weight 600
+  color black
+  display flex
+  justify-content space-between
+  align-items center
+  margin 2vw 0
+  .select
+    flex 1
+    text-align center
+    margin 0 0 0 20px
+    padding 0 0 0 15px
+    font-weight 600
+    font-size 1.4vw
+    border none
+    height 6.5vh
+    background url('~@/assets//image/select.png') center center no-repeat
+    background-size contain
+.button-group
+  display flex
+  justify-content center
+  flex-direction column
+.upload
+  display flex
+  align-items center
+.button4
+  border none
+  color white
+  padding 0.75vw 4.5vw
+  background url('~@/assets//image/button_blue_4.png') center center no-repeat
+  background-size cover
+  font-size 3rem
+  text-align center
+.record, .play
+  margin 2vw 0
 </style>

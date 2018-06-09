@@ -1,42 +1,17 @@
 <script>
 import * as request from "../../utils/request";
+import uuid from "uuid";
 
 export default {
   data() {
-    return {};
+    return {
+      name: "",
+      motto: "",
+      photoUrl: "",
+      photoFile: ""
+    };
   },
-  computed: {
-    name: {
-      get() {
-        return this.$store.state.Motto.name;
-      },
-      set(val) {
-        this.$store.commit("SET_MOTO_STATE", {
-          name: val
-        });
-      }
-    },
-    motto: {
-      get() {
-        return this.$store.state.Motto.motto;
-      },
-      set(val) {
-        this.$store.commit("SET_MOTO_STATE", {
-          motto: val
-        });
-      }
-    },
-    photoUrl: {
-      get() {
-        return this.$store.state.Motto.photoUrl;
-      },
-      set(val) {
-        this.$store.commit("SET_MOTO_STATE", {
-          photoUrl: val
-        });
-      }
-    }
-  },
+  computed: {},
   methods: {
     snapshot() {
       const { video, canvas } = this.$refs;
@@ -45,15 +20,23 @@ export default {
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
+
       this.photoUrl = canvas.toDataURL("image/png");
+      canvas.toBlob(blob => {
+        const file = new File([blob], `${uuid.v1()}.png`);
+        this.photoFile = file;
+      });
     },
     async upload() {
       const data = await request.UploadMotto({
         text: this.motto,
-        image: this.photoUrl,
-        name: this.name
+        image: this.photoFile,
+        authorName: this.name
       });
-      // this.$router.push({ name: "mottoDetail" });
+      const { id, qrcodeUrl } = data;
+      if (id) {
+        this.$router.push({ name: "mottoDetail", query: { id, qrcodeUrl } });
+      }
     }
   },
   mounted() {
@@ -103,7 +86,7 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 60vh
+  height 70vh
   position relative
   display flex
   align-items center
@@ -118,7 +101,7 @@ export default {
   display flex
   flex-direction column
   justify-content space-around
-  height 100%
+  height 80%
   width 35vw
   font-size 1.5vw
   font-weight 600
@@ -146,6 +129,7 @@ export default {
   left 18vw
   top 20vw
 .motto-content
+  transform scale(1.1)
   width 55vw
   height 100%
   background url('~@/assets//image/book.png') no-repeat

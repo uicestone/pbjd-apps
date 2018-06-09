@@ -1,5 +1,11 @@
 import config from "../config";
 
+export const $ = (obj, cb) => {
+  for (let [key, val] of Object.entries(obj)) {
+    cb(key, val)
+  }
+}
+
 const parseJson = async (res) => {
   try {
     let data = await res.json();
@@ -11,6 +17,7 @@ const parseJson = async (res) => {
 
 export const request = (url, options) => {
   url = `${config.apiRoot}${url}`;
+  // console.log(options)
   return fetch(url, options).then(parseJson);
 }
 
@@ -36,42 +43,58 @@ export const getCpcReview = ({
   })
 }
 
-export const UploadSpeech = ({
-  type,
-  uri
-}) => {
-  let fromData = new FormData()
-  fromData.append("data", {
-    type,
-    bgid: "1",
-    audio: uri
+export const UploadSpeechTalk = (datas) => {
+
+  let formData = new FormData()
+  $(datas, (key, val) => {
+    formData.append(key, val)
   })
-  return request(`speeches/${type}`, {
+  return request(`speeches/talk`, {
     method: "POST",
-    headers: {
-      'Content-Type': "multipart/from-data"
-    },
-    body: fromData
+    body: formData
   })
 }
 
-export const UploadMotto = ({
-  text,
-  image,
-  authorName
-}) => {
-  let fromData = new FormData()
-  fromData.append("data", {
-    text,
-    image,
-    authorName
+export const UploadSpeechMovie = (datas) => {
+
+  let formData = new FormData()
+  $(datas, (key, val) => {
+    formData.append(key, val)
+  })
+  return request(`speeches/movie`, {
+    method: "POST",
+    body: formData
+  })
+}
+
+export const getSpeechMove = (datas) => {
+  const {
+    id
+  } = datas
+  return request(`speeches/${id}`, {
+    method: "GET"
+  })
+}
+
+
+
+export const UploadMotto = (datas) => {
+  let formData = new FormData()
+  $(datas, (key, val) => {
+    formData.append(key, val)
   })
   return request(`mottoes`, {
     method: "POST",
-    headers: {
-      'Content-Type': "multipart/from-data"
-    },
-    body: fromData
+    body: formData
+  })
+}
+
+export const getMotto = datas => {
+  const {
+    id
+  } = datas
+  return request(`mottoes/${id}`, {
+    method: "GET"
   })
 }
 

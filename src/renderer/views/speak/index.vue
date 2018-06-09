@@ -1,14 +1,16 @@
 <script>
 import * as request from "../../utils/request";
+import uuid from "uuid";
 
 export default {
   data() {
     return {
       playing: false,
-      recorder: null,
+      rec: new Recorder(),
       isRecord: false,
       RecordSuccess: false,
       audioUrl: "",
+      audioFile: "",
       videos: {
         "1": {
           value: "1",
@@ -30,27 +32,29 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    this.rec.open();
   },
   methods: {
     record() {
       const { video } = this.$refs;
       const isRecord = this.isRecord;
       video.currentTime = 0;
-      this.isRecord = !isRecord;
       this.RecordSuccess = false;
-
+      this.isRecord = !isRecord;
       if (!isRecord) {
         this.audioUrl = null;
-        this.playing = true;
-        this.recorder.start();
+        this.rec.start();
         video.play();
       }
       if (isRecord) {
-        this.recorder.stop();
+        this.rec.stop(blob => {
+          this.audioUrl = URL.createObjectURL(blob);
+          let file = new File([blob], `${uuid.v1()}.mp3`);
+          this.audioFile = file;
+          this.rec.close();
+        });
         video.pause();
         this.RecordSuccess = true;
-        this.playing = false;
       }
     },
     play() {
@@ -62,41 +66,15 @@ export default {
       audio.play();
     },
     async upload() {
-      if (!this.audioUrl) return;
-      const data = await request.UploadSpeech({
+      const data = await request.UploadSpeechTalk({
         type: "talk",
-        uri: this.audioUrl
+        bgid: this.currentVideo.value,
+        audio: this.audioFile
       });
-      // this.$router.push({ name: "speakDetail" });
-    },
-    init() {
-      let options = {};
-      if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
-        options = { mimeType: "video/webm; codecs=vp9" };
-      } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) {
-        options = { mimeType: "video/webm; codecs=vp8" };
-      } else {
-        // ...
+      const { id, qrcodeUrl } = data;
+      if (id) {
+        this.$router.push({ name: "speakDetail", query: { id, qrcodeUrl } });
       }
-
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(stream => {
-          const chunks = [];
-          const recorder = new MediaRecorder(stream, options);
-          recorder.ondataavailable = e => {
-            chunks.push(e.data);
-            if (recorder.state == "inactive") {
-              const blob = new Blob(chunks, { type: "audio/webm" });
-              const url = URL.createObjectURL(blob);
-              this.audioUrl = url;
-            }
-          };
-          this.recorder = recorder;
-        })
-        .catch(e => {
-          console.log(`navigator.getUserMedia error: ${e}`);
-        });
     }
   }
 };
