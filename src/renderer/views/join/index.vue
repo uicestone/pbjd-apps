@@ -27,29 +27,31 @@ export default {
     return {
       dateTypes: [
         {
-          value: "birthday",
+          value: "birth",
           label: "生日"
         },
         {
-          value: "memorialday",
+          value: "memo",
           label: "纪念日"
         },
         {
-          value: "partyday",
+          value: "enroll",
           label: "入党日"
         }
       ],
-      yearList: new Array(98).fill(0).map((k, i) => ({ value: i + 1921 })),
-      monthList: new Array(12).fill(0).map((k, i) => ({ value: i + 1 })),
+      yearList: new Array(98).fill(0).map((k, i) => ({ value: `${i + 1921}` })),
+      monthList: new Array(12)
+        .fill(0)
+        .map((k, i) => ({ value: i >= 10 ? `${i + 1}` : `0${i}` })),
       dayList: new Array(30).fill(0).map((k, i) => ({
-        value: i + 1
+        value: i >= 10 ? `${i + 1}` : `0${i}`
       })),
       date: {
         date: "",
-        type: "partyday",
-        year: 1980,
-        month: 1,
-        day: 1
+        type: "enroll",
+        year: `1980`,
+        month: `01`,
+        day: `01`
       }
     };
   },
@@ -72,116 +74,91 @@ export default {
 </script>
 
 <style lang="stylus">
-.page-join-index {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start !important;
-  height: 100vh;
-  background: url('~@/assets//image/history_bg_home.png') center center no-repeat;
-  background-size: cover;
-
-  select {
-    overflow: hidden !important;
-  }
-
-  .title {
-    width: 80vw;
-  }
-
-  .subtitle {
-    color: black;
-    font-size: 2vw;
-    font-weight: 600;
-    margin: 2vw 0 2vw -600px;
-  }
-
-  .select {
-    unset: all;
-  }
-
-  .form {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    font-size: 2rem;
-    font-weight: 600;
-    width: 80vw;
-  }
-
-  .form-box {
-    display: flex;
-    align-items: center;
-  }
-
-  .join-count {
-    position: absolute;
-    top: 4vh;
-    font-size: 2vw;
-    color: black;
-    font-weight: 600;
-
-    span {
-      font-size: 3vw;
-      font-weight: 600;
-      color: #E60012;
-    }
-  }
-
-  .button4 {
-    border: none;
-    width: 16vw;
-    height: 4.4vw;
-    text-align-last: center;
-    font-size: 2rem;
-    background: url('~@/assets//image/button_blue_4.png') center center no-repeat;
-    background-size: cover;
-    text-align: center;
-    color: white;
-  }
-
-  .selectYear {
-    border: none;
-    width: 10vw;
-    height: 4.4vw;
-    text-align-last: center;
-    background: url('~@/assets//image/select_4.png') center center no-repeat;
-    background-size: cover;
-    font-size: 2rem;
-    text-align: center;
-  }
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.selectMonth {
-  border: none;
-  text-align-last: center;
-  width: 4.9vw;
-  height: 4.4vw;
-  background: url('~@/assets//image/select_2.png') center center no-repeat;
-  background-size: cover;
-  font-size: 2rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.selectType {
-  border: none;
-  width: 15vw;
-  height: 4.4vw;
-  text-align-last: center;
-  background: url('~@/assets//image/select_arrow.png') center center no-repeat;
-  background-size: cover;
-  font-size: 2rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.page-join-index
+  display flex
+  flex-direction column
+  align-items center
+  justify-content flex-start !important
+  height 100vh
+  background url('~@/assets//image/history_bg_home.png') center center no-repeat
+  background-size cover
+  select
+    overflow hidden !important
+  .title
+    width 80vw
+  .subtitle
+    color black
+    font-size 2vw
+    font-weight 600
+    margin 2vw 0 2vw -600px
+  .select
+    unset all
+  .form
+    display flex
+    align-items center
+    justify-content space-around
+    font-size 1.5vw
+    color black
+    font-weight 600
+    width 80vw
+  .form-box
+    display flex
+    align-items center
+  .join-count
+    position absolute
+    top 4vh
+    font-size 2vw
+    color black
+    font-weight 600
+    span
+      font-size 3vw
+      font-weight 600
+      color #E60012
+  .button4
+    border none
+    width 16vw
+    height 4.4vw
+    text-align-last center
+    font-size 2vw
+    background url('~@/assets//image/button_blue_4.png') center center no-repeat
+    background-size cover
+    text-align center
+    color white
+  .selectYear
+    border none
+    width 10vw
+    height 4.4vw
+    text-align-last center
+    background url('~@/assets//image/select_4.png') center center no-repeat
+    background-size cover
+    font-size 1.5vw
+    text-align center
+  display flex
+  align-items center
+  justify-content center
+.selectMonth
+  border none
+  text-align-last center
+  width 4.9vw
+  height 4.4vw
+  background url('~@/assets//image/select_2.png') center center no-repeat
+  background-size cover
+  font-size 1.5vw
+  text-align center
+  display flex
+  align-items center
+  justify-content center
+.selectType
+  border none
+  width 15vw
+  height 4.4vw
+  text-indent -40px
+  text-align-last center
+  background url('~@/assets//image/select_arrow.png') center center no-repeat
+  background-size cover
+  font-size 2vw
+  display flex
+  align-items center
+  justify-content center
 </style>
 

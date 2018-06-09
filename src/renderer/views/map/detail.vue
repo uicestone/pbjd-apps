@@ -35,6 +35,7 @@ import geoJson from "@/assets/json/geo.json";
 import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
 global.L = L;
+import { EventEmitter } from "events";
 
 export default {
   data() {
@@ -86,78 +87,68 @@ export default {
           layer: L.layerGroup([]).setZIndex(10)
         }
       },
-      defaultLayer: 0,
+      cachedOptionLayer: "0",
       currentOptionLayer: "",
       currentLayer: "",
       customDatas: {
         华亭镇: {
-          type: "type2",
-          layer: 4
+          style: {
+            fillColor: "rgb(214,124,90)"
+          }
         },
         徐行镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(218,161,118)"
           }
         },
         南翔镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(190,190,213)"
           }
         },
         真新街道: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(129,131,152)"
           }
         },
         外冈镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(246,229,177)"
           }
         },
         江桥镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(158,157,175)"
           }
         },
         安亭镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(250,203,135)"
           }
         },
         马陆镇: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(233,192,102)"
           }
         },
         新成路街道: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(121,188,112)"
           }
         },
         嘉定镇街道: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(82,161,80)"
           }
         },
         菊园新区管委会: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(235,194,162)"
           }
         },
         嘉定工业区: {
-          type: "type2",
           style: {
-            fillColor: "#000"
+            fillColor: "rgb(177,210,165)"
           }
         }
       },
@@ -179,7 +170,8 @@ export default {
     };
   },
   watch: {
-    currentOptionLayer(val) {
+    currentOptionLayer(val, prev) {
+      this.cachedOptionLayer = prev;
       this.resetLayers(this.OptionLayers);
       if (val) {
         const layer = this.OptionLayers[val].layer;
@@ -266,7 +258,7 @@ export default {
         },
         this.config.zoom
       );
-      this.currentOptionLayer = 0;
+      this.currentOptionLayer = this.cachedOptionLayer;
       this.currentLayer = "";
     },
     resetLayers(layers) {
@@ -281,152 +273,131 @@ export default {
       if (data) {
         data.layer = layer;
         const { type } = data || {};
-        if (type == "type2") {
-          layer.on({
-            // mouseover: this.highlightFeature,
-            // mouseout: this.resetHighlight,
-            click: e => this.zoomToFeature(e, { Name })
-          });
-        }
+        // if (type == "type2") {
+        layer.on({
+          // mouseover: this.highlightFeature,
+          // mouseout: this.resetHighlight,
+          click: e => this.zoomToFeature(e, { Name })
+        });
+        // }
       }
     }
   },
   mounted() {
     let layers = Object.values(this.OptionLayers);
     let features = Object.values(this.features);
-    // let Icon = L.icon({
-    //   iconUrl: "a.png",
-    //   iconSize: [50, 50]
-    // });
-    // L.marker([31.413630999999999, 121.24348000000001], {
-    //   icon: Icon
-    // }).addTo(this.map);
-    this.geo.features.forEach(feature => {
-      let coords = feature.geometry.coordinates[0];
-      const [y, x] = coords[Math.floor(Math.random() * coords.length)];
-      if (!Array.isArray(x) && !Array.isArray(y)) {
-        let circle = L.circle([x, y], {
-          color: "red",
-          fillColor: "#f03",
-          fillOpacity: 1,
-          radius: 500
-        });
-        this.features.type1.addLayer(circle);
-        layers[Math.floor(Math.random() * layers.length)].layer.addLayer(
-          circle
-        );
-      }
+
+    let icon = L.icon({
+      iconUrl: "static/images/map_marker.png",
+      iconSize: [35, 50]
     });
 
     this.map = L.map("map", {
       center: [this.config.lat, this.config.lng],
-      zoom: this.config.zoom
+      zoom: this.config.zoom,
+      zoomControl: false,
+      attributionControl: false
     });
+
+    this.geo.features.forEach(feature => {
+      let coords = feature.geometry.coordinates[0];
+      const [y, x] = coords[Math.floor(Math.random() * coords.length)];
+      if (!Array.isArray(x) && !Array.isArray(y)) {
+        let marker = L.marker([x, y], {
+          icon
+        });
+
+        this.features.type1.addLayer(marker);
+        layers[Math.floor(Math.random() * layers.length)].layer.addLayer(
+          marker
+        );
+      }
+    });
+
+    this.map.doubleClickZoom.disable();
     const getColor = () =>
       "#" + Math.floor(Math.random() * 16777215).toString(16);
     this.geojson = L.geoJSON(this.geo.features, {
-      style: () => ({
-        color: "white",
-        fillColor: getColor(),
-        weight: 6,
-        fillOpacity: 1,
-        boxShadow: "-5px -5px 5px #888",
-        className: "map-shadow"
-      }),
+      style: feature => {
+        let fillColor = "";
+        const { Name } = feature.properties;
+        let data = this.customDatas[Name];
+        if (data) {
+          fillColor = data.style.fillColor;
+        }
+        return {
+          color: "white",
+          fillColor,
+          weight: 6,
+          fillOpacity: 1,
+          boxShadow: "-5px -5px 5px #888",
+          className: "map-shadow"
+        };
+      },
       onEachFeature: this.onEachFeature
     }).addTo(this.map);
     this.features.type1.on("click", () => (this.modal1 = true));
-    // this.map.on("dblclick", () => {
-    //   this.resetMap();
-    // });
-    this.setLayer(this.defaultLayer, this.OptionLayers[this.defaultLayer]);
+    this.setLayer(
+      this.cachedOptionLayer,
+      this.OptionLayers[this.cachedOptionLayer]
+    );
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.map {
-  height: 100vh;
-  background: url('~@/assets//image/map_bg.png') center center no-repeat;
-  background-size: cover;
-  padding: 1rem 0;
-}
-
-#map {
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-}
-
-.map-shadow {
-  box-shadow: -5px -5px 5px #888;
-}
-
-.menu {
-  position: absolute;
-  top: 40vh;
-  left: 10vw;
-  z-index: 10000;
-}
-
-.menu-img {
-  width: 25vw;
-  margin: 10px 0;
-}
-
-.menu-img-detail {
-  width: 15vw;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-footer-left {
-  width: 6rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal-footer-right {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal2-content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal2-content-left {
-  width: 60%;
-}
-
-.modal2-content-right {
-  width: 35%;
-  display: flex;
-  flex-direction: column;
-}
-
-div.modal2-footer-right {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.logo {
-  position: absolute;
-  top: 50px;
-  left: 50px;
-  width: 25vw;
-}
-
-.back_menu {
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-  width: 150px;
-  z-index: 10000;
-}
+.map
+  height 100vh
+  background url('~@/assets//image/map_bg.png') center center no-repeat
+  background-size cover
+#map
+  width 100vw
+  height 100vh
+  background transparent
+.map-shadow
+  box-shadow -5px -5px 5px #888
+.menu
+  position absolute
+  top 40vh
+  left 10vw
+  z-index 10000
+.menu-img
+  width 25vw
+  margin 10px 0
+.menu-img-detail
+  width 15vw
+.modal-footer
+  display flex
+  justify-content space-between
+  align-items center
+.modal-footer-left
+  width 6rem
+  display flex
+  justify-content space-between
+.modal-footer-right
+  display flex
+  justify-content space-between
+.modal2-content
+  display flex
+  justify-content space-between
+.modal2-content-left
+  width 60%
+.modal2-content-right
+  width 35%
+  display flex
+  flex-direction column
+div.modal2-footer-right
+  display flex
+  justify-content flex-start
+.logo
+  position absolute
+  top 50px
+  left 50px
+  width 25vw
+.back_menu
+  position absolute
+  bottom 50px
+  right 50px
+  width 150px
+  z-index 10000
 </style>

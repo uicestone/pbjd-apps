@@ -1,4 +1,6 @@
 <script>
+import * as request from "../../utils/request";
+
 export default {
   data() {
     return {};
@@ -45,8 +47,13 @@ export default {
         .drawImage(video, 0, 0, canvas.width, canvas.height);
       this.photoUrl = canvas.toDataURL("image/png");
     },
-    upload() {
-      this.$router.push({ name: "mottoDetail" });
+    async upload() {
+      const data = await request.UploadMotto({
+        text: this.motto,
+        image: this.photoUrl,
+        name: this.name
+      });
+      // this.$router.push({ name: "mottoDetail" });
     }
   },
   mounted() {
