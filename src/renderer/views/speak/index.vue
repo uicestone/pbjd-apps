@@ -16,14 +16,14 @@ export default {
       audioUrl: "",
       audioFile: "",
       videos: staticGen.talk,
-      currentIndex: ""
+      currentIndex: "",
+      recordingSign: false,
+      recordingSignInterval:null
     };
   },
   computed: {
     poster() {
-      return this.playing
-        ? "static/images/music_bg_play.png"
-        : "static/images/music_bg.png";
+      return "static/images/music_bg_play.png";
     },
     currentVideo() {
       return this.videos[this.currentIndex] || {};
@@ -37,30 +37,46 @@ export default {
   },
   methods: {
     record() {
+      console.log('Start recording...');
       const { video } = this.$refs;
       const isRecord = this.isRecord;
       video.currentTime = 0;
       this.RecordSuccess = false;
       this.isRecord = !isRecord;
-      if (!isRecord) {
+      
+      if (!isRecord) {        
         this.audioUrl = null;
         this.rec.start();
+        this.recordingSignInterval = setInterval(() => {
+          this.recordingSign = !this.recordingSign;
+        }, 500);
         video.play();
       }
       if (isRecord) {
-        this.rec
+        console.log('Stop recording.');
+        video.pause();
+        clearInterval(this.recordingSignInterval);
+        this.recordingSign = false;
+        this.RecordSuccess = true;
+        return this.rec
           .stop()
           .getMp3()
           .then(([buffer, blob]) => {
             this.audioUrl = URL.createObjectURL(blob);
             let file = new File([blob], `${uuid.v1()}.mp3`);
             this.audioFile = file;
+            console.log('Audio file generated.');
           });
-        video.pause();
-        this.RecordSuccess = true;
       }
     },
-    play() {
+    async play() {
+
+      if (this.isRecord) {
+        await this.record();
+      }
+
+      console.log('Play.');
+
       if (!this.RecordSuccess || this.isRecord) return;
       this.playing = true;
       const { audio, video } = this.$refs;
@@ -69,6 +85,10 @@ export default {
       audio.play();
     },
     async upload() {
+      if (!this.audioFile) {
+        return;
+      }
+
       const data = await request.UploadSpeechTalk({
         type: "talk",
         bgid: this.currentVideo.label,
@@ -95,12 +115,12 @@ export default {
           video.video(:poster="poster" ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
-        Icon.record(type="mic-a" @click="record")
+        Icon.record(type="mic-a" @click="record" v-bind:class="{recording:recordingSign}")
         Icon.play(type="play" @click="play")
         //- Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         //- Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
       div.upload   
-        button.button4(@click="upload") 我要上传
+        button.button4(@click="upload" v-bind:class="{disabled:!audioFile}") 我要上传
     button.button-back(@click="$router.go(-1)") 返回    
     img.logo(src="~@/assets/image/sound.png") 
 </template>
@@ -165,6 +185,9 @@ export default {
   width 21.19vw
   height 5.87vw
   font-weight bold
+  &.disabled
+    opacity 0.5
+    color #ccc
 .logo
   position absolute
   width 20vw
@@ -181,6 +204,8 @@ export default {
   border-radius 5vw
 .record
   background #b3292c
+  &.recording
+    opacity 0.5
 .play
   background #717171
   padding-left 1vw
