@@ -11,13 +11,6 @@ export default {
       RecordSuccess: false,
       audioFile: [],
       audioUrl: "",
-      // videos: {
-      //   "1": {
-      //     value: "1",
-      //     label: "小兵张嘎",
-      //     url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-      //   }
-      // },
       videos: staticGen.movie,
       currentIndex: "1"
     };
@@ -28,6 +21,8 @@ export default {
     }
   },
   mounted() {
+    const firstVideo = Object.keys(this.videos)[0];
+    this.currentIndex = firstVideo;
     this.rec.open();
   },
   methods: {

@@ -12,12 +12,6 @@ export default {
       RecordSuccess: false,
       audioUrl: "",
       audioFile: "",
-      // videos: [
-      //   {
-      //     label: "我爱你中国",
-      //     url: "static/media/test.mp3"
-      //   }
-      // ],
       videos: staticGen.talk,
       currentIndex: ""
     };
@@ -33,6 +27,8 @@ export default {
     }
   },
   mounted() {
+    const firstVideo = Object.keys(this.videos)[0];
+    this.currentIndex = firstVideo;
     this.rec.open();
   },
   methods: {

@@ -17,18 +17,13 @@
 
 <script>
 import * as request from "../../utils/request";
+import staticGen from "../../static-gen.js";
 
 export default {
   data() {
     return {
       playing: false,
-      videos: {
-        "1": {
-          value: "1",
-          label: "我爱你中国",
-          url: "static/media/test.mp3"
-        }
-      },
+      videos: staticGen.talk,
       audioUrl: "",
       currentIndex: "1",
       qrcodeUrl: ""

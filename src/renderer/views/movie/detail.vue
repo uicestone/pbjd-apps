@@ -16,18 +16,13 @@
 
 <script>
 import * as request from "../../utils/request";
+import staticGen from "../../static-gen.js";
 
 export default {
   data() {
     return {
       playing: false,
-      videos: {
-        "1": {
-          value: "1",
-          label: "小兵张嘎",
-          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-        }
-      },
+      videos: staticGen.movie,
       audioUrl: "",
       currentIndex: "1",
       qrcodeUrl: ""
