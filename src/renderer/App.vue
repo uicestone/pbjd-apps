@@ -76,7 +76,7 @@ li {
   margin: 3vw auto;
 }
 .button-back-debug {
-  position: fixed;
+  display: none;
 }
 
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
