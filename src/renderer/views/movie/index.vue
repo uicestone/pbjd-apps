@@ -26,7 +26,6 @@ export default {
   mounted() {
     const firstVideo = Object.keys(this.videos)[0];
     this.currentIndex = firstVideo;
-    this.rec.open();
   },
   methods: {
     record() {
@@ -48,7 +47,6 @@ export default {
             this.audioUrl = URL.createObjectURL(blob);
             let file = new File([blob], `${uuid.v1()}.mp3`);
             this.audioFile = file;
-            this.rec.close();
           });
         video.pause();
         this.RecordSuccess = true;
