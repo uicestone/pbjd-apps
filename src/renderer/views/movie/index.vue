@@ -1,6 +1,7 @@
 <script>
 import * as request from "../../utils/request";
 import uuid from "uuid";
+import staticGen from "../../static-gen.js";
 
 export default {
   data() {
@@ -10,13 +11,14 @@ export default {
       RecordSuccess: false,
       audioFile: [],
       audioUrl: "",
-      videos: {
-        "1": {
-          value: "1",
-          label: "小兵张嘎",
-          url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-        }
-      },
+      // videos: {
+      //   "1": {
+      //     value: "1",
+      //     label: "小兵张嘎",
+      //     url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+      //   }
+      // },
+      videos: staticGen.movie,
       currentIndex: "1"
     };
   },
@@ -60,7 +62,7 @@ export default {
     },
     async upload() {
       const data = await request.UploadSpeechMovie({
-        bgid: this.currentVideo.value,
+        bgid: this.currentVideo.label,
         audio: this.audioFile
       });
       const { id, qrcodeUrl } = data;
@@ -79,7 +81,7 @@ export default {
       div
         div.selectGrop 选择片段
           select.select(v-model="currentIndex")
-            option.option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
+            option.option(v-for="item in videos" :value="item.label" :key="item.label" :label="item.label") {{item.label}}
         video.video( ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    

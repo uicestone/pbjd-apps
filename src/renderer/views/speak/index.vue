@@ -1,6 +1,7 @@
 <script>
 import * as request from "../../utils/request";
 import uuid from "uuid";
+import staticGen from "../../static-gen.js";
 
 export default {
   data() {
@@ -11,14 +12,14 @@ export default {
       RecordSuccess: false,
       audioUrl: "",
       audioFile: "",
-      videos: {
-        "1": {
-          value: "1",
-          label: "我爱你中国",
-          url: "static/media/test.mp3"
-        }
-      },
-      currentIndex: "1"
+      // videos: [
+      //   {
+      //     label: "我爱你中国",
+      //     url: "static/media/test.mp3"
+      //   }
+      // ],
+      videos: staticGen.talk,
+      currentIndex: ""
     };
   },
   computed: {
@@ -68,7 +69,7 @@ export default {
     async upload() {
       const data = await request.UploadSpeechTalk({
         type: "talk",
-        bgid: this.currentVideo.value,
+        bgid: this.currentVideo.label,
         audio: this.audioFile
       });
       const { id, qrcodeUrl } = data;
@@ -87,7 +88,7 @@ export default {
       div
         div.selectGrop 选择背景音乐
           select.select(v-model="currentIndex")
-            option.option(v-for="item in videos" :value="item.value" :key="item.value" :label="item.label") {{item.label}}
+            option.option(v-for="item in videos"  :value="item.label" :label="item.label" :key="item.label" ) {{item.label}}
         video.video(:poster="poster" ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
