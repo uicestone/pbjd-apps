@@ -1,30 +1,54 @@
+<template lang="pug">
+  div.page-map-index
+    video.video(:class="{show: isPlaying, hidden: !isPlaying }" ref="video" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")
+    div.buttonGroup
+      img(@click="playVideo" src="~@/assets//image/map_index_button1.png")
+      img(@click="goDetail" src="~@/assets//image/map_index_button2.png")
+</template>
+
 <script>
 export default {
-  methods:{
-    goDetail(){
-      this.$router.push({name:"mapDetail"})
+  data() {
+    return {
+      isPlaying: false
+    };
+  },
+  watch: {
+    isPlaying(val) {
+      const { video } = this.$refs;
+      console.log(video);
+      video.play();
+    }
+  },
+  methods: {
+    goDetail() {
+      this.$router.push({ name: "mapDetail" });
+    },
+    playVideo() {
+      this.isPlaying = true;
     }
   }
 };
 </script>
 
-<template lang="pug">
-  div.page-map-index
-    div.buttonGroup
-      img(src="~@/assets//image/map_index_button1.png")
-      img(@click="goDetail" src="~@/assets//image/map_index_button2.png")
-</template>
-
 <style lang="stylus" scoped>
-.page-map-index {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start !important;
-  height: 100vh;
-  background: url('~@/assets//image/map_index_bg.png') center center no-repeat;
-  background-size: cover;
-}
+.page-map-index
+  display flex
+  flex-direction column
+  align-items center
+  justify-content flex-start !important
+  height 100vh
+  background url('~@/assets//image/map_index_bg.png') center center no-repeat
+  background-size cover
+.video
+  z-index 2
+  height 100%
+  width 100%
+  object-fit cover
+.show
+  visibility visible
+.hidden
+  visibility hidden
 .buttonGroup
   position absolute
   left 40%
@@ -32,7 +56,7 @@ export default {
   display flex
   width 30vw
   justify-content space-between
-  img 
+  img
     cursor pointer
     width 40%
     height 40%
