@@ -25,7 +25,7 @@ export default {
           type: "movie"
         },
         {
-          label: "我要对党说..",
+          label: "我要对党说",
           type: "talk"
         },
         {
@@ -130,7 +130,7 @@ export default {
           span 下一页         
           img.icon-arrow(src="~@/assets/image/arrow_right.png")
     button.button-back(@click="$router.go(-1)") 返回
-            
+    img.logo(src="~@/assets/image/sound.png")             
 </template>
 
 <style lang="stylus" scoped>
@@ -146,15 +146,16 @@ export default {
   .list-item
     width 40vw
     .user-item
-      font-size 2vw
-      font-weight 600
-      display flex
-      justify-content space-between
-      align-items center
-      margin 8px 16px
-      padding 10px 20px 10px 0
-      border-bottom solid 3px rgba(152, 130, 52, 1)
-      background rgba(227, 188, 52, 1)
+      font-size: 2vw;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1vh 1vw;
+      padding: 10px 20px 10px 0;
+      border-bottom: solid 3px #988234;
+      background: #e3bc34;
+      height: 9vh;
       .name
         color black
         font-weight 400
@@ -177,8 +178,12 @@ export default {
   margin 20px auto 10px
   .button5
     margin 0 40px
+    width 17.34vw
+    height 4.39vw
+    font-size 2.19vw
+    font-weight bold
 .content
-  height 65vh
+  height 71vh
   display flex
   flex-direction column
 .button5
@@ -191,6 +196,7 @@ export default {
   font-size 1.6vw
   font-weight 400
   text-align center
+  line-height 2vw
 .count
   font-size 2vw
   background rgba(245, 185, 155, 1)
@@ -208,4 +214,9 @@ export default {
 .icon-arrow-blue
   width 30px
   height 30px
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>

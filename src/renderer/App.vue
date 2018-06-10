@@ -50,15 +50,16 @@ li {
 }
 .main-title {
   color: white;
-  height: 10vh;
-  width: 30vw;
+  height: 7.43vw;
+  width: 38.11vw;
   background: #cc3739;
-  border-bottom: 4px solid rgb(146, 35, 44);
+  border-bottom: 4px solid #92232c;
   margin-top: 2vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3vw;
+  font-size: 3.3vw;
+  font-weight: bold;
 }
 .button-back {
   border: none;
