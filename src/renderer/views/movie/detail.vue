@@ -73,8 +73,8 @@ export default {
   display flex
   align-content center
   justify-content space-around
-  padding 1rem 0
-  margin 2vw 0
+  padding 5vh 0
+  height 73vh  
 .hidden
   display none
 .qrcode-group

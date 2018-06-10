@@ -50,7 +50,7 @@ li {
 }
 .main-title {
   color: white;
-  height: 7.43vw;
+  height: 13.21vh;
   width: 38.11vw;
   background: #cc3739;
   border-bottom: 4px solid #92232c;
@@ -73,7 +73,7 @@ li {
   letter-spacing: 10px;
   text-indent: 10px;
   text-align: center;
-  margin: 3vw auto;
+  margin: 1vh auto 0;
 }
 .button-back-debug {
   display: none;

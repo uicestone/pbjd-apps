@@ -72,7 +72,8 @@ export default {
   display flex
   align-content center
   justify-content space-around
-  margin 2vw 0
+  padding 5vh 0
+  height 73vh
 .video-container
   position relative
 .hidden
