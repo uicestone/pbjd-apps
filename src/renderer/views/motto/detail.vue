@@ -56,7 +56,7 @@ export default {
   align-items center
   text-align center
 .motto-preview-photo
-  height 25vh
+  width 14vw
   transform rotate(-8deg)
   position absolute
   left 31vw

@@ -109,7 +109,7 @@ export default {
   font-weight 600
   color black
 .motto-preview-photo
-  height 25vh
+  width 14vw
   transform rotate(-8deg)
   position absolute
   left 31vw

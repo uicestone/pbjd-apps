@@ -12,3 +12,5 @@ thumbs.db
 
 static/movie/*
 static/talk/*
+
+static-gen.js
