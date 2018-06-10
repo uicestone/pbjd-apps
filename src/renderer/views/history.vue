@@ -69,7 +69,7 @@ export default {
       if (this.currentUser.length == 0) {
         let data = await req[type]({
           type,
-          query: { page: page + 1, limit: 12 }
+          query: { page: page + 1, limit: 10 }
         });
         this[type][page] = data;
         this.isUpdate = !this.isUpdate;
@@ -114,7 +114,7 @@ export default {
               span.name {{value.authorName}}
             img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")
         div.list-item
-          div.user-item(v-if="index >= 5 && index <= 10" v-for="(value,index) in currentUser" @click="clickItem(value)")
+          div.user-item(v-if="index >= 5 && index <10" v-for="(value,index) in currentUser" @click="clickItem(value)")
             div
               span.index {{index | dt}}
               span.name {{value.authorName}}
@@ -146,16 +146,16 @@ export default {
   .list-item
     width 40vw
     .user-item
-      font-size: 2vw
-      font-weight: 600
-      display: flex
-      justify-content: space-between
-      align-items: center
-      margin: 1vh 1vw
-      padding: 10px 20px 10px 0
-      border-bottom: solid 3px #988234
-      background: #e3bc34
-      height: 9vh
+      font-size 2vw
+      font-weight 600
+      display flex
+      justify-content space-between
+      align-items center
+      margin 1vh 1vw
+      padding 10px 20px 10px 0
+      border-bottom solid 3px #988234
+      background #e3bc34
+      height 9vh
       .name
         color black
         font-weight 400
