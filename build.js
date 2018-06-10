@@ -13,15 +13,14 @@ let output = {
 
 for (let [key, val] of Object.entries(staticPath)) {
   let files = fs.readdirSync(val)
-
   files.forEach(file => {
     const filename = path.basename(file, path.extname(file))
 
-    output[key] = {
-      [filename]: {
-        label: filename,
-        url: `${val}/${file}`
-      }
+
+    output[key][filename] = {
+      label: filename,
+      url: `${val}/${file}`
+
     }
 
   })
