@@ -6,8 +6,8 @@
         video.video( ref="video" :src="currentVideo.url" width=480 heigh=320)    
         img.button-play(v-if="!playing" @click="play" src="~@/assets/image/button_replay.png")
         audio.hidden(controls ref="audio" :src="audioUrl") 
-      div.qrcode-group
-        img.qrcode-image( src="http://via.placeholder.com/400x500")
+      div.qrcode-group(v-if="qrcodeUrl")
+        img.qrcode-image(src="qrcodeUrl")
         p.qrcode-text 收藏到<br/>我的微官网
     button.button-back(@click="$router.go(-1)") 返回
       
@@ -29,7 +29,8 @@ export default {
         }
       },
       audioUrl: "",
-      currentIndex: "1"
+      currentIndex: "1",
+      qrcodeUrl: ""
     };
   },
   methods: {
@@ -47,13 +48,14 @@ export default {
   },
   async mounted() {
     const { query } = this.$route;
-    const { id } = query;
+    const { id, qrcodeUrl } = query;
     let data = await request.getSpeechMove({ id });
     console.log(data);
     const { bgid, audioUrl } = data;
 
     this.currentIndex = bgid;
     this.audioUrl = audioUrl;
+    this.qrcodeUrl = qrcodeUrl;
   }
 };
 </script>

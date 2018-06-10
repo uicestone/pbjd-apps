@@ -6,8 +6,8 @@
         video.video(:poster="poster"  :src="currentVideo.url" ref="video" width=480 heigh=320)   
         img.button-play(v-if="!playing" @click="play" src="~@/assets/image/button_replay.png")                 
         audio.hidden(ref="audio" :src="audioUrl") 
-      div.qrcode-group
-        img.qrcode-image( src="http://via.placeholder.com/400x500")
+      div.qrcode-group(v-if="qrcodeUrl")
+        img.qrcode-image( src="qrcodeUrl")
         p.qrcode-text 收藏到<br/>我的微官网
     button.button-back(@click="$router.go(-1)") 返回
     img.logo(src="~@/assets/image/sound.png") 

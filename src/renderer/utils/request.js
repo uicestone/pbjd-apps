@@ -6,6 +6,14 @@ export const $ = (obj, cb) => {
   }
 }
 
+export const obj2query = obj => {
+  let queryString = ""
+  for (let [key, value] of Object.entries(obj)) {
+    queryString += `&${key}=${encodeURIComponent(value)}`
+  }
+  return queryString.substr(1)
+}
+
 const parseJson = async (res) => {
   try {
     let data = await res.json();
@@ -98,8 +106,19 @@ export const getMotto = datas => {
   })
 }
 
-export const getMottoes = () => {
-  return request("mottoes", {
+export const getMottoes = datas => {
+  const {
+    query
+  } = datas
+  return request(`mottoes?${obj2query(query)}`, {
     method: "GET"
   })
+}
+export const getSpeechs = datas => {
+  const {
+    type,
+    query
+  } = datas
+
+  return request(`speeches/${type}?${obj2query(query)}`)
 }

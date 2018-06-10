@@ -7,8 +7,8 @@
         p.motto-preview-name --{{authorName}}      
         img.motto-preview-photo(:src="imageUrl")           
       div.form(span="12")
-        div.qrcode-group
-          img.qrcode-image(src="http://via.placeholder.com/400x500")
+        div.qrcode-group(v-if="qrcodeUrl")
+          img.qrcode-image(src="qrcodeUrl")
           p.qrcode-text 收藏到<br/>我的微官网
     button.button-back(@click="$router.go(-1)") 返回
     
@@ -23,7 +23,8 @@ export default {
     return {
       authorName: "",
       text: "",
-      imageUrl: ""
+      imageUrl: "",
+      qrcodeUrl: ""
     };
   },
   computed: {},
