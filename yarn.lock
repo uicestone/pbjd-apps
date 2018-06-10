@@ -22,9 +22,25 @@
   dependencies:
     "@types/node" "*"
 
+"@types/events@*":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
+
+"@types/glob@^5.0.35":
+  version "5.0.35"
+  resolved "https://registry.npmjs.org/@types/glob/-/glob-5.0.35.tgz#1ae151c802cece940443b5ac246925c85189f32a"
+  dependencies:
+    "@types/events" "*"
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
 "@types/less@0.0.32":
   version "0.0.32"
   resolved "https://registry.npmjs.org/@types/less/-/less-0.0.32.tgz#7e36ccbfc730278dc33ab4b90b111ca32e532410"
+
+"@types/minimatch@*":
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
 "@types/node@*":
   version "10.1.1"
@@ -4589,6 +4605,12 @@ methods@~1.1.2:
 mgrs@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/mgrs/-/mgrs-1.0.0.tgz#fb91588e78c90025672395cb40b25f7cd6ad1829"
+
+mic-recorder-to-mp3@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/mic-recorder-to-mp3/-/mic-recorder-to-mp3-2.2.0.tgz#cc31cd6d97cda5cce35669a2f4396928ef418b8a"
+  dependencies:
+    lamejs "^1.2.0"
 
 micromatch@^2.3.11:
   version "2.3.11"

@@ -2,11 +2,14 @@
 import * as request from "../../utils/request";
 import uuid from "uuid";
 import staticGen from "../../static-gen.js";
+import MicRecorder from "mic-recorder-to-mp3";
 
 export default {
   data() {
     return {
-      rec: new Recorder(),
+      rec: new MicRecorder({
+        bitRate: 128
+      }),
       isRecord: false,
       RecordSuccess: false,
       audioFile: [],
@@ -38,12 +41,15 @@ export default {
         video.play();
       }
       if (isRecord) {
-        this.rec.stop(blob => {
-          this.audioUrl = URL.createObjectURL(blob);
-          let file = new File([blob], `${uuid.v1()}.mp3`);
-          this.audioFile = file;
-          this.rec.close();
-        });
+        this.rec
+          .stop()
+          .getMp3()
+          .then(([buffer, blob]) => {
+            this.audioUrl = URL.createObjectURL(blob);
+            let file = new File([blob], `${uuid.v1()}.mp3`);
+            this.audioFile = file;
+            this.rec.close();
+          });
         video.pause();
         this.RecordSuccess = true;
       }
