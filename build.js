@@ -1,5 +1,3 @@
-const glob = require("glob")
-
 const fs = require("fs")
 const path = require("path")
 
@@ -28,7 +26,6 @@ for (let [key, val] of Object.entries(staticPath)) {
 
   })
 }
-
 
 console.log(output)
 fs.writeFileSync("src/renderer/static-gen.js", `export default ${JSON.stringify(output)}`)

@@ -81,7 +81,7 @@ export default {
       div
         div.selectGrop 选择片段
           select.select(v-model="currentIndex")
-            option.option(v-for="item in videos" :value="item.label" :key="item.label" :label="item.label") {{item.label}}
+            option.option(v-for="item in videos" :value="item.label" :key="item.value" :label="item.label") {{item.label}}
         video.video( ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
