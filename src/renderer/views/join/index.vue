@@ -2,7 +2,7 @@
   div.page-join-index
     p.join-count 已有<span>2135689</span>人次参与
     img.title(src="~@/assets/image/title.png")
-    p.subtitle 输入你想了解的那一天
+    p.subtitle 输入您需要了解的一天
     div.form
       select.selectYear(v-model="date.year" placeholder="null")
         option(v-for="item in yearList" :value="item.value" :key="item.value") {{item.value}}
