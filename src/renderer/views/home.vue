@@ -2,7 +2,7 @@
   div.page-home
     ul.menu-list
       router-link.button5(to="/movie/index") 红色电影配音
-      router-link.button5(to="/speak/index") 我要对党说..
+      router-link.button5(to="/speak/index") 我要对党说
       router-link.button5(to="/motto/index") 我的座右铭
       router-link.button5(to="/history") 往期精选            
 </template>
@@ -18,19 +18,22 @@ export default {};
   background-size cover
   .menu-list
     position absolute
-    top 10vh
+    top 13vh
     right 5vw
     display flex
     flex-direction column
     justify-content space-around
-    height 60vh
+    height 70vh
 .button5
   color white
-  padding 0.75vw 3vw
   background url('~@/assets/image/button_blue_5.png') center center no-repeat
   background-size cover
-  font-size 2.4rem
   text-align center
+  width 24.1vw;
+  height 6.11vw;
+  line-height 5.6vw;
+  font-weight bold;
+  font-size 3.04vw;
 .button4
   color white
   padding 0.2rem

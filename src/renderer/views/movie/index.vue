@@ -88,7 +88,7 @@ export default {
       div.upload   
         button.button4(@click="upload") 我要上传
     button.button-back(@click="$router.go(-1)") 返回
-    
+    img.logo(src="~@/assets/image/sound.png") 
 </template>
 
 
@@ -99,29 +99,31 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 65vh
-  display flex
-  align-content center
-  justify-content space-around
+  height 73vh;
+  display flex;
+  align-content center;
+  justify-content space-between;
+  width 83.28vw;
+  margin auto;
 .hidden
   display none
 .video
-  width 40vw
+  width 43.36vw
 .selectGrop
-  font-size 1.2vw
-  font-weight 600
-  color black
-  display flex
-  justify-content space-between
-  align-items center
-  margin 2vw 0
+  font-size 2vw;
+  font-weight 600;
+  color #000;
+  display flex;
+  justify-content space-between;
+  align-items center;
+  margin 2vw 0 5vw;
   .select
     flex 1
     text-align center
     margin 0 0 0 20px
     padding 0 0 0 15px
     font-weight 600
-    font-size 1.4vw
+    font-size inherit
     border none
     height 6.5vh
     background url('~@/assets//image/select.png') center center no-repeat
@@ -130,17 +132,29 @@ export default {
   display flex
   justify-content center
   flex-direction column
+  margin-top 5vw
 .upload
   display flex
   align-items center
+  margin-top 5vw
 .button4
   border none
   color white
-  padding 0.75vw 4.5vw
   background url('~@/assets//image/button_blue_4.png') center center no-repeat
   background-size cover
   font-size 3rem
   text-align center
+  font-size 3.1vw;
+  text-align center;
+  width 21.19vw;
+  height 5.87vw;
+  font-weight bold;
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 .record, .play
-  margin 2vw 0
+  margin 2vw 0;
+  width 10vw;
 </style>

@@ -52,7 +52,7 @@ li {
   color: white;
   height: 10vh;
   width: 30vw;
-  background: #de2230;
+  background: #cc3739;
   border-bottom: 4px solid rgb(146, 35, 44);
   margin-top: 2vh;
   display: flex;

@@ -90,6 +90,7 @@ export default {
   position relative
   display flex
   align-items center
+  white-space pre-line
 .content p
   margin-bottom 10px
 .hidden
@@ -138,13 +139,20 @@ export default {
   width 100%
   height 15vh
   padding 20px
+  border 3px #CCC solid;
+  box-shadow 0 0.22vw 0.44vw #888;
 .input-name
   width 100%
   height 8vh
-  padding 20px
+  padding 1vw
+  border 3px #CCC solid;
+  box-shadow 0 0.22vw 0.44vw #888;
 .actions
   display flex
   align-items center
+  font-size 2vw
 .snapshot
   height 100%
+  width: 6.5vw
+  margin 0 1.5vw
 </style>
