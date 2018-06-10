@@ -42,7 +42,7 @@ export default {
   mounted() {
     const { video, snapshot, canvas } = this.$refs;
     navigator.mediaDevices
-      .getUserMedia({ video: { width: 1920, height: 1080 }, audio: false })
+      .getUserMedia({ video: true, audio: false })
       .then(stream => {
         window.localMediaStream = stream;
         video.srcObject = stream;
