@@ -1,14 +1,20 @@
 <template lang="pug">
   div.map
-    //- svg(id="map" ref="map" xmlns="http://www.w3.org/2000/svg" width="700" height="800")  
     div#map
     div.menu
       li(v-if="!currentLayer && value.label !== undefined" v-for="(value, key) in OptionLayers" @click="setLayer(key,value)")
         img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
-      img.menu-img-detail(v-if="currentLayer " @click="modal1 = true" src="static/images/map_button_5.png")
-    div(v-if="currentData.type==0")
-      Modal.modal1(v-model="modal1" :title="currentData.title" )
-        p.modal1-content {{currentData.content}}    
+      img.menu-img-detail(v-if="currentLayer " @click="showTownModal" src="static/images/map_button_5.png")
+    div(v-if="currentModalData.id")
+      Modal.modal1(v-model="modal1" :title="currentModalData.name" )
+        div.modal1-content
+          div.desc(v-html="currentModalData.desc") 
+          div.contact
+            p 联系人:{{currentModalData.contact}}
+            p 地址:{{currentModalData.address}}
+            p 联系电话:{{currentModalData.phone}}
+            
+            
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
@@ -18,12 +24,16 @@
             div
               img.modal-icon(src="~@/assets/image/map_icon_2.png")
               span 导航到此地
-    div(v-if="currentData.type==1")
-      Modal.modal2(v-model="modal1" :title="currentData.title")
+    div(v-if="currentModalData.id")
+      Modal.modal2(v-model="modal2" :title="currentModalData.name")
         div.modal2-content
-          img.modal2-content-left(:src="currentData.img")
+          img.modal2-content-left(:src="currentModalData.images[0]")
           div.modal2-content-right
-            p.modal2-content {{currentData.content}}    
+            div.desc(v-html="currentModalData.desc") 
+            div.contact
+              p 联系人:{{currentModalData.contact}}
+              p 地址:{{currentModalData.address}}
+              p 联系电话:{{currentModalData.phone}}  
             div.modal2-footer-right
               div 
                 img.modal-icon(src="~@/assets/image/map_icon_1.png")
@@ -39,25 +49,27 @@
 
 <script>
 import geoJson from "@/assets/json/geo.json";
-import rawJson from "@/assets/json/raw.json";
+// import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
+import * as request from "../../utils/request";
+import { TSPropertySignature } from "babel-types";
 global.L = L;
-import { EventEmitter } from "events";
 
 export default {
   data() {
     return {
-      raw: rawJson,
+      // raw: rawJson,
       geo: geoJson,
       geojson: {},
       map: {},
+      spots: {},
       features: {
         type1: L.featureGroup([]),
         type2: L.featureGroup([])
       },
       OptionLayers: {
-        0: {
-          label: "党建服务中心",
+        区党建服务中心: {
+          label: "区党建服务中心",
           images: {
             select: "static/images/map_button_1.png",
             unselect: "static/images/map_button_1a.png"
@@ -66,7 +78,7 @@ export default {
           layer: L.layerGroup([]).setZIndex(10),
           children: {}
         },
-        1: {
+        街镇社区党建服务中心: {
           label: "街镇社区党建服务中心",
           images: {
             select: "static/images/map_button_2.png",
@@ -75,7 +87,7 @@ export default {
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
         },
-        2: {
+        组织生活现场开放点: {
           label: "组织生活现场开放点",
           images: {
             select: "static/images/map_button_3.png",
@@ -84,7 +96,7 @@ export default {
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
         },
-        3: {
+        党性教育基地: {
           label: "党性教育基地",
           images: {
             select: "static/images/map_button_4.png",
@@ -94,66 +106,78 @@ export default {
           layer: L.layerGroup([]).setZIndex(10)
         }
       },
-      cachedOptionLayer: "0",
+      cachedOptionLayer: "区党建服务中心",
       currentOptionLayer: "",
       currentLayer: "",
       customDatas: {
         华亭镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(214,124,90)"
           }
         },
         徐行镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(218,161,118)"
           }
         },
         南翔镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(190,190,213)"
           }
         },
         真新街道: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(129,131,152)"
           }
         },
         外冈镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(246,229,177)"
           }
         },
         江桥镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(158,157,175)"
           }
         },
         安亭镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(250,203,135)"
           }
         },
         马陆镇: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(233,192,102)"
           }
         },
         新成路街道: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(121,188,112)"
           }
         },
         嘉定镇街道: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(82,161,80)"
           }
         },
-        菊园新区管委会: {
+        菊园新区: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(235,194,162)"
           }
         },
         嘉定工业区: {
+          childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(177,210,165)"
           }
@@ -166,14 +190,8 @@ export default {
       },
       svgElements: [],
       modal1: false,
-      currentIndex: 0,
-      datas: new Array(10).fill("").map((k, i) => ({
-        type: Math.floor(Math.random() * 2),
-        title: `test${i}`,
-        img: "http://via.placeholder.com/100x50",
-        content:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-      }))
+      modal2: false,
+      currentModalIndex: 0
     };
   },
   watch: {
@@ -189,7 +207,10 @@ export default {
       if (_val) {
         for (let [key, val] of Object.entries(this.customDatas)) {
           if (key != _val) {
+            this.map.removeLayer(val.childLayer);
             this.map.removeLayer(val.layer);
+          } else {
+            this.map.addLayer(val.childLayer);
           }
         }
       } else {
@@ -207,13 +228,16 @@ export default {
     currentLayerData() {
       return this.customDatas[this.currentLayer] || {};
     },
-    currentData() {
-      return this.datas[this.currentIndex] || {};
+    currentModalData() {
+      return this.spots[this.currentModalIndex] || {};
     }
   },
   methods: {
-    ok() {},
-    cancel() {},
+    showTownModal() {
+      let customdata = this.customDatas[this.currentLayer];
+      const { spotId } = customdata;
+      this.showModal(spotId);
+    },
     back() {
       if (this.currentLayer) {
         this.resetMap();
@@ -221,8 +245,17 @@ export default {
         this.$router.go(-1);
       }
     },
-    setLayer(key, value) {
-      const { type } = value;
+    showModal(id) {
+      this.currentModalIndex = id;
+      const spot = this.spots[id];
+      const { images } = spot;
+      if (images && images.length > 0) {
+        this.modal2 = true;
+      } else {
+        this.modal1 = true;
+      }
+    },
+    setLayer(key) {
       this.resetMap();
       this.currentOptionLayer = key;
     },
@@ -265,6 +298,10 @@ export default {
         },
         this.config.zoom
       );
+
+      for (let [key, val] of Object.entries(this.customDatas)) {
+        this.map.removeLayer(val.childLayer);
+      }
       this.currentOptionLayer = this.cachedOptionLayer;
       this.currentLayer = "";
     },
@@ -290,7 +327,7 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
     let layers = Object.values(this.OptionLayers);
     let features = Object.values(this.features);
 
@@ -304,21 +341,6 @@ export default {
       zoom: this.config.zoom,
       zoomControl: false,
       attributionControl: false
-    });
-
-    this.geo.features.forEach(feature => {
-      let coords = feature.geometry.coordinates[0];
-      const [y, x] = coords[Math.floor(Math.random() * coords.length)];
-      if (!Array.isArray(x) && !Array.isArray(y)) {
-        let marker = L.marker([x, y], {
-          icon
-        });
-
-        this.features.type1.addLayer(marker);
-        layers[Math.floor(Math.random() * layers.length)].layer.addLayer(
-          marker
-        );
-      }
     });
 
     this.map.doubleClickZoom.disable();
@@ -344,10 +366,47 @@ export default {
       onEachFeature: this.onEachFeature
     }).addTo(this.map);
     this.features.type1.on("click", () => (this.modal1 = true));
-    this.setLayer(
-      this.cachedOptionLayer,
-      this.OptionLayers[this.cachedOptionLayer]
-    );
+    this.setLayer(this.cachedOptionLayer);
+
+    let _spots = await request.getSpots();
+    _spots.forEach(spot => {
+      const { id, town, type, latitude, longitude, name, images } = spot;
+      this.spots[id] = spot;
+
+      let marker = L.marker([latitude, longitude], { icon });
+      marker.on("click", () => {
+        this.showModal(id);
+      });
+      if (type == "服务中心" && !town) {
+        this.OptionLayers["区党建服务中心"].layer.addLayer(marker);
+      }
+      if (type == "服务中心" && town) {
+        let customData = this.customDatas[town];
+        customData.spotId = id;
+        this.OptionLayers["街镇社区党建服务中心"].layer.addLayer(marker);
+      }
+      if (type == "组织生活现场开放点") {
+        this.OptionLayers["组织生活现场开放点"].layer.addLayer(marker);
+      }
+      if (type == "党性教育基地") {
+        this.OptionLayers["党性教育基地"].layer.addLayer(marker);
+      }
+      if (type == "服务站") {
+        let customData = this.customDatas[town];
+        if (customData) {
+          customData.childLayer.addLayer(marker);
+        }
+      }
+    });
+    // for (let [key, val] of Object.entries(this.customDatas)) {
+    //   this.map.addLayer(val.childLayer);
+    // }
+    // L.circle([31.343661, 121.239589], {
+    //   color: "red",
+    //   fillColor: "#f03",
+    //   fillOpacity: 0.5,
+    //   radius: 1000
+    // }).addTo(this.map);
   }
 };
 </script>
@@ -376,12 +435,15 @@ export default {
   .ivu-modal-header-inner
     font-size 1.5vw
     color rgb(211, 5, 32)
-    height 20px
+    height 40px
     display flex
     align-items center
     padding 0 0 0 10px
+    line-height 40px
   .ivu-modal
     width 55vw !important
+  .ivu-modal-close
+    top 14px
   .ivu-modal-header
     background white
     border-radius 10px 10px 0 0
@@ -403,9 +465,21 @@ export default {
     top 0
     font-size 45px
     line-height 30px
+  .desc
+    min-height 100px
+    max-height 500px
+    overflow-y auto
+    font-size 1.2vw
+    line-height 50px
+    text-indent 50px
+    font-weight 500
+  .contact
+    font-size 1.2vw
+    line-height 50px
+    margin-top 30px
   .modal1-content
-    height 600px
-    padding 3vw
+    height 500px
+    padding 2vw
     font-size 1vw
   .modal-footer
     display flex
@@ -430,10 +504,13 @@ export default {
   .ivu-modal-header-inner
     font-size 1.5vw
     color rgb(211, 5, 32)
-    height 20px
+    height 40px
     display flex
     align-items center
     padding 0 0 0 10px
+    line-height 40px
+  .ivu-modal-close
+    top 14px
   .ivu-modal-header
     border 1px solid rgba(255, 0, 0, 0.7)
     background white
@@ -455,16 +532,26 @@ export default {
     box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
   .modal2-content-left
     width 60%
+  .desc
+    min-height 100px
+    font-size 1.2vw
+    line-height 50px
+    text-indent 50px
+    font-weight 500
+  .contact
+    font-size 1.2vw
+    line-height 50px
   .modal2-content-right
     width 35%
     display flex
     flex-direction column
+    justify-content space-between
   .modal2-footer-right
     font-size 1.2vw
     display flex
     justify-content flex-start
     div
-      padding 0 20px
+      padding 0 20px 0 0
       display flex
       align-items center
   .ivu-icon-ios-close-empty

@@ -122,3 +122,7 @@ export const getSpeechs = datas => {
 
   return request(`speeches/${type}?${obj2query(query)}`)
 }
+
+export const getSpots = datas => {
+  return request(`spots`)
+}
