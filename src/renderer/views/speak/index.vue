@@ -85,11 +85,12 @@ export default {
         div.selectGrop 选择背景音乐
           select.select(v-model="currentIndex")
             option.option(v-for="item in videos"  :value="item.label" :label="item.label" :key="item.label" ) {{item.label}}
-        video.video(:poster="poster" ref="video" :src="currentVideo.url")
+        div.video-container
+          video.video(:poster="poster" ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
-        img.record(@click="record" src="~@/assets/image/button_record.png")
-        img.play( @click="play" src="~@/assets/image/button_play.png")
+        Icon.record(type="mic-a" @click="record")
+        Icon.play(type="play" @click="play")
         //- Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         //- Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
       div.upload   
@@ -106,12 +107,14 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 73vh;
-  display flex;
-  align-content center;
-  justify-content space-between;
-  width 83.28vw;
-  margin auto;
+  height 73vh
+  display flex
+  align-content center
+  justify-content space-between
+  width 83.28vw
+  margin auto
+.video-container
+  position relative
 .video
   width 43.36vw
 .hidden
@@ -122,13 +125,13 @@ export default {
   flex-direction column
   margin-top 5vw
 .selectGrop
-  font-size 2vw;
-  font-weight 600;
-  color #000;
-  display flex;
-  justify-content space-between;
-  align-items center;
-  margin 2vw 0 5vw;
+  font-size 2vw
+  font-weight 600
+  color #000
+  display flex
+  justify-content space-between
+  align-items center
+  margin 2vw 0 5vw
   .select
     flex 1
     text-align center
@@ -151,17 +154,29 @@ export default {
   background-size cover
   font-size 3rem
   text-align center
-  font-size 3.1vw;
-  text-align center;
-  width 21.19vw;
-  height 5.87vw;
-  font-weight bold;
+  font-size 3.1vw
+  text-align center
+  width 21.19vw
+  height 5.87vw
+  font-weight bold
 .logo
   position absolute
   width 20vw
   right 10px
   top 10px
 .record, .play
-  margin 2vw 0;
-  width 10vw;
+  margin 2vw 0
+  width 10vw
+  height 10vw
+  font-size 8vw
+  text-align center
+  line-height 10vw
+  color white
+  border-radius 5vw
+.record
+  background #b3292c
+.play
+  background #717171
+  padding-left: 1vw
+  font-size: 7vw
 </style>

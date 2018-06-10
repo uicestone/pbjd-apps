@@ -99,24 +99,24 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 73vh;
-  display flex;
-  align-content center;
-  justify-content space-between;
-  width 83.28vw;
-  margin auto;
+  height 73vh
+  display flex
+  align-content center
+  justify-content space-between
+  width 83.28vw
+  margin auto
 .hidden
   display none
 .video
   width 43.36vw
 .selectGrop
-  font-size 2vw;
-  font-weight 600;
-  color #000;
-  display flex;
-  justify-content space-between;
-  align-items center;
-  margin 2vw 0 5vw;
+  font-size 2vw
+  font-weight 600
+  color #000
+  display flex
+  justify-content space-between
+  align-items center
+  margin 2vw 0 5vw
   .select
     flex 1
     text-align center
@@ -144,17 +144,17 @@ export default {
   background-size cover
   font-size 3rem
   text-align center
-  font-size 3.1vw;
-  text-align center;
-  width 21.19vw;
-  height 5.87vw;
-  font-weight bold;
+  font-size 3.1vw
+  text-align center
+  width 21.19vw
+  height 5.87vw
+  font-weight bold
 .logo
   position absolute
   width 20vw
   right 10px
   top 10px
 .record, .play
-  margin 2vw 0;
-  width 10vw;
+  margin 2vw 0
+  width 10vw
 </style>

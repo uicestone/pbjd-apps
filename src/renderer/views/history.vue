@@ -146,16 +146,16 @@ export default {
   .list-item
     width 40vw
     .user-item
-      font-size: 2vw;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 1vh 1vw;
-      padding: 10px 20px 10px 0;
-      border-bottom: solid 3px #988234;
-      background: #e3bc34;
-      height: 9vh;
+      font-size: 2vw
+      font-weight: 600
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin: 1vh 1vw
+      padding: 10px 20px 10px 0
+      border-bottom: solid 3px #988234
+      background: #e3bc34
+      height: 9vh
       .name
         color black
         font-weight 400

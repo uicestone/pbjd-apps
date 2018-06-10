@@ -29,11 +29,11 @@ export default {};
   background url('~@/assets/image/button_blue_5.png') center center no-repeat
   background-size cover
   text-align center
-  width 24.1vw;
-  height 6.11vw;
-  line-height 5.6vw;
-  font-weight bold;
-  font-size 3.04vw;
+  width 24.1vw
+  height 6.11vw
+  line-height 5.6vw
+  font-weight bold
+  font-size 3.04vw
 .button4
   color white
   padding 0.2rem
