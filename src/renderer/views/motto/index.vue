@@ -15,8 +15,8 @@ export default {
   methods: {
     snapshot() {
       const { video, canvas } = this.$refs;
-      // canvas.width = video.videoWidth;
-      // canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
       canvas
         .getContext("2d")
         .drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -42,8 +42,9 @@ export default {
   mounted() {
     const { video, snapshot, canvas } = this.$refs;
     navigator.mediaDevices
-      .getUserMedia({ video: { width: 150, height: 100 }, audio: false })
+      .getUserMedia({ video: { width: 1920, height: 1080 }, audio: false })
       .then(stream => {
+        window.localMediaStream = stream;
         video.srcObject = stream;
       })
       .catch(e => {
@@ -108,12 +109,12 @@ export default {
   font-weight 600
   color black
 .motto-preview-photo
-  width 16vw
-  height 16vh
+  height 25vh
   transform rotate(-8deg)
   position absolute
-  left 30vw
-  top 15vw
+  left 31vw
+  top 14vw
+  object-fit contain
 .motto-preview-text
   width 15vw
   font-size 2vw
@@ -139,20 +140,20 @@ export default {
   width 100%
   height 15vh
   padding 20px
-  border 3px #CCC solid;
-  box-shadow 0 0.22vw 0.44vw #888;
+  border 3px #CCC solid
+  box-shadow 0 0.22vw 0.44vw #888
 .input-name
   width 100%
   height 8vh
   padding 1vw
-  border 3px #CCC solid;
-  box-shadow 0 0.22vw 0.44vw #888;
+  border 3px #CCC solid
+  box-shadow 0 0.22vw 0.44vw #888
 .actions
   display flex
   align-items center
   font-size 2vw
 .snapshot
   height 100%
-  width: 6.5vw
+  width 6.5vw
   margin 0 1.5vw
 </style>

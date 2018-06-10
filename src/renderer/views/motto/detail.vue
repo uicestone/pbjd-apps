@@ -56,12 +56,12 @@ export default {
   align-items center
   text-align center
 .motto-preview-photo
-  width 16vw
-  height 16vh
+  height 25vh
   transform rotate(-8deg)
   position absolute
-  left 30vw
-  top 15vw
+  left 31vw
+  top 14vw
+  object-fit contain
 .qrcode-text
   font-weight 600
   font-size 1.8vw
