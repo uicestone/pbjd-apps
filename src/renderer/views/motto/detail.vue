@@ -32,7 +32,6 @@ export default {
     const { query } = this.$route;
     const { id } = query;
     let data = await request.getMotto({ id });
-    console.log(data);
     const { imageUrl, authorName, text } = data;
 
     this.imageUrl = imageUrl;

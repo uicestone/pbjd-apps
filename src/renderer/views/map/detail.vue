@@ -369,6 +369,12 @@ export default {
     this.setLayer(this.cachedOptionLayer);
 
     let _spots = await request.getSpots();
+    if (!Array.isArray(_spots) || _spots.length == 0) {
+      _spots = JSON.parse(localStorage.getItem("_spots"));
+    } else {
+      localStorage.setItem("_spots", JSON.stringify(_spots));
+    }
+
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images } = spot;
       this.spots[id] = spot;
@@ -398,6 +404,7 @@ export default {
         }
       }
     });
+
     // for (let [key, val] of Object.entries(this.customDatas)) {
     //   this.map.addLayer(val.childLayer);
     // }
@@ -467,7 +474,7 @@ export default {
     line-height 30px
   .desc
     min-height 100px
-    max-height 500px
+    max-height 300px
     overflow-y auto
     font-size 1.2vw
     line-height 50px
