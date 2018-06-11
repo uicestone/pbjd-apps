@@ -1,10 +1,10 @@
 <template lang="pug">
   div.page-home
     ul.menu-list
-      router-link.button5(to="/movie/index") 红色电影配音
-      router-link.button5(to="/speak/index") 我要对党说
-      router-link.button5(to="/motto/index") 我的座右铭
-      router-link.button5(to="/history") 往期精选            
+      router-link.button5.glow(to="/movie/index") 红色电影配音
+      router-link.button5.glow.delay-1(to="/speak/index") 我要对党说
+      router-link.button5.glow.delay-2(to="/motto/index") 我的座右铭
+      router-link.button5.glow.delay-3(to="/history") 往期精选            
 </template>
 
 <script>
@@ -41,4 +41,21 @@ export default {};
   background-size cover
   font-size 0.8rem
   text-align center
+@keyframes glow
+  0%
+    opacity 1
+  25%
+    opacity 0.5
+  50%
+    opacity 1
+  100%
+    opacity 1
+.glow
+  animation glow 4s ease-in-out infinite
+.delay-1
+  animation-delay 1s
+.delay-2
+  animation-delay 2s
+.delay-3
+  animation-delay 3s
 </style>
