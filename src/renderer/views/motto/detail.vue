@@ -11,7 +11,7 @@
           img.qrcode-image(src="qrcodeUrl")
           p.qrcode-text 收藏到<br/>我的微官网
     button.button-back(@click="$router.go(-1)") 返回
-    
+    img.logo(src="~@/assets/image/sound.png")
 </template>
 
 
@@ -106,4 +106,9 @@ export default {
   width 60vw
   background url('~@/assets//image/book.png') no-repeat
   background-size cover
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>

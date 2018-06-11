@@ -84,7 +84,7 @@ export default {
           Icon.snapshot(type="upload" @click="upload" v-bind:class="{disabled:!photoFile}")
           
     button.button-back(@click="$router.go(-1)") 返回
-    
+    img.logo(src="~@/assets/image/sound.png")
 </template>
 
 <style lang="stylus" scoped>
@@ -187,4 +187,9 @@ export default {
   box-shadow 0.2vw 0.2vw 0.3vw #333
   &.disabled
     opacity 0.5
+.logo
+  position absolute
+  width 20vw
+  right 10px
+  top 10px
 </style>
