@@ -9,10 +9,10 @@
       Modal.modal1(v-model="modal1" :title="currentModalData.name" )
         div.modal1-content
           div.desc(v-html="currentModalData.desc") 
-          div.contact
-            p 联系人:{{currentModalData.contact}}
-            p 地址:{{currentModalData.address}}
-            p 联系电话:{{currentModalData.phone}}
+            div.contact
+              p 联系人：{{currentModalData.contact}}
+              p 地址：{{currentModalData.address}}
+              p 联系电话：{{currentModalData.phone}}
             
             
         div.modal-footer(slot="footer")
@@ -29,11 +29,12 @@
         div.modal2-content
           img.modal2-content-left(:src="currentModalData.images[0]")
           div.modal2-content-right
-            div.desc(v-html="currentModalData.desc") 
-            div.contact
-              p 联系人:{{currentModalData.contact}}
-              p 地址:{{currentModalData.address}}
-              p 联系电话:{{currentModalData.phone}}  
+            div.desc-container
+              div.desc(v-html="currentModalData.desc") 
+              div.contact
+                p 联系人：{{currentModalData.contact}}
+                p 地址：{{currentModalData.address}}
+                p 联系电话：{{currentModalData.phone}}  
             div.modal2-footer-right
               div 
                 img.modal-icon(src="~@/assets/image/map_icon_1.png")
@@ -509,52 +510,63 @@ export default {
 .modal2
   z-index 10001
   .ivu-modal-header-inner
-    font-size 1.5vw
-    color rgb(211, 5, 32)
-    height 40px
+    font-size 2.2vw
+    color #c14328
+    height 5vh
     display flex
     align-items center
     padding 0 0 0 10px
     line-height 40px
+    font-family STZhongSong
   .ivu-modal-close
     top 14px
+    z-index 1
   .ivu-modal-header
-    border 1px solid rgba(255, 0, 0, 0.7)
-    background white
+    border-bottom 3px solid #94251f
+    background #fff
     border-radius 10px 10px 0 0
+    position relative
+    z-index 0
+    box-shadow 0 1px 10px rgba(51, 17, 9, 0.7)
   .ivu-modal-body
     background white
     border-radius 0 0 10px 10px
   .ivu-modal
-    width 90vw !important
-    height 90vh
+    width 88vw !important
   .modal2-content
-    height 75vh
+    height 74vh
     padding 2vw
     display flex
     justify-content space-between
     font-size 1vw
   .ivu-modal-content
     background transparent
-    box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
+    box-shadow 0 0 15px 3px rgba(183, 25, 25, 0.5)
   .modal2-content-left
     width 60%
+  .desc-container
+    max-height 61vh
+    overflow-y scroll
   .desc
     min-height 100px
-    font-size 1.2vw
-    line-height 50px
-    text-indent 50px
+    font-size 1.5vw
+    line-height 1.8
     font-weight 500
+    color #515253
+    p
+      text-indent 2em
   .contact
-    font-size 1.2vw
+    font-size 1.4vw
+    font-weight normal
     line-height 50px
+    margin-top 2vh
   .modal2-content-right
     width 35%
     display flex
     flex-direction column
     justify-content space-between
   .modal2-footer-right
-    font-size 1.2vw
+    font-size 1.4vw
     display flex
     justify-content flex-start
     div
@@ -562,13 +574,16 @@ export default {
       display flex
       align-items center
   .ivu-icon-ios-close-empty
-    color red
+    color #b80000
     border-radius 2px
-    border 1px solid red
+    border 1px solid #b80000
     padding 0 8px
     top 0
-    font-size 45px
-    line-height 30px
+    font-size 85px
+    line-height 50px
+    width 50px
+    height 50px
+    text-align center
   .ivu-modal-footer
     display none
 .logo
@@ -581,8 +596,8 @@ export default {
   bottom 50px
   right 50px
   width 150px
-  z-index 10000
+  z-index 1
 .modal-icon
-  width 45px
+  width 55px
   margin 0 10px
 </style>
