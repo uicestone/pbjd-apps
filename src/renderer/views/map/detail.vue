@@ -8,7 +8,8 @@
     div(v-if="currentModalData.id")
       Modal.modal1(v-model="modal1" :title="currentModalData.name" )
         div.modal1-content
-          div.desc(v-html="currentModalData.desc") 
+          div.desc-container
+            div.desc(v-html="currentModalData.desc") 
             div.contact
               p 联系人：{{currentModalData.contact}}
               p 地址：{{currentModalData.address}}
@@ -441,20 +442,28 @@ export default {
 .modal1
   z-index 10001
   .ivu-modal-header-inner
-    font-size 1.5vw
-    color rgb(211, 5, 32)
-    height 40px
+    font-size 2.2vw
+    color #c14328
+    height 5vh
     display flex
     align-items center
     padding 0 0 0 10px
     line-height 40px
+    font-family STZhongSong
   .ivu-modal
     width 55vw !important
+    margin-right 5vw
+    margin-top 5vh
   .ivu-modal-close
     top 14px
+    z-index 1
   .ivu-modal-header
-    background white
+    border-bottom 3px solid #94251f
+    background #fff
     border-radius 10px 10px 0 0
+    position relative
+    z-index 0
+    box-shadow 0 1px 10px rgba(51, 17, 9, 0.7)
   .ivu-modal-body
     background white
     border 1px solid rgba(255, 0, 0, 0.7)
@@ -466,25 +475,30 @@ export default {
     background transparent
     box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
   .ivu-icon-ios-close-empty
-    color red
+    color #b80000
     border-radius 2px
-    border 1px solid red
+    border 1px solid #b80000
     padding 0 8px
     top 0
-    font-size 45px
-    line-height 30px
-  .desc
-    min-height 100px
-    max-height 300px
-    overflow-y auto
-    font-size 1.2vw
+    font-size 85px
     line-height 50px
-    text-indent 50px
-    font-weight 500
-  .contact
-    font-size 1.2vw
-    line-height 50px
-    margin-top 30px
+    width 50px
+    height 50px
+    text-align center
+  .desc-container
+    .desc
+      min-height 100px
+      font-size 1.5vw
+      line-height 1.8
+      font-weight 500
+      color #515253
+      p
+        text-indent 2em
+    .contact
+      font-size 1.4vw
+      font-weight normal
+      line-height 50px
+      margin-top 2vh
   .modal1-content
     height 500px
     padding 2vw
@@ -498,7 +512,7 @@ export default {
     display flex
     justify-content space-between
   .modal-footer-right
-    font-size 1vw
+    font-size 1.4vw
     display flex
     justify-content space-between
     div
@@ -506,7 +520,9 @@ export default {
       align-items center
       padding 0 20px
 .menu-img-detail
-  width 15vw
+  width 24vw
+  margin-top 6.8vh
+  margin-left 1.2vw
 .modal2
   z-index 10001
   .ivu-modal-header-inner
