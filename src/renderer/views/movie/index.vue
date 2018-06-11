@@ -17,6 +17,7 @@ export default {
       videos: staticGen.movie,
       currentIndex: "1",
       recordingSign: false,
+      playing: false,
       recordingSignInterval:null
     };
   },
@@ -31,7 +32,13 @@ export default {
   },
   methods: {
     record() {
+
+      if (this.playing) {
+        return;
+      }
+
       console.log('Start recording...');
+
       const { video } = this.$refs;
       const isRecord = this.isRecord;
       video.currentTime = 0;
@@ -47,7 +54,9 @@ export default {
       }
       if (isRecord) {
         console.log('Stop recording.');
+        clearInterval(this.recordingSignInterval);
         video.pause();
+        this.recordingSign = false;
         this.RecordSuccess = true;
         return this.rec
           .stop()
@@ -60,7 +69,25 @@ export default {
           });
       }
     },
+    resetRecorder() {
+      this.isRecord = false;
+      this.RecordSuccess = false;
+      this.audioFile = "";
+      this.audioUrl = "";
+      this.recordingSign = false;
+    },
     async play() {
+
+      const { audio, video } = this.$refs;
+
+      if (this.playing) {
+        console.log('Stop playing.');
+        video.pause();
+        if (audio)
+        audio.pause();
+        this.playing = false;
+        return;
+      }
 
       if (this.isRecord) {
         await this.record();
@@ -68,11 +95,17 @@ export default {
 
       console.log('Play.');
 
-      if (!this.RecordSuccess || this.isRecord) return;
-      const { audio, video } = this.$refs;
+      if (this.isRecord) return;
+
       video.currentTime = 0;
       video.play();
-      audio.play();
+
+      if (this.RecordSuccess) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+
+      this.playing = true;
     },
     async upload() {
       if (!this.audioFile) {
@@ -87,6 +120,15 @@ export default {
       if (id) {
         this.$router.push({ name: "movieDetail", query: { id, qrcodeUrl } });
       }
+    },
+    async bgChange() {
+      if (this.playing) {
+        this.play();
+      }
+      if (this.isRecord) {
+        await this.record();
+      }
+      this.resetRecorder();
     }
   }
 };
@@ -98,13 +140,13 @@ export default {
     div.content
       div
         div.selectGrop 选择片段
-          select.select(v-model="currentIndex")
+          select.select(v-model="currentIndex" @change="bgChange")
             option.option(v-for="item in videos" :value="item.label" :key="item.value" :label="item.label") {{item.label}}
         video.video( ref="video" :src="currentVideo.url")
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
-        Icon.record(type="mic-a" @click="record" v-bind:class="{recording:recordingSign}")
-        Icon.play(type="play" @click="play")
+        Icon.record(type="mic-a" @click="record" v-bind:class="{recording:recordingSign,disabled:playing}")
+        Icon.play(:type="playing ? 'stop' : 'play'" @click="play" v-bind:class="{recorded:audioFile,playing:playing}")
         
         //- Button.record(@click="record" shape="circle" icon="mic-a" size="large")
         //- Button.play(:disabled= "!RecordSuccess || isRecord" @click="play" shape="circle" icon="play" size="large")   
@@ -193,8 +235,15 @@ export default {
   background #b3292c
   &.recording
     opacity 0.5
+  &.disabled
+    background #717171
 .play
   background #717171
-  padding-left 1vw
-  font-size 7vw
+  &.ivu-icon-play
+    padding-left 1vw
+    font-size 7vw
+  &.ivu-icon-stop
+    font-size 5vw
+  &.recorded, &.playing
+    background #213137
 </style>
