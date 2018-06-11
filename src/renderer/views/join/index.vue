@@ -84,6 +84,8 @@ export default {
   background-size cover
   select
     overflow hidden !important
+    font-weight bold
+    letter-spacing 0.1vw
   .title
     width 80vw
   .subtitle
@@ -119,7 +121,8 @@ export default {
     width 16vw
     height 4.4vw
     text-align-last center
-    font-size 2vw
+    font-size 2.3vw
+    font-weight bold
     background url('~@/assets//image/button_blue_4.png') center center no-repeat
     background-size cover
     text-align center
@@ -130,7 +133,7 @@ export default {
     height 4.4vw
     text-align-last center
     background url('~@/assets//image/select_4.png') center center no-repeat
-    background-size cover
+    background-size contain
     font-size 1.5vw
     text-align center
   display flex
@@ -142,7 +145,7 @@ export default {
   width 4.9vw
   height 4.4vw
   background url('~@/assets//image/select_2.png') center center no-repeat
-  background-size cover
+  background-size contain
   font-size 1.5vw
   text-align center
   display flex
@@ -151,11 +154,11 @@ export default {
 .selectType
   border none
   width 15vw
-  height 4.4vw
+  height 4.5vw
   text-indent -40px
   text-align-last center
   background url('~@/assets//image/select_arrow.png') center center no-repeat
-  background-size cover
+  background-size contain
   font-size 2vw
   display flex
   align-items center

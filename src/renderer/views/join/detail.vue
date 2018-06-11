@@ -72,6 +72,7 @@ export default {
           p 党史上的这一天也同样重要，一起来看看吧。
       div.desc
         span 共有 <span class="highlight">{{request.count}}</span>人次在这一天入党,占活动总人数的<span class="highlight">{{request.percentage}}%</span>
+        div.share 分享到朋友圈，让您的党员同志一起来参加
       //- div
       //-   span 分享到朋友圈，让您的党员朋友一起来参加
     div.right
@@ -79,7 +80,7 @@ export default {
         p.month {{date.month }}月
         p.day {{date.day }}日
       img.post-title(src="~@/assets/image/post-title.png")
-      p.post-content(v-html="request.content")
+      div.post-content(v-html="request.content")
     div.button-back-custom(@click="$router.go(-1)") 返回    
     img.logo(src="~@/assets/image/logo_cpc.png")              
 
@@ -92,11 +93,11 @@ export default {
   height 100vh
   background url('~@/assets//image/history_bg.png') no-repeat center center fixed
   background-size cover
-  justify-content space-around
+  justify-content space-between
   .left
-    width 35vw
+    width 44vw
   .right
-    width 35vw
+    width 38vw
     box-sizing border-box
     display flex
     flex-direction column
@@ -109,28 +110,30 @@ export default {
   .post-title
     object-fit contain
     height 100px
-    margin 40px 0 40px 0
+    margin 3vh 0
   .post-content
     overflow-y scroll
     padding 0 0 0 20px
     color black
+    font-size 1.5vw
     &::-webkit-scrollbar
       display none
     h2
-      font-size 1.4vw
+      font-size 2vw
       margin 0 0 1vw 0
     p
       margin 0 0 3vw 0
-      line-height 1.5vw
-      font-size 1vw
+      line-height 1.5
       font-weight 600
+      color #3e3e3e
+      text-indent 2em
   .date
     position absolute
     border solid 1px black
     border-radius 6px
-    left -2vw
-    top -2vw
-    font-size 2rem
+    left -3.5vw
+    top -3.5vw
+    font-size 2vw
     font-weight 600
     .month
       background rgb(234, 84, 19)
@@ -146,19 +149,22 @@ export default {
     width 100%
   .logo
     position absolute
-    width 80px
+    width 7vw
     height auto
-    right 20px
-    top 20px
+    right 2vw
+    top 2vw
   .content-header
-    background rgba(245, 170, 134, 0.9)
+    background #ecb28a
     color black
-    padding 1.5vw
-    font-size 1.5vw
+    padding 0.5vw 1.5vw
+    font-size 1.8vw
     font-weight bold
     border-radius 1rem 1rem 0 0
     display flex
     justify-content center
+    .highlight
+      color rgb(195, 13, 35)
+      font-size 3vw
   .content-footer
     font-size 1.5vw
     font-weight bold
@@ -169,9 +175,9 @@ export default {
     display flex
     justify-content center
   .content-footer3
-    font-size 1.5vw
-    font-weight bold
-    background rgba(250, 213, 159, 0.9)
+    font-size 1.8vw
+    font-weight normal
+    background #f8dba6
     color black
     padding 1.5vw
     border-radius 0 0 1rem 1rem
@@ -179,17 +185,19 @@ export default {
     flex-direction column
     justify-content center
     align-items center
+    line-height 1.8
   .button-back-custom
     position absolute
-    top 3vw
-    right 8vw
+    top 2.5vw
+    right 10vw
     border none
     z-index 10000
     color white
-    padding 0.25vw 0.6vw
+    padding 1vw 1.3vw
     background url('~@/assets//image/button_blue_2.png') center center no-repeat
-    background-size cover
-    font-size 1vw
+    background-size contain
+    font-size 1.5vw
+    font-weight bold
     display flex
     letter-spacing 10px
     text-indent 10px
@@ -197,9 +205,10 @@ export default {
   .desc
     margin 2vw 0
     letter-spacing 2px
-    font-size 1.2vw
+    font-size 1.8vw
     font-weight bold
     color black
+    padding 0 1vw
   .highlight
     color rgb(195, 13, 35)
     font-size 2vw
