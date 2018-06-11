@@ -204,7 +204,6 @@ export default {
     text-align center
   .desc
     margin 2vw 0
-    letter-spacing 2px
     font-size 1.8vw
     font-weight bold
     color black

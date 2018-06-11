@@ -86,6 +86,7 @@ export default {
     overflow hidden !important
     font-weight bold
     letter-spacing 0.1vw
+    font-size 2vw
   .title
     width 80vw
   .subtitle
@@ -134,7 +135,7 @@ export default {
     text-align-last center
     background url('~@/assets//image/select_4.png') center center no-repeat
     background-size contain
-    font-size 1.5vw
+    font-size 2vw
     text-align center
   display flex
   align-items center
