@@ -28,6 +28,9 @@ export default {
       });
     },
     async upload() {
+      if (!this.photoFile) {
+        return;
+      }
       const data = await request.UploadMotto({
         text: this.motto,
         image: this.photoFile,
@@ -60,9 +63,10 @@ export default {
     div.content
       div.motto-content(span="12")
         p.motto-preview-text {{motto}}
-        p(v-if="name!==''").motto-preview-name --{{name}}      
-        video.motto-preview-photo(autoplay :class='{hidden: photoUrl}' ref="video") 
-        canvas.motto-preview-photo(ref="canvas" :class='{hidden: !photoUrl}')              
+        p(v-if="name!==''").motto-preview-name --{{name}} 
+        div.motto-preview-photo
+          video(autoplay :class='{hidden: photoUrl}' ref="video") 
+          canvas(ref="canvas" :class='{hidden: !photoUrl}')              
       div.form(span="12")
         div
           p 我的座右铭
@@ -72,9 +76,9 @@ export default {
           input.input-name(v-model="name")
         div.actions
           div 我要拍照
-          img.snapshot(@click="snapshot" src="~@/assets/image/camera.png")
+          Icon.snapshot(type="camera" @click="snapshot")
           div 我要上传
-          img.snapshot(@click="upload" src="~@/assets/image/camera.png")
+          Icon.snapshot(type="upload" @click="upload" v-bind:class="{disabled:!photoFile}")
           
     button.button-back(@click="$router.go(-1)") 返回
     
@@ -87,7 +91,7 @@ export default {
   background-size cover
   padding 1rem 0
 .content
-  height 70vh
+  height 73vh
   position relative
   display flex
   align-items center
@@ -109,12 +113,26 @@ export default {
   font-weight 600
   color black
 .motto-preview-photo
-  width 14vw
-  transform rotate(-8deg)
-  position absolute
-  left 31vw
-  top 14vw
-  object-fit contain
+  width: 17.4vw
+  transform: rotate(-7.25deg)
+  position: absolute
+  left: 33vw
+  top: 14vw
+  height: 12vw
+  object-fit: cover
+  overflow: hidden
+  video,canvas
+    position absolute
+    top 0
+    left 0
+    object-fit cover
+    width 100%
+    height 100%
+  video
+    z-index 0
+  canvas
+    z-index 1
+  
 .motto-preview-text
   width 15vw
   font-size 2vw
@@ -130,12 +148,13 @@ export default {
   position absolute
   left 18vw
   top 20vw
+  width 9vw
 .motto-content
-  transform scale(1.1)
-  width 55vw
-  height 100%
+  width 53vw
+  height 64vh
   background url('~@/assets//image/book.png') no-repeat
-  background-size cover
+  background-size contain
+  margin 3vw 3vw 0
 .input-motto
   width 100%
   height 15vh
@@ -153,7 +172,16 @@ export default {
   align-items center
   font-size 2vw
 .snapshot
-  height 100%
+  height 6vw
   width 6.5vw
-  margin 0 1.5vw
+  line-height 6vw
+  font-size 5vw
+  text-align center
+  margin 0 2vw 0 1vw
+  background #956134
+  color white
+  border-radius 0.5vw
+  box-shadow 0.2vw 0.2vw 0.3vw #333
+  &.disabled
+    opacity 0.5
 </style>

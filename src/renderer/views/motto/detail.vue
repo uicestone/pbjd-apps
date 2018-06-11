@@ -55,12 +55,13 @@ export default {
   align-items center
   text-align center
 .motto-preview-photo
-  width 14vw
-  transform rotate(-8deg)
+  width 19.7vw
+  transform rotate(-7.25deg)
   position absolute
-  left 31vw
-  top 14vw
-  object-fit contain
+  left 34vw
+  top 11vw
+  object-fit cover
+  height 14vw
 .qrcode-text
   font-weight 600
   font-size 1.8vw
@@ -80,8 +81,9 @@ export default {
   position absolute
   left 18vw
   top 20vw
+  width 9vw
 .content
-  height 70vh
+  height 73vh
   display flex
   align-items center
   justify-content space-around
@@ -98,10 +100,10 @@ export default {
   width 40vw
   flex 0
 .motto-content
-  transform scale(1.2)
   position relative
-  width 55vw
-  height 100%
+  margin-top 5vh
+  height 68vh
+  width 60vw
   background url('~@/assets//image/book.png') no-repeat
   background-size cover
 </style>
