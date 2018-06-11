@@ -42,9 +42,9 @@ export default {
       yearList: new Array(98).fill(0).map((k, i) => ({ value: `${i + 1921}` })),
       monthList: new Array(12)
         .fill(0)
-        .map((k, i) => ({ value: i >= 10 ? `${i + 1}` : `0${i}` })),
+        .map((k, i) => ({ value: i >= 9 ? `${i + 1}` : `0${i + 1}` })),
       dayList: new Array(30).fill(0).map((k, i) => ({
-        value: i >= 10 ? `${i + 1}` : `0${i}`
+        value: i >= 9 ? `${i + 1}` : `0${i + 1}`
       })),
       date: {
         date: "",
