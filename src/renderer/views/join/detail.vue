@@ -72,7 +72,9 @@ export default {
           p 党史上的这一天也同样重要，一起来看看吧。
       div.desc
         span 共有 <span class="highlight">{{request.count}}</span>人次在这一天入党,占活动总人数的<span class="highlight">{{request.percentage}}%</span>
-        div.share 分享到朋友圈，让您的党员同志一起来参加
+        div.share
+          img.qrcode(src="~@/assets/image/qrcode.jpg")
+          span 分享到朋友圈，让您的党员同志一起来参加
       //- div
       //-   span 分享到朋友圈，让您的党员朋友一起来参加
     div.right
@@ -88,7 +90,7 @@ export default {
 
 <style lang="stylus">
 .page-join-detail
-  padding 8vw 6vw
+  padding 8vw 6vw 4vw
   display flex
   height 100vh
   background url('~@/assets//image/history_bg.png') no-repeat center center fixed
@@ -207,7 +209,18 @@ export default {
     font-size 1.8vw
     font-weight bold
     color black
-    padding 0 1vw
+    padding-left 1vw
+    .share
+      font-weight normal
+      font-size 1.7vw
+      line-height 15vh
+      height 15vh
+      margin-top 2vh
+      span
+        vertical-align text-bottom
+      .qrcode
+        width 8vw
+        margin-right 1vw
   .highlight
     color rgb(195, 13, 35)
     font-size 2vw
