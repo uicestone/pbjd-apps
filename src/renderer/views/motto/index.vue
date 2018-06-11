@@ -53,6 +53,9 @@ export default {
       .catch(e => {
         console.log(`navigator.getUserMedia error: ${e}`);
       });
+  },
+  destroyed() {
+    window.localMediaStream.getTracks()[0].stop();
   }
 };
 </script>
