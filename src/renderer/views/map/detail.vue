@@ -72,8 +72,8 @@ export default {
         区党建服务中心: {
           label: "区党建服务中心",
           images: {
-            select: "static/images/map_button_1.png",
-            unselect: "static/images/map_button_1a.png"
+            select: "static/images/map_button_1a.png",
+            unselect: "static/images/map_button_1.png"
           },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10),
@@ -82,8 +82,8 @@ export default {
         街镇社区党建服务中心: {
           label: "街镇社区党建服务中心",
           images: {
-            select: "static/images/map_button_2.png",
-            unselect: "static/images/map_button_2a.png"
+            select: "static/images/map_button_2a.png",
+            unselect: "static/images/map_button_2.png"
           },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
@@ -91,8 +91,8 @@ export default {
         组织生活现场开放点: {
           label: "组织生活现场开放点",
           images: {
-            select: "static/images/map_button_3.png",
-            unselect: "static/images/map_button_3a.png"
+            select: "static/images/map_button_3a.png",
+            unselect: "static/images/map_button_3.png"
           },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
@@ -100,8 +100,8 @@ export default {
         党性教育基地: {
           label: "党性教育基地",
           images: {
-            select: "static/images/map_button_4.png",
-            unselect: "static/images/map_button_4a.png"
+            select: "static/images/map_button_4a.png",
+            unselect: "static/images/map_button_4.png"
           },
           type: "type1",
           layer: L.layerGroup([]).setZIndex(10)
@@ -433,10 +433,10 @@ export default {
 .menu
   position absolute
   top 40vh
-  left 10vw
+  left 8vw
   z-index 1000
 .menu-img
-  width 25vw
+  width 29vw
   margin 10px 0
 .modal1
   z-index 10001
@@ -588,9 +588,9 @@ export default {
     display none
 .logo
   position absolute
-  top 50px
-  left 50px
-  width 25vw
+  top 2vh
+  left 3vw
+  width 29vw
 .back_menu
   position absolute
   bottom 50px
