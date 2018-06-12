@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.map
+  div.map(v-bind:class="{'map-town':currentLayer}")
     div#map
     div.menu
       li(v-if="!currentLayer && value.label !== undefined" v-for="(value, key) in OptionLayers" @click="setLayer(key,value)")
@@ -19,7 +19,7 @@
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
-            div 
+            div(v-if="currentModalData.liveVideoUrl")
               img.modal-icon(src="~@/assets/image/map_icon_1.png")
               span 实时连线
             div
@@ -37,13 +37,16 @@
                 p 地址：{{currentModalData.address}}
                 p 联系电话：{{currentModalData.phone}}  
             div.modal2-footer-right
-              div 
+              div(v-if="currentModalData.liveVideoUrl")
                 img.modal-icon(src="~@/assets/image/map_icon_1.png")
                 span 实时连线
               div
                 img.modal-icon(src="~@/assets/image/map_icon_2.png")
                 span 导航到此地
-    img.logo(src="~@/assets/image/map_title.png")
+    img.logo(src="~@/assets/image/map_title.png" v-if="!currentLayer")
+    div.town-title(v-if="currentLayer")
+      div.town-name {{ currentLayer }}
+      div 社区党建服务中心
     img.back_menu(@click="back" src="~@/assets/image/map_back.png")
     
 </template>
@@ -425,6 +428,8 @@ export default {
   height 100vh
   background url('~@/assets//image/map_bg.png') center center no-repeat
   background-size cover
+  &.map-town
+    background url('~@/assets//image/map_town_bg.png') center center no-repeat
 #map
   width 100vw
   height 100vh
@@ -462,11 +467,14 @@ export default {
     background #fff
     border-radius 10px 10px 0 0
     position relative
-    z-index 0
+    z-index 1
     box-shadow 0 1px 10px rgba(51, 17, 9, 0.7)
   .ivu-modal-body
     background white
     border 1px solid rgba(255, 0, 0, 0.7)
+    position relative
+    z-index 1
+    box-shadow 0 1px 10px rgba(51, 17, 9, 0.7)
   .ivu-modal-footer
     border 1px solid rgba(255, 0, 0, 0.7)
     background rgb(247, 231, 230)
@@ -613,6 +621,22 @@ export default {
   right 50px
   width 150px
   z-index 1
+.town-title
+  width 816px
+  height 163px
+  left 0
+  top 60px
+  position absolute
+  background url('~@/assets//image/town_title_bg.png') no-repeat
+  background-size contain
+  font-size 60px
+  font-family STZhongSong
+  color #c44328
+  padding-left 70px
+  line-height 1.2
+  padding-top 10px
+  .town-name
+    font-weight bold
 .modal-icon
   width 55px
   margin 0 10px
