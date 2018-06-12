@@ -1,6 +1,6 @@
 <template lang="pug">
   div.page-map-index
-    video.video(:class="{show: isPlaying, hidden: !isPlaying }" ref="video" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")
+    video.video(:class="{show: isPlaying, hidden: !isPlaying}" ref="video" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" @ended="videoEnded")
     div.buttonGroup
       img(@click="playVideo" src="~@/assets//image/map_index_button1.png")
       img(@click="goDetail" src="~@/assets//image/map_index_button2.png")
@@ -16,7 +16,6 @@ export default {
   watch: {
     isPlaying(val) {
       const { video } = this.$refs;
-      console.log(video);
       video.play();
     }
   },
@@ -25,7 +24,12 @@ export default {
       this.$router.push({ name: "mapDetail" });
     },
     playVideo() {
+      console.log('Play video.')
       this.isPlaying = true;
+    },
+    videoEnded() {
+      console.log('Video ended')
+      this.isPlaying = false;
     }
   }
 };
