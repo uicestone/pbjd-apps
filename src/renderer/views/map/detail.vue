@@ -1,6 +1,6 @@
 <template lang="pug">
   div.map(v-bind:class="{'map-town':currentLayer}")
-    div#map
+    div#map(ref="map")
     div.menu
       li(v-if="!currentLayer && value.label !== undefined" v-for="(value, key) in OptionLayers" @click="setLayer(key,value)")
         img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
@@ -14,8 +14,7 @@
               p 联系人：{{currentModalData.contact}}
               p 地址：{{currentModalData.address}}
               p 联系电话：{{currentModalData.phone}}
-            
-            
+
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
@@ -113,75 +112,88 @@ export default {
       },
       cachedOptionLayer: "区党建服务中心",
       currentOptionLayer: "",
+      currentHoverLayer:"",
       currentLayer: "",
       customDatas: {
         华亭镇: {
+          hiddenMarkerPoint: [121.302905, 31.497195],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(214,124,90)"
           }
         },
         徐行镇: {
+          hiddenMarkerPoint: [ 121.21434799999999, 31.479182],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(218,161,118)"
           }
         },
         南翔镇: {
+          hiddenMarkerPoint: [121.340947, 31.336383],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(190,190,213)"
           }
         },
         真新街道: {
+          hiddenMarkerPoint: [121.36162999999999, 31.260224],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(129,131,152)"
           }
         },
         外冈镇: {
+          hiddenMarkerPoint: [121.176841, 31.405644000000002],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(246,229,177)"
           }
         },
         江桥镇: {
+          hiddenMarkerPoint: [121.251139, 31.294613000000002],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(158,157,175)"
           }
         },
         安亭镇: {
+          hiddenMarkerPoint: [121.20115799999999,31.250049],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(250,203,135)"
           }
         },
         马陆镇: {
+          hiddenMarkerPoint: [ 121.308802, 31.407790000000002],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(233,192,102)"
           }
         },
         新成路街道: {
+          hiddenMarkerPoint: [ 121.27557999999999, 31.402249],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(121,188,112)"
           }
         },
         嘉定镇街道: {
+          hiddenMarkerPoint: [ 121.249546, 31.39321],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(82,161,80)"
           }
         },
         菊园新区: {
+          hiddenMarkerPoint: [ 121.259914, 31.414283],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(235,194,162)"
           }
         },
         嘉定工业区: {
+          hiddenMarkerPoint: [ 121.23277499999999,31.371815],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(177,210,165)"
@@ -206,6 +218,26 @@ export default {
       if (val) {
         const layer = this.OptionLayers[val].layer;
         this.map.addLayer(layer);
+      }
+    },
+    currentHoverLayer(_val){
+      if (_val) {
+        for (let [key, val] of Object.entries(this.customDatas)) {
+          if (key != _val) {
+            // this.map.removeLayer(val.childLayer);
+            // this.map.removeLayer(val.layer);
+            val.hiddenMarker.closePopup()            
+          } else {
+            // console.log(val)
+            // this.map.addLayer(val.childLayer);
+            // console.log(val.hiddenMarker)
+            val.hiddenMarker.openPopup()
+          }
+        }
+      } else {
+        Object.values(this.customDatas).forEach(val => {
+          val.hiddenMarker.closePopup()
+        });
       }
     },
     currentLayer(_val) {
@@ -272,15 +304,15 @@ export default {
         frag.appendChild(div.firstChild.firstChild);
       return frag;
     },
-    highlightFeature(e) {
+    highlightFeature(e, {Name}) {
       let layer = e.target;
-
-      layer.setStyle({
-        weight: 10,
-        color: "#666",
-        dashArray: "",
-        fillOpacity: 1
-      });
+      this.currentHoverLayer = Name
+      // layer.setStyle({
+      //   weight: 10,
+      //   color: "#666",
+      //   dashArray: "",
+      //   fillOpacity: 1
+      // });
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -324,8 +356,8 @@ export default {
         const { type } = data || {};
         // if (type == "type2") {
         layer.on({
-          // mouseover: this.highlightFeature,
-          // mouseout: this.resetHighlight,
+          mouseover: e => this.highlightFeature(e, {Name}),
+          mouseout: e => this.highlightFeature(e, {Name: ''}),
           click: e => this.zoomToFeature(e, { Name })
         });
         // }
@@ -335,7 +367,6 @@ export default {
   async mounted() {
     let layers = Object.values(this.OptionLayers);
     let features = Object.values(this.features);
-
     let icon = L.icon({
       iconUrl: "static/images/map_marker.png",
       iconSize: [35, 50]
@@ -349,8 +380,6 @@ export default {
     });
 
     this.map.doubleClickZoom.disable();
-    const getColor = () =>
-      "#" + Math.floor(Math.random() * 16777215).toString(16);
     this.geojson = L.geoJSON(this.geo.features, {
       style: feature => {
         let fillColor = "";
@@ -394,6 +423,17 @@ export default {
       if (type == "服务中心" && town) {
         let customData = this.customDatas[town];
         customData.spotId = id;
+        // let hiddenMarker = L.circle([latitude, longitude],{
+        //   color: 'transparent',
+        //   fillColor: 'transparent',
+        //   fillOpacity: 0.1,
+        //   radius: 1
+        // }).addTo(this.map)
+        // hiddenMarker.bindPopup(town,{
+        //   closeButton: false,
+        // })
+
+        // customData.hiddenMarker = hiddenMarker
         this.OptionLayers["街镇社区党建服务中心"].layer.addLayer(marker);
       }
       if (type == "组织生活现场开放点") {
@@ -409,6 +449,35 @@ export default {
         }
       }
     });
+
+    for (let[key,val] of Object.entries(this.customDatas)){
+      const {hiddenMarkerPoint} = val
+      const [a,b] = hiddenMarkerPoint
+
+       let hiddenMarker = L.circle([b,a],{
+          color: 'transparent',
+          fillColor: 'transparent',
+          fillOpacity: 0.1,
+          radius: 1
+        }).addTo(this.map)
+        hiddenMarker.bindPopup(key,{
+          closeButton: false,
+        })
+        hiddenMarker.addTo(this.map)
+        val.hiddenMarker = hiddenMarker
+    }
+    
+    // console.log( document.querySelector(".leaflet-zoom-animated"))
+
+    var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceGraphic" dx="-30" dy="30" />
+      <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+      values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
+      <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>`
+    document.querySelector(".leaflet-zoom-animated").prepend(defs)
 
     // for (let [key, val] of Object.entries(this.customDatas)) {
     //   this.map.addLayer(val.childLayer);
@@ -441,6 +510,8 @@ export default {
   top 40vh
   left 8vw
   z-index 1000
+.popup
+  color red
 .menu-img
   width 29vw
   margin 10px 0
@@ -640,4 +711,17 @@ export default {
 .modal-icon
   width 55px
   margin 0 10px
+.leaflet-popup-tip
+  width 10px
+
+.leaflet-popup-content-wrapper
+  border-radius 5px
+.leaflet-popup-content
+  margin 6px
+  text-align center  
+  color #c44328
+  font-weight  600
+div.leaflet-overlay-pane svg > g {
+  filter: url(#shadow);
+}
 </style>
