@@ -474,7 +474,7 @@ export default {
 
     var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
       defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
-      <feOffset result="offOut" in="SourceGraphic" dx="-30" dy="30" />
+      <feOffset result="offOut" in="SourceGraphic" dx="50" dy="30" />
       <feColorMatrix result="matrixOut" in="offOut" type="matrix"
       values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
       <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
