@@ -153,7 +153,7 @@ export default {
     position absolute
     width 7vw
     height auto
-    right 2vw
+    left 91vw
     top 2vw
   .content-header
     background #ecb28a
