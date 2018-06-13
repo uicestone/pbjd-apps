@@ -2,127 +2,128 @@ import config from "../config";
 
 export const $ = (obj, cb) => {
   for (let [key, val] of Object.entries(obj)) {
-    cb(key, val)
+    cb(key, val);
   }
-}
+};
 
 export const obj2query = obj => {
-  let queryString = ""
+  let queryString = "";
   for (let [key, value] of Object.entries(obj)) {
-    queryString += `&${key}=${encodeURIComponent(value)}`
+    queryString += `&${key}=${encodeURIComponent(value)}`;
   }
-  return queryString.substr(1)
-}
+  return queryString.substr(1);
+};
 
-const parseJson = async (res) => {
+const parseJson = async res => {
   try {
     let data = await res.json();
     return data;
   } catch (e) {
     throw new Error("服务器错误");
   }
-}
+};
 
-export const request = (url, options) => {
+export const request = async (url, options = {}) => {
+  const { cacheable = true } = options;
   url = `${config.apiRoot}${url}`;
-  // console.log(options)
-  return fetch(url, options).then(parseJson);
-}
+  const cacheData = JSON.parse(localStorage.getItem(url));
+  let remoteData = null;
+  if (cacheable && cacheData) {
+    console.log("Cache data founded.");
+    _fetch(url, options)
+      .then(data => {
+        localStorage.setItem(url, JSON.stringify(data));
+        console.log("Cache data.");
+      })
+      .catch(e => {
+        console.error("Network error fetching data.");
+      });
 
+    return cacheData;
+  } else {
+    console.log("Not found cached data, get data from remote server.");
 
+    remoteData = await _fetch(url, options);
+    localStorage.setItem(url, JSON.stringify(remoteData));
+    console.log("Cache data.");
 
-export const getUserCount = ({
-  type,
-  month,
-  day
-}) => {
+    return remoteData;
+  }
+};
+
+export const _fetch = (url, options) => fetch(url, options).then(parseJson);
+
+export const getUserCount = ({ type, month, day }) => {
   return request(`user-count/${type}/${month}/${day}`, {
     method: "GET"
-  })
-}
+  });
+};
 
-export const getCpcReview = ({
-  type,
-  month,
-  day
-}) => {
+export const getCpcReview = ({ type, month, day }) => {
   return request(`cpc-review/${type}/${month}/${day}`, {
     method: "GET"
-  })
-}
+  });
+};
 
-export const UploadSpeechTalk = (datas) => {
-
-  let formData = new FormData()
+export const UploadSpeechTalk = datas => {
+  let formData = new FormData();
   $(datas, (key, val) => {
-    formData.append(key, val)
-  })
+    formData.append(key, val);
+  });
   return request(`speeches/talk`, {
     method: "POST",
     body: formData
-  })
-}
+  });
+};
 
-export const UploadSpeechMovie = (datas) => {
-
-  let formData = new FormData()
+export const UploadSpeechMovie = datas => {
+  let formData = new FormData();
   $(datas, (key, val) => {
-    formData.append(key, val)
-  })
+    formData.append(key, val);
+  });
   return request(`speeches/movie`, {
     method: "POST",
     body: formData
-  })
-}
+  });
+};
 
-export const getSpeechMove = (datas) => {
-  const {
-    id
-  } = datas
+export const getSpeechMove = datas => {
+  const { id } = datas;
   return request(`speeches/${id}`, {
     method: "GET"
-  })
-}
+  });
+};
 
-
-
-export const UploadMotto = (datas) => {
-  let formData = new FormData()
+export const UploadMotto = datas => {
+  let formData = new FormData();
   $(datas, (key, val) => {
-    formData.append(key, val)
-  })
+    formData.append(key, val);
+  });
   return request(`mottoes`, {
     method: "POST",
     body: formData
-  })
-}
+  });
+};
 
 export const getMotto = datas => {
-  const {
-    id
-  } = datas
+  const { id } = datas;
   return request(`mottoes/${id}`, {
     method: "GET"
-  })
-}
+  });
+};
 
 export const getMottoes = datas => {
-  const {
-    query
-  } = datas
+  const { query } = datas;
   return request(`mottoes?${obj2query(query)}`, {
     method: "GET"
-  })
-}
+  });
+};
 export const getSpeechs = datas => {
-  const {
-    type,
-    query
-  } = datas
+  const { type, query } = datas;
 
-  return request(`speeches/${type}?${obj2query(query)}`)
-}
+  return request(`speeches/${type}?${obj2query(query)}`);
+};
 
 export const getSpots = datas => {
-  return request(`spots`)
-}
+  return request(`spots`);
+};

@@ -405,25 +405,27 @@ export default {
     this.features.type1.on("click", () => (this.modal1 = true));
     this.setLayer(this.cachedOptionLayer);
 
-    let _spotsLocal = JSON.parse(localStorage.getItem("_spots"));
+    // let _spotsLocal = JSON.parse(localStorage.getItem("_spots"));
     let _spots;
 
-    if (_spotsLocal) {
-      console.log('Local spots found.');
-      _spots = _spotsLocal;
-      request.getSpots().then(_spots => {
-        localStorage.setItem("_spots", JSON.stringify(_spots));
-        console.log('Saved local spots.');
-      }).catch(e => {
-        console.error('Network error fetching spots.');
-      });
-    } else {
-      console.log('Initing spots from remote server.');
-      _spots = await request.getSpots();
-      localStorage.setItem("_spots", JSON.stringify(_spots));
-      console.log('Saved local spots.');
-    }
+    // if (_spotsLocal) {
+    //   console.log('Local spots found.');
+    //   _spots = _spotsLocal;
+    //   request.getSpots().then(_spots => {
+    //     localStorage.setItem("_spots", JSON.stringify(_spots));
+    //     console.log('Saved local spots.');
+    //   }).catch(e => {
+    //     console.error('Network error fetching spots.');
+    //   });
+    // } else {
+    //   console.log('Initing spots from remote server.');
+    //   _spots = await request.getSpots();
+    //   localStorage.setItem("_spots", JSON.stringify(_spots));
+    //   console.log('Saved local spots.');
+    // }
 
+    _spots = await request.getSpots();
+    console.log(2)
 
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images } = spot;
