@@ -25,13 +25,14 @@ function createWindow() {
     height: 1080,
     useContentSize: true,
     width: 1920,
-    resizable: false
+    resizable: false,
+    fullscreen: true
   });
 
   mainWindow.loadURL(winURL);
 
   // debug
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on("closed", () => {
     mainWindow = null;
