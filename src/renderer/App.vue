@@ -2,7 +2,8 @@
   div#app
     div
       div.button-back-debug(@click="$router.go(-1)") 返回
-    router-view
+    transition(name="fade")
+      router-view
 </template>
 
 <script>
@@ -16,6 +17,21 @@ export default {
 @import "~iview/src/styles/index.less";
 @import "~leaflet/dist/leaflet.css";
 @import "./assets/fonts/Guoxiang.css";
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.25s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.25s;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 
 @link-color: #000000;
 html {
