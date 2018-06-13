@@ -307,12 +307,12 @@ export default {
     highlightFeature(e, {Name}) {
       let layer = e.target;
       this.currentHoverLayer = Name
-      // layer.setStyle({
-      //   weight: 10,
-      //   color: "#666",
-      //   dashArray: "",
-      //   fillOpacity: 1
-      // });
+      layer.setStyle({
+        weight: 3,
+        color: "#c44328",
+        dashArray: "",
+        fillOpacity: 1
+      });
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -357,7 +357,10 @@ export default {
         // if (type == "type2") {
         layer.on({
           mouseover: e => this.highlightFeature(e, {Name}),
-          mouseout: e => this.highlightFeature(e, {Name: ''}),
+          mouseout: e => {
+            this.highlightFeature(e, {Name: ''});
+            this.resetHighlight(e);
+          },
           click: e => this.zoomToFeature(e, { Name })
         });
         // }
@@ -391,7 +394,7 @@ export default {
         return {
           color: "white",
           fillColor,
-          weight: 6,
+          weight: 3,
           fillOpacity: 1,
           boxShadow: "-5px -5px 5px #888",
           className: "map-shadow"
@@ -716,11 +719,17 @@ export default {
 
 .leaflet-popup-content-wrapper
   border-radius 5px
+  box-shadow 0.5vw 0.5vw 1vw rgba(127,0,0,.4)
 .leaflet-popup-content
   margin 6px
   text-align center  
   color #c44328
   font-weight  600
+  width auto !important
+  height 1.8vw
+  font-size 1.3vw
+  white-space nowrap
+  padding 0 .5vw
 div.leaflet-overlay-pane svg > g {
   filter: url(#shadow);
 }
