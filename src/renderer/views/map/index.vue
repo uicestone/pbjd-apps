@@ -1,6 +1,6 @@
 <template lang="pug">
   div.page-map-index
-    video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/test.mp4" @ended="videoEnded")
+    video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/intro.mp4" @ended="videoEnded")
     Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
     div.buttonGroup
       img(@click="playVideo" src="~@/assets//image/map_index_button1.png")
@@ -69,8 +69,6 @@ export default {
   top 0
   z-index 21
   text-shadow .1vw .1vw .3vw black
-.show
-  visibility visible
 .hidden
   visibility hidden
 .buttonGroup
