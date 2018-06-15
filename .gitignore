@@ -10,6 +10,7 @@ thumbs.db
 !.gitkeep
 *.log
 
+static/map/*
 static/movie/*
 static/talk/*
 
