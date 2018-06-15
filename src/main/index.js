@@ -26,7 +26,7 @@ function createWindow() {
     useContentSize: true,
     width: 1920,
     resizable: false,
-    fullscreen: true
+    fullscreen: false
   });
 
   mainWindow.loadURL(winURL);
