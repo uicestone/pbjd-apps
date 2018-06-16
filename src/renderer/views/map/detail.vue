@@ -430,7 +430,6 @@ export default {
     // }
 
     _spots = await request.getSpots();
-    console.log(2)
 
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images } = spot;

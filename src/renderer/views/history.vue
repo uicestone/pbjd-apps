@@ -105,7 +105,7 @@ export default {
     div.main-title 往期精选
     div.content    
       ul.menu-list
-        Button.button5(v-for="button in buttons"  @click="switchType(button)") {{button.label}}
+        Button.button5(v-for="(button,index) in buttons" :key="index" @click="switchType(button)") {{button.label}}
       div.user-list
         div.list-item
           div.user-item(v-if="index < 5" v-for="(value,index) in currentUser" @click="clickItem(value)")
