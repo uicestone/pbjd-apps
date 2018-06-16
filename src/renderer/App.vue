@@ -15,6 +15,10 @@ export default {
 @import "~leaflet/dist/leaflet.css";
 @import "./assets/fonts/Guoxiang.css";
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .fade-enter-active {
   animation: fade-in 2s;
   position: absolute;
