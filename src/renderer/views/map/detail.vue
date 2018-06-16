@@ -158,7 +158,7 @@ export default {
           }
         },
         安亭镇: {
-          hiddenMarkerPoint: [121.20115799999999,31.250049],
+          hiddenMarkerPoint: [121.20115799999999,31.336383],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(250,203,135)"
@@ -304,15 +304,15 @@ export default {
         frag.appendChild(div.firstChild.firstChild);
       return frag;
     },
-    highlightFeature(e, {Name}) {
+    highlightFeature(e, { Name }) {
       let layer = e.target;
       this.currentHoverLayer = Name
-      layer.setStyle({
-        weight: 3,
-        color: "#c44328",
-        dashArray: "",
-        fillOpacity: 1
-      });
+      // layer.setStyle({
+      //   weight: 3,
+      //   color: "#c44328",
+      //   dashArray: "",
+      //   fillOpacity: 1
+      // });
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
@@ -322,7 +322,7 @@ export default {
       this.geojson.resetStyle(e.target);
     },
     zoomToFeature(e, { Name }) {
-      this.map.fitBounds(e.target.getBounds());
+      this.map.fitBounds(e.target.getBounds(), {paddingTopLeft:[400, 0]});
       // this.resetLayers(this.OptionLayers);
       this.currentOptionLayer = "";
       Name && (this.currentLayer = Name);
@@ -356,12 +356,18 @@ export default {
         const { type } = data || {};
         // if (type == "type2") {
         layer.on({
-          mouseover: e => this.highlightFeature(e, {Name}),
-          mouseout: e => {
-            this.highlightFeature(e, {Name: ''});
-            this.resetHighlight(e);
+          contextmenu: e => {
+            this.highlightFeature(e, { Name })
           },
-          click: e => this.zoomToFeature(e, { Name })
+          // mouseout: e => {
+          //   console.log(`Mouseout ${Name}.`)
+          //   this.highlightFeature(e, {Name: ''});
+          //   this.resetHighlight(e);
+          // },
+          click: e => {
+            if (this.currentOptionLayer === '街镇社区党建服务中心')
+            this.zoomToFeature(e, { Name })
+          }
         });
         // }
       }
@@ -379,10 +385,11 @@ export default {
       center: [this.config.lat, this.config.lng],
       zoom: this.config.zoom,
       zoomControl: false,
-      attributionControl: false
+      attributionControl: false,
+      doubleClickZoom: false,
+      dragging: false
     });
 
-    this.map.doubleClickZoom.disable();
     this.geojson = L.geoJSON(this.geo.features, {
       style: feature => {
         let fillColor = "";
@@ -395,9 +402,7 @@ export default {
           color: "white",
           fillColor,
           weight: 3,
-          fillOpacity: 1,
-          boxShadow: "-5px -5px 5px #888",
-          className: "map-shadow"
+          fillOpacity: 0.7,
         };
       },
       onEachFeature: this.onEachFeature
@@ -550,7 +555,7 @@ export default {
     margin-top 5vh
   .ivu-modal-close
     top 14px
-    z-index 1
+    z-index 2
   .ivu-modal-header
     border-bottom 3px solid #94251f
     background #fff
