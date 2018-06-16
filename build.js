@@ -14,6 +14,11 @@ let output = {
 for (let [key, val] of Object.entries(staticPath)) {
   let files = fs.readdirSync(val)
   files.forEach(file => {
+    
+    if (file.match(/^\./)) {
+      return;
+    }
+
     const filename = path.basename(file, path.extname(file))
 
 
