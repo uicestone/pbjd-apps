@@ -1,7 +1,5 @@
 <template lang="pug">
   div#app
-    div
-      div.button-back-debug(@click="$router.go(-1)") 返回
     transition(name="fade")
       router-view
 </template>
@@ -13,24 +11,29 @@ export default {
 </script>
 
 <style lang="less">
-// https://github.com/iview/iview/blob/2.0/src/styles/custom.less
 @import "~iview/src/styles/index.less";
 @import "~leaflet/dist/leaflet.css";
 @import "./assets/fonts/Guoxiang.css";
 
-.fade-enter-active,
-.fade-leave-active {
-  transition-property: opacity;
-  transition-duration: 0.25s;
-}
-
 .fade-enter-active {
-  transition-delay: 0.25s;
+  animation: fade-in 2s;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
-
-.fade-enter,
 .fade-leave-active {
-  opacity: 0;
+  animation: fade-in 2s reverse;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @link-color: #000000;
@@ -47,11 +50,6 @@ select {
 li {
   list-style-type: none;
 }
-// .button-back {
-//   position: absolute;
-//   right: 0;
-//   z-index: 10000;
-// }
 .ivu-select-selection {
   all: unset;
   i {
@@ -90,9 +88,6 @@ li {
   text-indent: 10px;
   text-align: center;
   margin: 1vh auto 0;
-}
-.button-back-debug {
-  display: none;
 }
 
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
