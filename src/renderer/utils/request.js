@@ -29,11 +29,11 @@ export const request = async (url, options = {}) => {
   const cacheData = JSON.parse(localStorage.getItem(url));
   let remoteData = null;
   if (cacheable && cacheData) {
-    console.log("Cache data founded.");
+    // console.log("Cache data founded.");
     _fetch(url, options)
       .then(data => {
         localStorage.setItem(url, JSON.stringify(data));
-        console.log("Cache data.");
+        // console.log("Cache data.");
       })
       .catch(e => {
         console.error("Network error fetching data.");
@@ -45,7 +45,7 @@ export const request = async (url, options = {}) => {
 
     remoteData = await _fetch(url, options);
     localStorage.setItem(url, JSON.stringify(remoteData));
-    console.log("Cache data.");
+    // console.log("Cache data.");
 
     return remoteData;
   }
