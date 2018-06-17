@@ -56,7 +56,6 @@ import geoJson from "@/assets/json/geo.json";
 // import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
 import * as request from "../../utils/request";
-import { TSPropertySignature } from "babel-types";
 global.L = L;
 
 export default {
@@ -378,7 +377,15 @@ export default {
     let features = Object.values(this.features);
     let icon = L.icon({
       iconUrl: "static/images/map_marker.png",
-      iconSize: [35, 50]
+      iconSize: [35, 50],
+      iconAnchor: [17, 50],
+    });
+
+    // need config
+    let cameraIcon = L.icon({
+      iconUrl: "static/images/map_marker.png",
+      iconSize: [35, 50],
+      iconAnchor: [17, 50],
     });
 
     this.map = L.map("map", {
@@ -410,30 +417,13 @@ export default {
     this.features.type1.on("click", () => (this.modal1 = true));
     this.setLayer(this.cachedOptionLayer);
 
-    // let _spotsLocal = JSON.parse(localStorage.getItem("_spots"));
     let _spots;
-
-    // if (_spotsLocal) {
-    //   console.log('Local spots found.');
-    //   _spots = _spotsLocal;
-    //   request.getSpots().then(_spots => {
-    //     localStorage.setItem("_spots", JSON.stringify(_spots));
-    //     console.log('Saved local spots.');
-    //   }).catch(e => {
-    //     console.error('Network error fetching spots.');
-    //   });
-    // } else {
-    //   console.log('Initing spots from remote server.');
-    //   _spots = await request.getSpots();
-    //   localStorage.setItem("_spots", JSON.stringify(_spots));
-    //   console.log('Saved local spots.');
-    // }
-
     _spots = await request.getSpots();
 
     _spots.forEach(spot => {
-      const { id, town, type, latitude, longitude, name, images } = spot;
+      const { id, town, type, latitude, longitude, name, images, live, liveVideoUrl } = spot;
       this.spots[id] = spot;
+      icon = liveVideoUrl ? cameraIcon : icon
 
       let marker = L.marker([latitude, longitude], { icon });
       marker.on("click", () => {
@@ -445,17 +435,7 @@ export default {
       if (type == "服务中心" && town) {
         let customData = this.customDatas[town];
         customData.spotId = id;
-        // let hiddenMarker = L.circle([latitude, longitude],{
-        //   color: 'transparent',
-        //   fillColor: 'transparent',
-        //   fillOpacity: 0.1,
-        //   radius: 1
-        // }).addTo(this.map)
-        // hiddenMarker.bindPopup(town,{
-        //   closeButton: false,
-        // })
 
-        // customData.hiddenMarker = hiddenMarker
         this.OptionLayers["街镇社区党建服务中心"].layer.addLayer(marker);
       }
       if (type == "组织生活现场开放点") {
@@ -488,8 +468,7 @@ export default {
         hiddenMarker.addTo(this.map)
         val.hiddenMarker = hiddenMarker
     }
-    
-    // console.log( document.querySelector(".leaflet-zoom-animated"))
+  
 
     var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
       defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
@@ -504,12 +483,14 @@ export default {
     // for (let [key, val] of Object.entries(this.customDatas)) {
     //   this.map.addLayer(val.childLayer);
     // }
-    // L.circle([31.343661, 121.239589], {
+    // L.circle([this.config.lat, this.config.lng], {
     //   color: "red",
     //   fillColor: "#f03",
     //   fillOpacity: 0.5,
-    //   radius: 1000
+    //   radius: 100
     // }).addTo(this.map);
+    //  L.marker([this.config.lat, this.config.lng], { icon }).addTo(this.map);
+
   }
 };
 </script>
