@@ -24,7 +24,12 @@ const parseJson = async res => {
 };
 
 export const request = async (url, options = {}) => {
-  const { cacheable = true } = options;
+  let { cacheable = true } = options;
+
+  if (options.method && options.method !== 'GET') {
+    cacheable = false;
+  }
+
   url = `${config.apiRoot}${url}`;
   const cacheData = JSON.parse(localStorage.getItem(url));
   let remoteData = null;
@@ -127,3 +132,13 @@ export const getSpeechs = datas => {
 export const getSpots = datas => {
   return request(`spots`);
 };
+
+
+export const getAllResources = datas => {
+  const query = {
+    limit: -1
+  }
+  return request(`attachments?${obj2query(query)}`, {
+    method: "GET"
+  })
+}

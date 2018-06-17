@@ -15,6 +15,12 @@ export default {
   methods: {
     snapshot() {
       const { video, canvas } = this.$refs;
+      if(this.photoUrl){
+        this.photoUrl = null
+        this.photoFile = null
+        return
+      }
+
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas
@@ -78,7 +84,7 @@ export default {
           p 我的名字
           input.input-name(v-model="name")
         div.actions
-          div 我要拍照
+          div {{photoUrl ? "我要重拍": "我要拍照" }}
           Icon.snapshot(type="camera" @click="snapshot")
           div 我要上传
           Icon.snapshot(type="upload" @click="upload" v-bind:class="{disabled:!photoFile}")
