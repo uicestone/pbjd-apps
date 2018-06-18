@@ -105,6 +105,14 @@ export const getSpeechMove = datas => {
   });
 };
 
+export const updateSpeech = speech => {
+  const { id } = speech;
+  return request(`speeches/${id}`, {
+    method: "POST",
+    body: JSON.stringify(speech)
+  });
+};
+
 export const UploadMotto = datas => {
   let formData = new FormData();
   $(datas, (key, val) => {
