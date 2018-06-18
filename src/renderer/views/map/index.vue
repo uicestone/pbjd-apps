@@ -62,7 +62,10 @@ export default {
   flex-direction column
   align-items center
   justify-content flex-start !important
+  position absolute
   height 100vh
+  width 100vw
+  overflow hidden
   background url('~@/assets//image/map_index_bg.png') center center no-repeat
   background-size cover
 .video
