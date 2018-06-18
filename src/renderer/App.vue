@@ -140,8 +140,8 @@ li {
   color: white;
   padding: 0.5vw 1.2vw;
   background: url("~@/assets/image/button_blue_2.png") center center no-repeat;
-  background-size: cover;
-  font-size: 0.83vw;
+  background-size: contain;
+  font-size: 1.4vw;
   display: flex;
   letter-spacing: 0.52vw;
   text-indent: 0.52vw;
