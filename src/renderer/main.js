@@ -7,8 +7,7 @@ import iView from "iview";
 import App from "./App";
 import router from "./router";
 import store from "./store";
-import FastClick from "fastclick"
-FastClick.attach(document.body);
+import { webFrame } from 'electron';
 
 import "./utils/recorder.js";
 
@@ -19,9 +18,13 @@ Vue.filter("dt", (val, format) => (val > 10 ? val : "0" + val));
 // Vue.use(VueSocketio, SocketInstance, store);
 Vue.use(iView);
 
-if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
+if (window.process && !window.process.env.IS_WEB) Vue.use(require("vue-electron"));
 Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
+
+if (window.process) {
+  webFrame.setZoomLevelLimits(1, 1)
+}
 
 /* eslint-disable no-new */
 new Vue({
