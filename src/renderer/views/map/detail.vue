@@ -576,6 +576,11 @@ export default {
       color #515253
       p
         text-indent 2em
+      table
+        width 100%
+        td
+          border 1px #ccc solid
+          padding 0.1vw 0.8vw
     .contact
       font-size 1.4vw
       font-weight normal
@@ -642,6 +647,7 @@ export default {
     box-shadow 0 0 15px 3px rgba(183, 25, 25, 0.5)
   .modal2-content-left
     width 60%
+    object-fit: cover
   .desc-container
     max-height 61vh
     overflow-y scroll
@@ -653,6 +659,11 @@ export default {
     color #515253
     p
       text-indent 2em
+    table
+      width 100%
+      td
+        border 1px #ccc solid
+        padding 0.1vw 0.8vw
   .contact
     font-size 1.4vw
     font-weight normal
