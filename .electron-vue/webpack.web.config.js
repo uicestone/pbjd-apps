@@ -69,6 +69,9 @@ let webConfig = {
       }
     ]
   },
+  node: {
+    fs: 'empty'
+  },
   plugins: [
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
