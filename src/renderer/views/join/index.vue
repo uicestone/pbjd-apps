@@ -1,6 +1,6 @@
 <template lang="pug">
   div.page-join-index
-    p.join-count 已有<span>2135689</span>人次参与
+    p.join-count 已有<span>{{ userTotal }}</span>人次参与
     img.title(src="~@/assets/image/title.png")
     p.subtitle 输入您需要了解的一天
     div.form
@@ -22,9 +22,12 @@
 
 
 <script>
+import * as request from "../../utils/request";
+
 export default {
   data() {
     return {
+      userTotal: '-',
       dateTypes: [
         {
           value: "birth",
@@ -56,7 +59,7 @@ export default {
     };
   },
   mounted() {
-    // this.date.year = 1980;
+    this.getTotalUsers();
   },
   computed: {
     finish() {
@@ -68,6 +71,9 @@ export default {
     join() {
       const { date } = this;
       this.$router.push({ name: "joinDetail", query: { ...date } });
+    },
+    async getTotalUsers() {
+      this.userTotal = (await request.getUserCountTotal()).count;
     }
   }
 };

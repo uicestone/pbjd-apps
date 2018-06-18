@@ -64,6 +64,12 @@ export const getUserCount = ({ type, month, day }) => {
   });
 };
 
+export const getUserCountTotal = () => {
+  return request(`user-count`, {
+    method: "GET"
+  });
+};
+
 export const getCpcReview = ({ type, month, day }) => {
   return request(`cpc-review/${type}/${month}/${day}`, {
     method: "GET"
