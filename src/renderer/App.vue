@@ -1,5 +1,6 @@
 <template lang="pug">
   div#app
+    div.force-landscape-hint 请将手机横屏浏览
     transition(name="fade")
       router-view
     div(v-if="cachingAttachments.length" ref="hidden")
@@ -163,5 +164,22 @@ li {
   position: absolute;
   left: 1vw;
   top: 97vh;
+}
+.force-landscape-hint {
+  display: none;
+  color: #a50000;
+  margin: auto;
+  text-align: center;
+  height: 100vh;
+  line-height: 100vh;
+  font-size: 7vw;
+}
+@media screen and (orientation: portrait) {
+  #app * {
+    display: none;
+  }
+  #app .force-landscape-hint {
+    display: block;
+  }
 }
 </style>
