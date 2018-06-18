@@ -147,6 +147,9 @@ export const getSpots = datas => {
   return request(`spots`);
 };
 
+export const getMapSlides = datas => {
+  return request(`attachments?order=asc&category=党建概况&limit=-1`);
+};
 
 export const getAllResources = datas => {
   const query = {

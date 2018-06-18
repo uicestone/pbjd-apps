@@ -1,9 +1,12 @@
 <template lang="pug">
   div.page-map-index
-    video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/intro.mp4" @ended="videoEnded")
+    //- video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/intro.mp4" @ended="videoEnded")
     Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
+    div.slides(v-if="showingSlides")
+      img.bg-element(:src="slides[currentSlideIndex].url" @click="nextSlide")
+    Icon.slide-close(type="ios-close-empty" v-if="showingSlides" @click="closeSlides")
     div.buttonGroup
-      img.glow(@click="playVideo" src="~@/assets//image/map_index_button1.png")
+      img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
       img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
     div.title-circle.fill
     div.title-circle.no-2.fill.delay-1
@@ -17,10 +20,15 @@
 </template>
 
 <script>
+import * as request from "../../utils/request";
+
 export default {
   data() {
     return {
-      isPlaying: false
+      isPlaying: false,
+      slides: [],
+      currentSlideIndex: 0,
+      showingSlides: false
     };
   },
   watch: {
@@ -51,7 +59,24 @@ export default {
       console.log('Stop video.')
       const { video } = this.$refs;
       this.isPlaying = false;
+    },
+    showSlides() {
+      this.showingSlides = true;
+    },
+    nextSlide() {
+      if (this.currentSlideIndex >= this.slides.length - 1) {
+        this.closeSlides();
+      } else {
+        this.currentSlideIndex++;
+      }
+    },
+    closeSlides() {
+      this.showingSlides = false;
+      this.currentSlideIndex = 0;
     }
+  },
+  async mounted() {
+    this.slides = await request.getMapSlides();
   }
 };
 </script>
@@ -81,6 +106,9 @@ export default {
   top 0
   z-index 21
   text-shadow .1vw .1vw .3vw black
+.slides
+  img
+    z-index 15
 .hidden
   visibility hidden
 .buttonGroup
