@@ -2,11 +2,13 @@
   div#app
     transition(name="fade")
       router-view
-    div(v-if="cacheable" ref="hidden" style="display: none")
-      div(v-for="(item, index) in data")
-        img(v-if="item.type == 'image'" :src="item.url")
-        audio(v-if="item.type == 'audio'" :src="item.url" preload=true)
-        video(v-if="item.type == 'video'" :src="item.url" preload=true)
+    div(v-if="cachingAttachments.length" ref="hidden")
+      div.caching-media-indicator 正在缓存媒体资源… 剩余 {{ cachingAttachments.length }} 项
+      div.caching-media
+        div(v-if="cachingAttachments.length" v-for="(item, index) in cachingAttachments")
+          img(v-if="item.type == 'image'" :src="item.url" @load="mediaLoaded(item)")
+          audio(v-if="item.type == 'audio'" :src="item.url" preload="auto" @loadeddata="mediaLoaded(item)")
+          video(v-if="item.type == 'video'" :src="item.url" preload="auto" @loadeddata="mediaLoaded(item)")
 
 
 </template>
@@ -18,16 +20,19 @@ export default {
   name: "app",
   data(){
     return {
-      cacheable: true,
-      data: []
+      cacheMedia: window.process && window.process.env.NODE_ENV === 'production', // cache media only in production electron version
+      cachingAttachments: []
+    }
+  },
+  methods: {
+    mediaLoaded(attachment) {
+      this.cachingAttachments = this.cachingAttachments.filter(a => a.url !== attachment.url);
     }
   },
   async mounted(){
-    this.data = await request.getAllResources();
-    // 暂时设为5秒后删除隐藏DOM
-    setTimeout(() =>{
-      this.cacheable = false
-    },5000)
+    if (this.cacheMedia) {
+      this.cachingAttachments = await request.getAllResources();
+    }
   }
 };
 </script>
@@ -119,5 +124,15 @@ li {
 .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
 .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
   all: unset;
+}
+.caching-media {
+  display: none;
+}
+.caching-media-indicator {
+  font-size: 1vw;
+  color: grey;
+  position: absolute;
+  left: 1vw;
+  top: 97vh;
 }
 </style>
