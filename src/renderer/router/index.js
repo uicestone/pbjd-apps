@@ -21,12 +21,18 @@ export default new Router({
       children: [{
           path: "index",
           name: "movieIndex",
-          component: require("@/views/movie/index").default
+          component: require("@/views/movie/index").default,
+          meta: {
+            homeName: 'home'
+          }
         },
         {
           path: "detail",
           name: "movieDetail",
-          component: require("@/views/movie/detail").default
+          component: require("@/views/movie/detail").default,
+          meta: {
+            homeName: 'home'
+          }
         }
       ]
     },
@@ -37,19 +43,28 @@ export default new Router({
       children: [{
           path: "index",
           name: "mottoIndex",
-          component: require("@/views/motto/index").default
+          component: require("@/views/motto/index").default,
+          meta: {
+            homeName: 'home'
+          }
         },
         {
           path: "detail",
           name: "mottoDetail",
-          component: require("@/views/motto/detail").default
+          component: require("@/views/motto/detail").default,
+          meta: {
+            homeName: 'home'
+          }
         }
       ]
     },
     {
       path: "/history",
       name: "history",
-      component: require("@/views/history").default
+      component: require("@/views/history").default,
+      meta: {
+        homeName: 'home'
+      }
     },
     {
       path: "/speak",
@@ -58,12 +73,18 @@ export default new Router({
       children: [{
           path: "index",
           name: "speakIndex",
-          component: require("@/views/speak/index").default
+          component: require("@/views/speak/index").default,
+          meta: {
+            homeName: 'home'
+          }
         },
         {
           path: "detail",
           name: "speakDetail",
-          component: require("@/views/speak/detail").default
+          component: require("@/views/speak/detail").default,
+          meta: {
+            homeName: 'home'
+          }
         }
       ]
     },
@@ -80,7 +101,10 @@ export default new Router({
         {
           path: "detail",
           name: "joinDetail",
-          component: require("@/views/join/detail").default
+          component: require("@/views/join/detail").default,
+          meta: {
+            homeName: 'joinIndex'
+          }
         }
       ]
     },
@@ -97,7 +121,10 @@ export default new Router({
         {
           path: "detail",
           name: "mapDetail",
-          component: require("@/views/map/detail").default
+          component: require("@/views/map/detail").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
         }
       ]
     },

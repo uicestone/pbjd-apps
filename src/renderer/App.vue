@@ -25,6 +25,13 @@ export default {
     }
   },
   methods: {
+    goHome() {
+      const {meta: {homeName}} = this.$route;
+
+      if(homeName){
+        this.$router.replace({name: homeName})
+      }
+    },
     mediaLoaded(attachment) {
       this.cachingAttachments = this.cachingAttachments.filter(a => a.url !== attachment.url);
     }
@@ -33,6 +40,27 @@ export default {
     if (this.cacheMedia) {
       this.cachingAttachments = await request.getAllResources();
     }
+
+    const resetGoHomeTimeout = () => {
+      if (this.goHomeTimeout) {
+        clearTimeout(this.goHomeTimeout);
+      }
+      this.goHomeTimeout = setTimeout(() => this.goHome(), 300000);
+    };
+
+    resetGoHomeTimeout();
+
+    ['click','touchstart', 'keydown', 'scroll'].forEach(i => {
+      document.addEventListener(i, e => {
+        resetGoHomeTimeout();
+      })
+    });
+
+    ['scroll'].forEach(i => {
+      document.addEventListener(i, e => {
+        resetGoHomeTimeout();
+      })
+    });
   }
 };
 </script>
@@ -47,13 +75,13 @@ body::-webkit-scrollbar {
 }
 
 .fade-enter-active {
-  animation: fade-in 2s;
+  animation: fade-in 1s;
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 .fade-leave-active {
-  animation: fade-in 2s reverse;
+  animation: fade-in 1s reverse;
   position: absolute;
   width: 100vw;
   height: 100vh;
