@@ -217,6 +217,6 @@ export default {
 .logo
   position absolute
   width 20vw
-  right 10px
-  top 10px
+  left 79vw
+  top 1vw
 </style>

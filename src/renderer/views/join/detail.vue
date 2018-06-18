@@ -111,7 +111,7 @@ export default {
     position relative
   .post-title
     object-fit contain
-    height 100px
+    height 7vh
     margin 3vh 0
   .post-content
     overflow-y scroll

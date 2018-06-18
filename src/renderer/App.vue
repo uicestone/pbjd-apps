@@ -108,10 +108,10 @@ li {
   padding: 0.5vw 1.2vw;
   background: url("~@/assets/image/button_blue_2.png") center center no-repeat;
   background-size: cover;
-  font-size: 1.6rem;
+  font-size: 0.83vw;
   display: flex;
-  letter-spacing: 10px;
-  text-indent: 10px;
+  letter-spacing: 0.52vw;
+  text-indent: 0.52vw;
   text-align: center;
   margin: 1vh auto 0;
 }
