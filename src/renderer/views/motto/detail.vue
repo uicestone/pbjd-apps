@@ -6,10 +6,10 @@
         p.motto-preview-text {{text}}
         p.motto-preview-name --{{authorName}}      
         img.motto-preview-photo(:src="imageUrl")           
-      div.form(span="12")
-        div.qrcode-group(v-if="qrcodeUrl")
-          img.qrcode-image(src="qrcodeUrl")
-          p.qrcode-text 收藏到<br/>我的微官网
+      div.qrcode-group
+        div
+          canvas.qrcode-canvas(ref="qrcode")
+          p.share-hint 扫描二维码，分享到微信
     button.button-back(@click="$router.go(-1)") 返回
     img.logo(src="~@/assets/image/sound.png")
 </template>
@@ -17,26 +17,38 @@
 
 <script>
 import * as request from "../../utils/request";
+import QRCode from 'qrcode';
 
 export default {
   data() {
     return {
+      motto: {},
       authorName: "",
       text: "",
       imageUrl: "",
-      qrcodeUrl: ""
+      qrcodeUrl: "",
+      sharable: !!window.process, // hide share form in web
     };
   },
   computed: {},
+  methods: {
+    generateQRCode() {
+      const { qrcode } = this.$refs;
+      QRCode.toCanvas(qrcode, `https://pbjd-apps.hbird.com.cn/#/motto/detail?id=${this.motto.id}`);
+    }
+  },
   async mounted() {
     const { query } = this.$route;
     const { id } = query;
-    let data = await request.getMotto({ id });
-    const { imageUrl, authorName, text } = data;
+    this.motto = await request.getMotto({ id });
+    const { imageUrl, authorName, text } = this.motto;
 
     this.imageUrl = imageUrl;
     this.text = text;
     this.authorName = authorName;
+
+    this.generateQRCode();
+
   }
 };
 </script>
@@ -83,6 +95,7 @@ export default {
   top 20vw
   width 9vw
 .content
+  padding 5vh 3vw
   height 73vh
   display flex
   align-items center
@@ -111,4 +124,48 @@ export default {
   width 20vw
   left 79vw
   top 1vw
+.form
+  display flex
+  flex-direction column
+  justify-content center
+  height 80%
+  width 26vw
+  font-size 1.5vw
+  font-weight 600
+  color black
+  p
+    font-size 2vw
+    color #888
+    text-align left
+  .input
+    width 100%
+    height 8vh
+    padding 1vw
+    border 3px #CCC solid
+    box-shadow 0 0.22vw 0.44vw #888
+    margin-bottom 5vh
+  .button4
+    border none
+    color white
+    background url('~@/assets//image/button_blue_4.png') center center no-repeat
+    background-size cover
+    font-size 3rem
+    text-align center
+    font-size 3.1vw
+    text-align center
+    width 21.19vw
+    height 5.87vw
+    font-weight bold
+    margin 0 auto
+    &.disabled
+      opacity 0.5
+      color #ccc
+.qrcode-canvas
+  width 26vw !important
+  height 26vw !important
+  background black
+.share-hint
+  margin-top 2vh
+  font-size 2vw
+  color #888
 </style>

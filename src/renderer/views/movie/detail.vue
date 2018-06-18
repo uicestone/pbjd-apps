@@ -68,7 +68,7 @@ export default {
     },
     generateQRCode() {
       const { qrcode } = this.$refs;
-      QRCode.toCanvas(qrcode, `https://pbjd-apps.hbird.com.cn/movie/detail?id=${this.speech.id}`);
+      QRCode.toCanvas(qrcode, `https://pbjd-apps.hbird.com.cn/#/movie/detail?id=${this.speech.id}`);
     }
   },
   computed: {
