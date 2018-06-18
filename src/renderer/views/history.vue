@@ -112,12 +112,14 @@ export default {
             div
               span.index {{index | dt}}
               span.name {{value.authorName}}
+              span.town {{value.authorTown}}
             img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")
         div.list-item
           div.user-item(v-if="index >= 5 && index <10" v-for="(value,index) in currentUser" @click="clickItem(value)")
             div
               span.index {{index | dt}}
               span.name {{value.authorName}}
+              span.town {{value.authorTown}}
             
             img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")            
       div.pagination
@@ -146,8 +148,9 @@ export default {
   .list-item
     width 40vw
     .user-item
-      font-size 2vw
+      font-size 2.5vw
       font-weight 600
+      letter-spacing 0.2vw
       display flex
       justify-content space-between
       align-items center
@@ -158,8 +161,10 @@ export default {
       height 9vh
       .name
         color black
+        margin-left 3vw
+      .town
         font-weight 400
-        margin-left 20px
+        margin-left 6vw
       .index
         padding 16px
         color white
