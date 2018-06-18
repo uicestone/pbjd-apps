@@ -3,7 +3,7 @@
     div.main-title 我要对党说
     div.content
       div.video-container
-        video.video(:poster="poster"  :src="currentVideo.url" ref="video" width=480 heigh=320)   
+        video.video(:poster="poster"  :src="currentVideo.url" ref="video" @click="stopPlay" width=480 heigh=320)   
         img.button-play(v-if="!playing" @click="play" src="~@/assets/image/button_replay.png")                 
         audio.hidden(ref="audio" :src="audioUrl") 
       div.qrcode-group(v-if="qrcodeUrl")
@@ -35,6 +35,14 @@ export default {
       this.playing = true;
       video.play();
       audio.play();
+    },
+    stopPlay() {
+      const { video, audio } = this.$refs;
+      this.playing = false;
+      video.pause();
+      audio.pause();
+      video.currentTime = 0;
+      audio.currentTime = 0;
     }
   },
   computed: {
@@ -81,10 +89,11 @@ export default {
 .button-play
   position absolute
   left 50%
-  top 50%
+  top 30vh
   margin -102px 0 0 -102px
 .video
   width 60vw
+  height 64vh
 .qrcode-group
   display flex
   flex-direction column

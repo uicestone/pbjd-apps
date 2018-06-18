@@ -3,7 +3,7 @@
     div.main-title 红色电影配音
     div.content
       div.video-container
-        video.video( ref="video" :src="currentVideo.url" width=480 heigh=320)    
+        video.video( ref="video" :src="currentVideo.url" @click="stopPlay" width=480 heigh=320)    
         img.button-play(v-if="!playing" @click="play" src="~@/assets/image/button_replay.png")
         audio.hidden(controls ref="audio" :src="audioUrl") 
       div.qrcode-group(v-if="qrcodeUrl")
@@ -34,6 +34,14 @@ export default {
       this.playing = true;
       video.play();
       audio.play();
+    },
+    stopPlay() {
+      const { video, audio } = this.$refs;
+      this.playing = false;
+      video.pause();
+      audio.pause();
+      video.currentTime = 0;
+      audio.currentTime = 0;
     }
   },
   computed: {
@@ -67,7 +75,7 @@ export default {
 .button-play
   position absolute
   left 50%
-  top 50%
+  top 30vh
   margin -102px 0 0 -102px
 .content
   display flex

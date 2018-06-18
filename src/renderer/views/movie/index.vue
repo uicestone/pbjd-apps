@@ -174,6 +174,7 @@ export default {
   display none
 .video
   width 43.36vw
+  height 50vh
 .selectGrop
   font-size 2vw
   font-weight 600
