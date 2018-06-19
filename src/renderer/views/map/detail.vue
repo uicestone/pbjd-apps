@@ -18,7 +18,7 @@
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
-            div(v-if="currentModalData.liveVideoUrl")
+            div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo")
               img.modal-icon(src="~@/assets/image/map_icon_1.png")
               span 实时连线
             div
@@ -36,7 +36,7 @@
                 p 地址：{{currentModalData.address}}
                 p 联系电话：{{currentModalData.phone}}  
             div.modal2-footer-right
-              div(v-if="currentModalData.liveVideoUrl")
+              div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo")
                 img.modal-icon(src="~@/assets/image/map_icon_1.png")
                 span 实时连线
               div
@@ -46,6 +46,8 @@
     div.town-title(v-if="currentLayer")
       div.town-name {{ currentLayer }}
       div 社区党建服务中心
+    div#live-video(v-show="playingLiveVideo")
+    Icon.live-video-close(type="ios-close-empty" v-if="playingLiveVideo" @click="stopLiveVideo")
     img.back_menu(@click="back" src="~@/assets/image/map_back.png")
     
 </template>
@@ -56,6 +58,9 @@ import geoJson from "@/assets/json/geo.json";
 // import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
 import * as request from "../../utils/request";
+import Chimee from 'chimee';
+import hls from 'chimee-kernel-hls';
+
 global.L = L;
 
 export default {
@@ -207,7 +212,8 @@ export default {
       svgElements: [],
       modal1: false,
       modal2: false,
-      currentModalIndex: 0
+      currentModalIndex: 0,
+      playingLiveVideo: false
     };
   },
   watch: {
@@ -290,6 +296,20 @@ export default {
       } else {
         this.modal1 = true;
       }
+    },
+    playLiveVideo() {
+      this.playingLiveVideo = true;
+      const chimee = new Chimee({
+        wrapper: '#live-video',
+        autoplay: true,
+        src: this.currentModalData.liveVideoUrl,
+        kernels: {
+          hls
+        }
+      })
+    },
+    stopLiveVideo() {
+      this.playingLiveVideo = false;
     },
     setLayer(key) {
       this.resetMap();
@@ -741,7 +761,21 @@ export default {
   font-size 1.3vw
   white-space nowrap
   padding 0 .5vw
-div.leaflet-overlay-pane svg > g {
-  filter: url(#shadow);
-}
+div.leaflet-overlay-pane svg > g
+  filter: url(#shadow)
+#live-video
+  position absolute
+  top 0
+  left 0
+  width 100vw
+  height 100vh
+  z-index 1010
+.live-video-close
+  font-size 5vw
+  color white
+  position absolute
+  left 96.5vw
+  top 0
+  z-index 1011
+  text-shadow .1vw .1vw .3vw black
 </style>
