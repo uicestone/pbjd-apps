@@ -186,4 +186,7 @@ li {
     display: block;
   }
 }
+body {
+  user-select: none;
+}
 </style>

@@ -21,9 +21,10 @@
             div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo" :class="{glow:connectingLiveVideo}")
               img.modal-icon(src="~@/assets/image/map_icon_1.png")
               span 实时连线
-            div
+            div.nav-button(@click="showNavQrcode")
               img.modal-icon(src="~@/assets/image/map_icon_2.png")
               span 导航到此地
+              canvas.nav-qrcode(ref="navQrcode" v-show="showingNavQrcode" @click="hideNavQrcode")
     div(v-if="currentModalData.id")
       Modal.modal2(v-model="modal2" :title="currentModalData.name")
         div.modal2-content
@@ -36,12 +37,13 @@
                 p 地址：{{currentModalData.address}}
                 p 联系电话：{{currentModalData.phone}}  
             div.modal2-footer-right
-              div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo")
+              div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo" :class="{glow:connectingLiveVideo}")
                 img.modal-icon(src="~@/assets/image/map_icon_1.png")
                 span 实时连线
-              div
+              div.nav-button(@click="showNavQrcode")
                 img.modal-icon(src="~@/assets/image/map_icon_2.png")
                 span 导航到此地
+                canvas.nav-qrcode(ref="navQrcode" v-show="showingNavQrcode" @click="hideNavQrcode")
     img.logo(src="~@/assets/image/map_title.png" v-if="!currentLayer")
     div.town-title(v-if="currentLayer")
       div.town-name {{ currentLayer }}
@@ -59,6 +61,7 @@ import geoJson from "@/assets/json/geo.json";
 import L from "leaflet";
 import * as request from "../../utils/request";
 import Hls from 'hls.js';
+import QRCode from 'qrcode';
 
 global.L = L;
 
@@ -213,7 +216,8 @@ export default {
       modal2: false,
       currentModalIndex: 0,
       connectingLiveVideo: false,
-      playingLiveVideo: false
+      playingLiveVideo: false,
+      showingNavQrcode: false
     };
   },
   watch: {
@@ -316,6 +320,18 @@ export default {
     stopLiveVideo() {
       this.connectingLiveVideo = false;
       this.playingLiveVideo = false;
+    },
+    showNavQrcode() {
+      if (this.showingNavQrcode) {
+        this.hideNavQrcode();
+        return;
+      }
+      const { navQrcode } = this.$refs;
+      QRCode.toCanvas(navQrcode, `http://uri.amap.com/marker?position=${this.currentModalData.longitude},${this.currentModalData.latitude}`);
+      this.showingNavQrcode = true;
+    },
+    hideNavQrcode() {
+      this.showingNavQrcode = false;
     },
     setLayer(key) {
       this.resetMap();
@@ -784,6 +800,16 @@ div.leaflet-overlay-pane svg > g
   top 0
   z-index 1011
   text-shadow .1vw .1vw .3vw black
+.nav-button
+  position relative
+  .nav-qrcode
+    background black
+    width 15vw !important
+    height 15vw !important
+    position absolute
+    bottom 6vh
+    box-shadow 0.1vw 0.1vw 1vw grey
+    border-radius 1vw
 @keyframes glow
   0%
     opacity 1
