@@ -56,7 +56,7 @@ export default {
 
     resetGoHomeTimeout();
 
-    ['click','touchstart', 'keydown', 'scroll'].forEach(i => {
+    ['click','touchstart', 'keydown', 'scroll', 'videotimeupdate'].forEach(i => {
       document.addEventListener(i, e => {
         resetGoHomeTimeout();
       })

@@ -307,6 +307,9 @@ export default {
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
           this.playingLiveVideo = true;
           liveVideoPlayer.play();
+          liveVideoPlayer.addEventListener('timeupdate', () => {
+            document.dispatchEvent(new Event('videotimeupdate'));
+          });
         });
       }
     },
