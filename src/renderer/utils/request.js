@@ -134,13 +134,16 @@ export const getMotto = datas => {
 export const getMottoes = datas => {
   const { query } = datas;
   return request(`mottoes?${obj2query(query)}`, {
-    method: "GET"
+    method: "GET",
+    cacheable: false
   });
 };
 export const getSpeechs = datas => {
   const { type, query } = datas;
 
-  return request(`speeches/${type}?${obj2query(query)}`);
+  return request(`speeches/${type}?${obj2query(query)}`, {
+    cacheable: false
+  });
 };
 
 export const getSpots = datas => {

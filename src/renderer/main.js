@@ -10,7 +10,7 @@ import store from "./store";
 import "./utils/recorder.js";
 
 
-Vue.filter("dt", (val, format) => (val > 10 ? val : "0" + val));
+Vue.filter("dt", (val, format) => (val >= 10 ? val : "0" + val));
 
 // const SocketInstance = socketio("http://localhost:3000");
 // Vue.use(VueSocketio, SocketInstance, store);

@@ -109,15 +109,15 @@ export default {
       div.user-list
         div.list-item
           div.user-item(v-if="index < 5" v-for="(value,index) in currentUser" @click="clickItem(value)")
-            div
-              span.index {{index | dt}}
+            span.index {{index+1 | dt}}
+            div.name-town
               span.name {{value.authorName}}
               span.town {{value.authorTown}}
             img.icon-arrow-blue(src="~@/assets/image/arrow_blue.png")
         div.list-item
           div.user-item(v-if="index >= 5 && index <10" v-for="(value,index) in currentUser" @click="clickItem(value)")
-            div
-              span.index {{index | dt}}
+            span.index {{index+1 | dt}}
+            div.name-town
               span.name {{value.authorName}}
               span.town {{value.authorTown}}
             
@@ -159,12 +159,18 @@ export default {
       border-bottom solid 3px #988234
       background #e3bc34
       height 9vh
-      .name
-        color black
-        margin-left 3vw
-      .town
-        font-weight 400
-        margin-left 6vw
+      .name-town
+        text-align left
+        width 100%
+        white-space nowrap
+        text-overflow ellipsis
+        overflow hidden
+        .name
+          color black
+          margin-left 2vw
+        .town
+          font-weight 400
+          margin-left 1vw
       .index
         padding 16px
         color white
