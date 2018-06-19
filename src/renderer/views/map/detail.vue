@@ -18,7 +18,7 @@
         div.modal-footer(slot="footer")
           div.modal-footer-left
           div.modal-footer-right
-            div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo")
+            div(v-if="currentModalData.liveVideoUrl" @click="playLiveVideo" :class="{glow:connectingLiveVideo}")
               img.modal-icon(src="~@/assets/image/map_icon_1.png")
               span 实时连线
             div
@@ -46,7 +46,7 @@
     div.town-title(v-if="currentLayer")
       div.town-name {{ currentLayer }}
       div 社区党建服务中心
-    div#live-video(v-show="playingLiveVideo")
+    video#live-video(v-show="playingLiveVideo" ref="liveVideoPlayer")
     Icon.live-video-close(type="ios-close-empty" v-if="playingLiveVideo" @click="stopLiveVideo")
     img.back_menu(@click="back" src="~@/assets/image/map_back.png")
     
@@ -58,8 +58,7 @@ import geoJson from "@/assets/json/geo.json";
 // import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
 import * as request from "../../utils/request";
-import Chimee from 'chimee';
-import hls from 'chimee-kernel-hls';
+import Hls from 'hls.js';
 
 global.L = L;
 
@@ -213,6 +212,7 @@ export default {
       modal1: false,
       modal2: false,
       currentModalIndex: 0,
+      connectingLiveVideo: false,
       playingLiveVideo: false
     };
   },
@@ -298,17 +298,20 @@ export default {
       }
     },
     playLiveVideo() {
-      this.playingLiveVideo = true;
-      const chimee = new Chimee({
-        wrapper: '#live-video',
-        autoplay: true,
-        src: this.currentModalData.liveVideoUrl,
-        kernels: {
-          hls
-        }
-      })
+      this.connectingLiveVideo = true;
+      const { liveVideoPlayer } = this.$refs;
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource(this.currentModalData.liveVideoUrl);
+        hls.attachMedia(liveVideoPlayer);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          this.playingLiveVideo = true;
+          liveVideoPlayer.play();
+        });
+      }
     },
     stopLiveVideo() {
+      this.connectingLiveVideo = false;
       this.playingLiveVideo = false;
     },
     setLayer(key) {
@@ -778,4 +781,14 @@ div.leaflet-overlay-pane svg > g
   top 0
   z-index 1011
   text-shadow .1vw .1vw .3vw black
+@keyframes glow
+  0%
+    opacity 1
+  50%
+    opacity 0.5
+  100%
+    opacity 1
+.glow
+  animation glow 1s ease-in-out infinite
+
 </style>
