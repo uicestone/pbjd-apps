@@ -142,7 +142,7 @@ export default {
         div.selectGrop 选择片段
           select.select(v-model="currentIndex" @change="bgChange")
             option.option(v-for="item in videos" :value="item.label" :key="item.value" :label="item.label") {{item.label}}
-        video.video( ref="video" :src="currentVideo.url")
+        video.video( ref="video" :src="currentVideo.url" x5-playsinline playsinline webkit-playsinline)
       div.button-group
         audio.hidden(controls ref="audio" :src="audioUrl")    
         Icon.record(type="mic-a" @click="record" v-bind:class="{recording:recordingSign,disabled:playing}")

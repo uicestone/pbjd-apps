@@ -3,7 +3,7 @@
     div.main-title 红色电影配音
     div.content
       div.video-container
-        video.video( ref="video" :src="currentVideo.url" @click="stopPlay" width=480 heigh=320)    
+        video.video( ref="video" :src="currentVideo.url" @click="stopPlay" x5-playsinline playsinline webkit-playsinline width=480 heigh=320)    
         img.button-play(v-if="!playing" @click="play" src="~@/assets/image/button_replay.png")
         audio.hidden(controls ref="audio" :src="audioUrl") 
       div.qrcode-group(v-if="sharable")
