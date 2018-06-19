@@ -6,7 +6,7 @@
         img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
       img.menu-img-detail(v-if="currentLayer " @click="showTownModal" src="static/images/map_button_5.png")
     div(v-if="currentModalData.id")
-      Modal.modal1(v-model="modal1" :title="currentModalData.name" )
+      Modal.modal1(v-model="modal1" :title="currentModalData.name" @on-visible-change="hideNavQrcode")
         div.modal1-content
           div.desc-container
             div.desc(v-html="currentModalData.desc") 
@@ -24,9 +24,9 @@
             div.nav-button(@click="showNavQrcode")
               img.modal-icon(src="~@/assets/image/map_icon_2.png")
               span 导航到此地
-              canvas.nav-qrcode(ref="navQrcode" v-show="showingNavQrcode" @click="hideNavQrcode")
+              canvas.nav-qrcode(ref="navQrcode1" v-show="showingNavQrcode" @click="hideNavQrcode")
     div(v-if="currentModalData.id")
-      Modal.modal2(v-model="modal2" :title="currentModalData.name")
+      Modal.modal2(v-model="modal2" :title="currentModalData.name" @on-visible-change="hideNavQrcode")
         div.modal2-content
           img.modal2-content-left(:src="currentModalData.images[0]")
           div.modal2-content-right
@@ -43,7 +43,7 @@
               div.nav-button(@click="showNavQrcode")
                 img.modal-icon(src="~@/assets/image/map_icon_2.png")
                 span 导航到此地
-                canvas.nav-qrcode(ref="navQrcode" v-show="showingNavQrcode" @click="hideNavQrcode")
+                canvas.nav-qrcode(ref="navQrcode2" v-show="showingNavQrcode" @click="hideNavQrcode")
     img.logo(src="~@/assets/image/map_title.png" v-if="!currentLayer")
     div.town-title(v-if="currentLayer")
       div.town-name {{ currentLayer }}
@@ -326,11 +326,13 @@ export default {
         this.hideNavQrcode();
         return;
       }
-      const { navQrcode } = this.$refs;
-      QRCode.toCanvas(navQrcode, `http://uri.amap.com/marker?position=${this.currentModalData.longitude},${this.currentModalData.latitude}`);
+      const { navQrcode1, navQrcode2 } = this.$refs;
+      QRCode.toCanvas(navQrcode1, `http://uri.amap.com/marker?position=${this.currentModalData.longitude},${this.currentModalData.latitude}`);
+      QRCode.toCanvas(navQrcode2, `http://uri.amap.com/marker?position=${this.currentModalData.longitude},${this.currentModalData.latitude}`);
       this.showingNavQrcode = true;
     },
-    hideNavQrcode() {
+    hideNavQrcode(e) {
+      e.stopPropagation();
       this.showingNavQrcode = false;
     },
     setLayer(key) {
@@ -809,6 +811,7 @@ div.leaflet-overlay-pane svg > g
     bottom 6vh
     box-shadow 0.1vw 0.1vw 1vw grey
     border-radius 1vw
+    z-index 1
 @keyframes glow
   0%
     opacity 1
