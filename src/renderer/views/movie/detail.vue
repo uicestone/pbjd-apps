@@ -124,6 +124,7 @@ export default {
   color black
 .video
   width 60vw
+  max-height 100%
 .form
   display flex
   flex-direction column
