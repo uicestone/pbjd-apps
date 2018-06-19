@@ -417,17 +417,16 @@ export default {
   async mounted() {
     let layers = Object.values(this.OptionLayers);
     let features = Object.values(this.features);
-    let icon = L.icon({
+    const defaultIcon = L.icon({
       iconUrl: "static/images/map_marker.png",
       iconSize: [35, 50],
-      iconAnchor: [17, 50],
+      iconAnchor: [17, 45],
     });
 
-    // need config
-    let cameraIcon = L.icon({
-      iconUrl: "static/images/map_marker.png",
-      iconSize: [35, 50],
-      iconAnchor: [17, 50],
+    const cameraIcon = L.icon({
+      iconUrl: "static/images/map_marker_video.png",
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
     });
 
     this.map = L.map("map", {
@@ -465,7 +464,7 @@ export default {
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images, live, liveVideoUrl } = spot;
       this.spots[id] = spot;
-      icon = liveVideoUrl ? cameraIcon : icon
+      const icon = liveVideoUrl ? cameraIcon : defaultIcon
 
       let marker = L.marker([latitude, longitude], { icon });
       marker.on("click", () => {
