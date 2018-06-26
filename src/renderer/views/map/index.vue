@@ -2,9 +2,15 @@
   div.page-map-index
     //- video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/intro.mp4" @ended="videoEnded")
     Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
-    div.slides(v-if="showingSlides")
-      img.bg-element(:src="slides[currentSlideIndex].url" @click="nextSlide")
-    Icon.slide-close(type="ios-close-empty" v-if="showingSlides" @click="closeSlides")
+    div.slides(v-if="currentSlide")
+      .menu-links(v-if="currentSlide=='0'")
+        a.section-1(@click="goToSlide(slideSections[0])")
+        a.section-2(@click="goToSlide(slideSections[1])")
+        a.section-3(@click="goToSlide(slideSections[2])")
+        a.section-4(@click="goToSlide(slideSections[3])")
+      .back(:class="{'section-cover':slideSections.indexOf(currentSlide)>-1||currentSlide=='0'}" @click="backSlide")
+      img.bg-element(:src="'static/images/slides/'+currentSlide+'.jpg'" @click="nextSlide")
+      //- Icon.slide-close(type="ios-close-empty" v-if="currentSlide" @click="closeSlides")
     div.buttonGroup
       img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
       img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
@@ -26,9 +32,9 @@ export default {
   data() {
     return {
       isPlaying: false,
-      slides: [],
-      currentSlideIndex: 0,
-      showingSlides: false
+      slideSections: ['1', '7', '16', '31'],
+      lastSlide: '32',
+      currentSlide: null
     };
   },
   watch: {
@@ -61,18 +67,27 @@ export default {
       this.isPlaying = false;
     },
     showSlides() {
-      this.showingSlides = true;
+      this.currentSlide = '0';
     },
     nextSlide() {
-      if (this.currentSlideIndex >= this.slides.length - 1) {
+      if (this.currentSlide === this.lastSlide) {
         this.closeSlides();
       } else {
-        this.currentSlideIndex++;
+        this.currentSlide = (Number(this.currentSlide) + 1).toString();
       }
     },
+    backSlide() {
+      if (this.currentSlide === '0') {
+        this.closeSlides();
+      } else {
+        this.currentSlide = '0';
+      }
+    },
+    goToSlide(name) {
+      this.currentSlide = name;
+    },
     closeSlides() {
-      this.showingSlides = false;
-      this.currentSlideIndex = 0;
+      this.currentSlide = null;
     }
   },
   async mounted() {
@@ -148,6 +163,43 @@ img.lotus
     left 39.8vw
   &.no-4
     left 50.8vw
+.slides
+  .menu-links
+    a
+      position absolute
+      z-index 20
+      &.section-1
+        left 15vw
+        top 10vh
+        width 30vw
+        height 15vh
+      &.section-2
+        left 61vw
+        top 20vh
+        width 26vw
+        height 16vh
+      &.section-3
+        left 6.25vw
+        top 53vh
+        width 30vw
+        height 13.42vh
+      &.section-4
+        left 54.7vw
+        top 67vh
+        width 36.7vw
+        height 13.9vh
+  .back
+    position absolute
+    z-index 20
+    left 88.5vw
+    top 6.7vh
+    width 7.66vw
+    height 7.03vh
+    &.section-cover
+      left 46vw
+      top 88vh
+      width 7.76vw
+      height 6.94vh
 @keyframes swipe
   0%
     top 0

@@ -13,5 +13,6 @@ thumbs.db
 static/map/*
 static/movie/*
 static/talk/*
+static/images/slides
 
 static-gen.js
