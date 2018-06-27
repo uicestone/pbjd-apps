@@ -331,8 +331,7 @@ export default {
       QRCode.toCanvas(navQrcode2, `http://uri.amap.com/marker?position=${this.currentModalData.longitude},${this.currentModalData.latitude}`);
       this.showingNavQrcode = true;
     },
-    hideNavQrcode(e) {
-      e.stopPropagation();
+    hideNavQrcode() {
       this.showingNavQrcode = false;
     },
     setLayer(key) {
