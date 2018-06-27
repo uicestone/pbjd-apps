@@ -105,7 +105,7 @@ export default {
   async mounted() {
     this.slides = await request.getMapSlides();
     window.keyboardListener = (event) => {
-      if (event.key !== 'PageDown') {
+      if (event.key !== 'b') {
         return;
       }
       if (this.showingOpening === 'image') {
