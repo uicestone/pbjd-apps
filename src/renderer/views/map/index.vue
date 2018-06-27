@@ -1,7 +1,8 @@
 <template lang="pug">
   div.page-map-index
-    //- video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/intro.mp4" @ended="videoEnded")
-    Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
+    img.bg-element.opening(v-if="showingOpening=='image'" src="static/map/opening.jpg" @click="showOpening" @keyup.enter="test")
+    video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
+    //- Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
     div.slides(v-if="currentSlide")
       .menu-links(v-if="currentSlide=='0'")
         a.section-1(@click="goToSlide(slideSections[0])")
@@ -14,7 +15,7 @@
     div.buttonGroup
       img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
       img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
-    div.title-circle.fill
+    div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
     div.title-circle.no-4.fill.delay-3
@@ -34,7 +35,8 @@ export default {
       isPlaying: false,
       slideSections: ['1', '7', '16', '31'],
       lastSlide: '32',
-      currentSlide: null
+      currentSlide: null,
+      showingOpening: null
     };
   },
   watch: {
@@ -52,19 +54,29 @@ export default {
     goDetail() {
       this.$router.push({ name: "mapDetail" });
     },
+    showOpening() {
+      if (!this.showingOpening) {
+        this.showingOpening = 'image';
+      } else {
+        this.showingOpening = null;
+        this.playVideo();
+      }
+    },
     playVideo() {
       console.log('Play video.')
       this.isPlaying = true;
+      this.showingOpening = 'video'; // use video as opening
     },
     videoEnded() {
-      console.log('Video ended.')
+      console.log('Video ended.');
       const { video } = this.$refs;
-      this.isPlaying = false;
+      // this.isPlaying = false;
     },
     closeVideo() {
       console.log('Stop video.')
       const { video } = this.$refs;
       this.isPlaying = false;
+      this.showingOpening = null; // use video as opening
     },
     showSlides() {
       this.currentSlide = '0';
@@ -92,6 +104,20 @@ export default {
   },
   async mounted() {
     this.slides = await request.getMapSlides();
+    window.keyboardListener = (event) => {
+      if (event.key !== 'PageDown') {
+        return;
+      }
+      if (this.showingOpening === 'image') {
+        this.playVideo();
+      } else {
+        this.closeVideo();
+      }
+    };
+    window.addEventListener('keyup', window.keyboardListener);
+  },
+  destroyed() {
+    window.removeEventListener('keyup', window.keyboardListener);
   }
 };
 </script>
@@ -121,6 +147,8 @@ export default {
   top 0
   z-index 21
   text-shadow .1vw .1vw .3vw black
+.opening
+  z-index 11
 .slides
   img
     z-index 15
@@ -157,6 +185,7 @@ img.lotus
   left 17.2vw
   position absolute
   top 16.5vw
+  z-index 1
   &.no-2
     left 28.5vw
   &.no-3
