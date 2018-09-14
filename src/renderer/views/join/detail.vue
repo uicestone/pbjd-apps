@@ -72,7 +72,7 @@ export default {
           p 党史上的这一天也同样重要，一起来看看吧。
       div.desc
         span 共有 <span class="highlight">{{request.count}}</span>人次在这一天入党,占活动总人数的<span class="highlight">{{request.percentage}}%</span>
-        div.share
+        //- div.share
           img.qrcode(src="~@/assets/image/qrcode.jpg")
           span 分享到朋友圈，让您的党员同志一起来参加
       //- div
@@ -164,6 +164,7 @@ export default {
     border-radius 1rem 1rem 0 0
     display flex
     justify-content center
+    margin-top 1vw
     .highlight
       color rgb(195, 13, 35)
       font-size 3vw
@@ -205,11 +206,12 @@ export default {
     text-indent 10px
     text-align center
   .desc
-    margin 2vw 0
+    margin 4vw 0
     font-size 1.8vw
     font-weight bold
     color black
     padding-left 1vw
+    text-align center
     .share
       font-weight normal
       font-size 1.7vw
