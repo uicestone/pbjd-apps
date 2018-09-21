@@ -46,7 +46,7 @@ export default {
       monthList: new Array(12)
         .fill(0)
         .map((k, i) => ({ value: i >= 9 ? `${i + 1}` : `0${i + 1}` })),
-      dayList: new Array(30).fill(0).map((k, i) => ({
+      dayList: new Array(31).fill(0).map((k, i) => ({
         value: i >= 9 ? `${i + 1}` : `0${i + 1}`
       })),
       date: {
