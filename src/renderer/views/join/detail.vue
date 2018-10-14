@@ -71,7 +71,7 @@ export default {
           p 这一天对你来说非常重要,
           p 党史上的这一天也同样重要，一起来看看吧。
       div.desc
-        span 共有 <span class="highlight">{{request.count}}</span>人次在这一天入党,占活动总人数的<span class="highlight">{{request.percentage}}%</span>
+        //- span 共有 <span class="highlight">{{request.count}}</span>人次在这一天入党,占活动总人数的<span class="highlight">{{request.percentage}}%</span>
         //- div.share
           img.qrcode(src="~@/assets/image/qrcode.jpg")
           span 分享到朋友圈，让您的党员同志一起来参加
@@ -205,6 +205,8 @@ export default {
     letter-spacing 10px
     text-indent 10px
     text-align center
+  .content
+    margin-top: 8vh
   .desc
     margin 4vw 0
     font-size 1.8vw
