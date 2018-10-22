@@ -79,10 +79,10 @@ export default {
       div.form(span="12")
         div
           p 我的座右铭
-          textarea.input-motto(v-model="motto" )
+          textarea.input-motto(v-model="motto" required)
         div
           p 我的名字
-          input.input-name(v-model="name")
+          input.input-name(v-model="name" required)
         div.actions
           div {{photoUrl ? "我要重拍": "我要拍照" }}
           Icon.snapshot(type="camera" @click="snapshot")
