@@ -91,6 +91,10 @@ export default {
     this.qrcodeUrl = qrcodeUrl;
     this.currentIndex = bgid;
     this.audioUrl = audioUrl;
+
+    if (!window.process) {
+      document.title = '我要对党说的话';
+    }
   }
 };
 </script>

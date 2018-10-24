@@ -49,6 +49,10 @@ export default {
 
     this.generateQRCode();
 
+    if (!window.process) {
+      document.title = '我的座右铭';
+    }
+
   }
 };
 </script>

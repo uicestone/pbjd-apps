@@ -85,6 +85,10 @@ export default {
     this.currentIndex = bgid;
     this.audioUrl = audioUrl;
     this.qrcodeUrl = qrcodeUrl;
+
+    if (!window.process) {
+      document.title = '红色电影配音';
+    }
   }
 };
 </script>
