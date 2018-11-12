@@ -15,6 +15,8 @@
     div.buttonGroup
       img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
       img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
+      img.glow.delay-2(src="~@/assets//image/map_index_button3.png")
+      img.glow.delay-3(src="~@/assets//image/map_index_button4.png")
     div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
@@ -156,21 +158,22 @@ export default {
   visibility hidden
 .buttonGroup
   position absolute
-  left 40%
-  bottom 10%
+  left 12vw
+  bottom 5vw
   display flex
   width 30vw
   justify-content space-between
   z-index 10
   img
     cursor pointer
-    width 40%
-    height 40%
-img.lotus
+    height 10vw
+    width 9vw
+    object-position 0 0
+    object-fit cover
   right -6vw
   position absolute
-  bottom -3.5vw
-  width 37vw
+  bottom 3.5vw
+  width 50vw
 .bg-element
   left 0
   top 0
