@@ -161,7 +161,7 @@ export default {
   left 12vw
   bottom 5vw
   display flex
-  width 30vw
+  width 48vw
   justify-content space-between
   z-index 10
   img
@@ -170,10 +170,11 @@ export default {
     width 9vw
     object-position 0 0
     object-fit cover
+img.lotus
   right -6vw
   position absolute
-  bottom 3.5vw
-  width 50vw
+  bottom -3.5vw
+  width 37vw
 .bg-element
   left 0
   top 0
