@@ -27,6 +27,7 @@
 import * as request from "../../utils/request";
 import staticGen from "../../static-gen.js";
 import QRCode from 'qrcode';
+import wx from 'jweixin-module';
 
 export default {
   data() {
@@ -80,6 +81,7 @@ export default {
     const { query } = this.$route;
     const { id, qrcodeUrl } = query;
     this.speech = await request.getSpeechMove({ id });
+    const speech = this.speech;
     const { bgid, audioUrl } = this.speech;
 
     this.currentIndex = bgid;
@@ -87,7 +89,21 @@ export default {
     this.qrcodeUrl = qrcodeUrl;
 
     if (!window.process) {
-      document.title = '红色电影配音';
+      wx.ready(function(){
+        wx.onMenuShareTimeline({
+          title: '红色电影配音',
+          link: `https://pbjd-apps.hbird.com.cn/#/movie/detail?id=${speech.id}`,
+          imgUrl: 'https://pbjd-www.hbird.com.cn/static/images/logo.png',
+          success(data) {}
+        });
+        wx.onMenuShareAppMessage({ 
+          title: '红色电影配音',
+          desc: '',
+          link: `https://pbjd-apps.hbird.com.cn/#/movie/detail?id=${speech.id}`,
+          imgUrl: 'https://pbjd-www.hbird.com.cn/static/images/logo.png',
+          success(data) {}
+        });
+      });
     }
   }
 };

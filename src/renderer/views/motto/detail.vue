@@ -18,6 +18,7 @@
 <script>
 import * as request from "../../utils/request";
 import QRCode from 'qrcode';
+import wx from 'jweixin-module';
 
 export default {
   data() {
@@ -41,6 +42,7 @@ export default {
     const { query } = this.$route;
     const { id } = query;
     this.motto = await request.getMotto({ id });
+    const motto = this.motto;
     const { imageUrl, authorName, text } = this.motto;
 
     this.imageUrl = imageUrl;
@@ -50,7 +52,21 @@ export default {
     this.generateQRCode();
 
     if (!window.process) {
-      document.title = '我的座右铭';
+      wx.ready(function() {
+        wx.onMenuShareTimeline({
+          title: '我的座右铭',
+          link: `https://pbjd-apps.hbird.com.cn/#/motto/detail?id=${motto.id}`,
+          imgUrl: 'http://pbjd-www.hbird.com.cn/static/images/logo.png',
+          success(data) {}
+        });
+        wx.onMenuShareAppMessage({ 
+          title: '我的座右铭',
+          desc: text,
+          link: `https://pbjd-apps.hbird.com.cn/#/motto/detail?id=${motto.id}`,
+          imgUrl: 'http://pbjd-www.hbird.com.cn/static/images/logo.png',
+          success(data) {}
+        });
+      });
     }
 
   }

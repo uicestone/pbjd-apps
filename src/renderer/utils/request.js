@@ -162,3 +162,9 @@ export const getAllResources = datas => {
     method: "GET"
   })
 }
+
+export const getWxJsapiArgs = (url) => {
+  return request(`wx/jsapi-args?url=${encodeURIComponent(url)}`, {
+    method: "GET"
+  })
+}

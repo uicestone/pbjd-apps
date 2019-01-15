@@ -8,7 +8,8 @@ import App from "./App";
 import router from "./router";
 import store from "./store";
 import "./utils/recorder.js";
-
+import * as request from "./utils/request";
+import wx from 'jweixin-module';
 
 Vue.filter("dt", (val, format) => (val >= 10 ? val : "0" + val));
 
@@ -22,6 +23,32 @@ Vue.config.productionTip = false;
 
 if (!process.env.IS_WEB) {
   require('electron').webFrame.setZoomLevelLimits(1, 1);
+}
+
+/* config js-api in wx web */
+async function configWeixin() {
+  const args = await request.getWxJsapiArgs(window.location.href);
+
+  wx.config({jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], ...args});
+  wx.ready(function() {
+    wx.onMenuShareTimeline({
+      title: '嘉定区·洪德楼',
+      link: 'https://pbjd-apps.hbird.com.cn',
+      imgUrl: 'https://pbjd-www.hbird.com.cn/static/images/logo.png',
+      success(data) {}
+    });
+    wx.onMenuShareAppMessage({ 
+      title: '嘉定区·洪德楼',
+      desc: '',
+      link: 'https://pbjd-apps.hbird.com.cn',
+      imgUrl: 'https://pbjd-www.hbird.com.cn/static/images/logo.png',
+      success(data) {}
+    });
+  });
+}
+
+if (process.env.IS_WEB) {
+  configWeixin();
 }
 
 /* eslint-disable no-new */
