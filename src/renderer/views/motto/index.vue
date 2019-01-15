@@ -6,6 +6,7 @@ export default {
   data() {
     return {
       name: "",
+      mobile: "",
       motto: "",
       photoUrl: "",
       photoFile: ""
@@ -40,7 +41,8 @@ export default {
       const data = await request.UploadMotto({
         text: this.motto,
         image: this.photoFile,
-        authorName: this.name
+        authorName: this.name,
+        authorMobile: this.mobile
       });
       const { id, qrcodeUrl } = data;
       if (id) {
@@ -80,9 +82,13 @@ export default {
         div
           p 我的座右铭
           textarea.input-motto(v-model="motto" required)
-        div
-          p 我的名字
-          input.input-name(v-model="name" required)
+        div.author-input
+          div
+            p 我的名字
+            input.input-name(v-model="name" required)
+          div
+            p 我的手机号
+            input.input-name(v-model="mobile" required)
         div.actions
           div {{photoUrl ? "我要重拍": "我要拍照" }}
           Icon.snapshot(type="camera" @click="snapshot")
@@ -121,6 +127,10 @@ export default {
   font-size 1.5vw
   font-weight 600
   color black
+  .author-input
+    display flex
+    div:first-child
+      margin-right 1vw
 .motto-preview-photo
   width: 17.4vw
   transform: rotate(-7.25deg)

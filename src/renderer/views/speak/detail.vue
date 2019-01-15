@@ -14,6 +14,8 @@
           form(@submit="submitAuthor")
             p 您的姓名
             input.input(v-model="speech.authorName" required)
+            p 您的手机号
+            input.input(v-model="speech.authorMobile" type="number" required)
             p 您所在的街道/镇
             select.input(v-model="speech.authorTown" required)
               option(v-for="town in $parent.$parent.towns") {{ town }}
