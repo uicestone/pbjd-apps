@@ -1,18 +1,20 @@
-# project-party
+# 嘉定党建大厅应用
 
-> An electron-vue project
+> 嘉定区党建中心的党建地图、党建声音和历史上的今天互动应用
 
 #### Build Setup
 
 ``` bash
 # install dependencies
-npm install
+yarn
 
 # serve with hot reload at localhost:9080
-npm run dev
+yarn dev
 
 # build electron application for production
-npm run build
+yarn build:win32
+yarn build:darwin
+yarn build:web
 
 
 ```
