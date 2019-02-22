@@ -14,8 +14,8 @@
       //- Icon.slide-close(type="ios-close-empty" v-if="currentSlide" @click="closeSlides")
     div.buttonGroup
       img.glow(@click="showSlides" :src="homeButtons[0]")
-      img.glow.delay-1(@click="goDetail" :src="homeButtons[1]")
-      img.glow.delay-2(:src="homeButtons[2]")
+      img.glow.delay-1(@click="goDetail" :src="homeButtons[2]")
+      img.glow.delay-2(@click="goGroup" :src="homeButtons[1]")
       img.glow.delay-3(:src="homeButtons[3]")
     div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
@@ -56,6 +56,9 @@ export default {
   methods: {
     goDetail() {
       this.$router.push({ name: "mapDetail" });
+    },
+    goGroup() {
+      this.$router.push({ name: "mapGroup" });
     },
     showOpening() {
       if (!this.showingOpening) {
@@ -106,7 +109,6 @@ export default {
     },
     getSpotConfig() {
       request.spotsConfig().then(res => {
-        console.log(res,'spotsconfig')
         this.homeButtons = res.homeButtons;
       });
     }
