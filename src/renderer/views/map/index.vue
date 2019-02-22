@@ -3,14 +3,17 @@
     img.bg-element.opening(v-if="showingOpening=='image'" src="static/map/opening.jpg" @click="showOpening" @keyup.enter="test")
     video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
     //- Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
-    div.slides(v-if="currentSlide")
-      .menu-links(v-if="currentSlide=='0'")
-        a.section-1(@click="goToSlide(slideSections[0])")
-        a.section-2(@click="goToSlide(slideSections[1])")
-        a.section-3(@click="goToSlide(slideSections[2])")
-        a.section-4(@click="goToSlide(slideSections[3])")
-      .back(:class="{'section-cover':slideSections.indexOf(currentSlide)>-1||currentSlide=='0'}" @click="backSlide")
-      img.bg-element(:src="'static/images/slides/'+currentSlide+'.jpg'" @click="nextSlide")
+    div.slides(v-if="currentSlideSection!==null&&currentSlide!==null")
+      .menu-links(v-if="currentSlide==0")
+        a.section-1(@click="goToSlide(1, 0)")
+        a.section-2(@click="goToSlide(2, 0)")
+        a.section-3(@click="goToSlide(3, 0)")
+        a.section-4(@click="goToSlide(4, 0)")
+      .nav-area
+        .prev(@click="prevSlide")
+        .next(@click="nextSlide")
+      .back(:class="{'section-cover':currentSlide==0}" @click="backSlide")
+      img.bg-element(:src="slides[currentSlideSection][currentSlide]" @click="nextSlide")
       //- Icon.slide-close(type="ios-close-empty" v-if="currentSlide" @click="closeSlides")
     div.buttonGroup
       img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
@@ -35,8 +38,8 @@ export default {
   data() {
     return {
       isPlaying: false,
-      slideSections: ['1', '7', '16', '31'],
-      lastSlide: '32',
+      slides:[[]],
+      currentSlideSection: null,
       currentSlide: null,
       showingOpening: null
     };
@@ -81,31 +84,54 @@ export default {
       this.showingOpening = null; // use video as opening
     },
     showSlides() {
-      this.currentSlide = '0';
+      this.goToSlide(0, 0);
     },
     nextSlide() {
-      if (this.currentSlide === this.lastSlide) {
-        this.closeSlides();
+      if (this.currentSlide === this.slides[this.currentSlideSection].length-1) {
+        if (this.currentSlideSection === this.slides.length-1) {
+          this.closeSlides();
+        } else {
+          this.currentSlideSection++;
+          this.currentSlide = 0;
+        }
       } else {
-        this.currentSlide = (Number(this.currentSlide) + 1).toString();
+        this.currentSlide++;
+      }
+    },
+    prevSlide() {
+      if (this.currentSlide === 0) {
+        if (this.currentSlideSection === 0) {
+          this.closeSlides();
+        } else {
+          this.currentSlideSection--;
+          this.currentSlide = this.slides[this.currentSlideSection].length-1;
+        }
+      } else {
+        this.currentSlide--;
       }
     },
     backSlide() {
-      if (this.currentSlide === '0') {
-        this.closeSlides();
+      if (this.currentSlide === 0) {
+        if (this.currentSlideSection === 0) {
+          this.closeSlides();
+        } else {
+          this.goToSlide(0, 0);
+        }
       } else {
-        this.currentSlide = '0';
+        this.currentSlide = 0;
       }
     },
-    goToSlide(name) {
-      this.currentSlide = name;
+    goToSlide(section, slide) {
+      this.currentSlideSection = section;
+      this.currentSlide = slide;
     },
     closeSlides() {
+      this.currentSlideSection = null;
       this.currentSlide = null;
     }
   },
   async mounted() {
-    this.slides = await request.getMapSlides();
+    this.slides = await request.getIntroSlides();
     window.keyboardListener = (event) => {
       if (event.key !== 'b') {
         return;
@@ -221,6 +247,21 @@ img.lotus
         top 67vh
         width 36.7vw
         height 13.9vh
+  .nav-area
+    .prev
+      position absolute
+      z-index 17
+      top 0
+      bottom 0
+      left 0
+      width 30%
+    .next
+      position absolute
+      z-index 17
+      top 0
+      bottom 0
+      right 0
+      width 70%
   .back
     position absolute
     z-index 20

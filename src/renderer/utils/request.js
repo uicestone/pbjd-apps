@@ -150,8 +150,8 @@ export const getSpots = datas => {
   return request(`spots`);
 };
 
-export const getMapSlides = datas => {
-  return request(`attachments?order=asc&category=党建概况&limit=-1`);
+export const getIntroSlides = datas => {
+  return request(`intro`);
 };
 
 export const getMapConfig = () => {
