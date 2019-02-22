@@ -125,6 +125,30 @@ export default new Router({
           meta: {
             homeName: 'mapIndex'
           }
+        },
+        {
+          path: "group",
+          name: "mapGroup",
+          component: require("@/views/map/group").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
+        },
+        {
+          path: "groupList",
+          name: "mapGroupList",
+          component: require("@/views/map/groupList").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
+        },
+        {
+          path: "groupDetail",
+          name: "mapGroupDetail",
+          component: require("@/views/map/groupDetail").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
         }
       ]
     },
