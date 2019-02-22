@@ -3,7 +3,9 @@
     div#map(ref="map")
     div.menu
       li(v-if="!currentLayer && value.label !== undefined" v-for="(value, key) in OptionLayers" @click="setLayer(key,value)")
-        img.menu-img(:src="currentOptionLayer == key ? value.images.select : value.images.unselect")       
+        div.menu-img(:class="{active: currentOptionLayer == key}")
+          img.icon(:src="value.icon")
+          span.label {{value.label}}
       img.menu-img-detail(v-if="currentLayer " @click="showTownModal" src="static/images/map_button_5.png")
     div(v-if="currentModalData.id")
       Modal.modal1(v-model="modal1" :title="currentModalData.name" @on-visible-change="hideNavQrcode")
@@ -47,7 +49,7 @@
     img.logo(src="~@/assets/image/map_title.png" v-if="!currentLayer")
     div.town-title(v-if="currentLayer")
       div.town-name {{ currentLayer }}
-      div 社区党建服务中心
+      div {{ config.spotTypes[1].text }}
     video#live-video(v-show="playingLiveVideo" ref="liveVideoPlayer")
     Icon.live-video-close(type="ios-close-empty" v-if="playingLiveVideo" @click="stopLiveVideo")
     img.back_menu(@click="back" src="~@/assets/image/map_back.png")
@@ -62,6 +64,7 @@ import L from "leaflet";
 import * as request from "../../utils/request";
 import Hls from 'hls.js';
 import QRCode from 'qrcode';
+import _ from 'lodash';
 
 global.L = L;
 
@@ -77,46 +80,7 @@ export default {
         type1: L.featureGroup([]),
         type2: L.featureGroup([])
       },
-      OptionLayers: {
-        区党建服务中心: {
-          label: "区党建服务中心",
-          images: {
-            select: "static/images/map_button_1a.png",
-            unselect: "static/images/map_button_1.png"
-          },
-          type: "type1",
-          layer: L.layerGroup([]).setZIndex(10),
-          children: {}
-        },
-        街镇社区党建服务中心: {
-          label: "街镇社区党建服务中心",
-          images: {
-            select: "static/images/map_button_2a.png",
-            unselect: "static/images/map_button_2.png"
-          },
-          type: "type1",
-          layer: L.layerGroup([]).setZIndex(10)
-        },
-        组织生活现场开放点: {
-          label: "组织生活现场开放点",
-          images: {
-            select: "static/images/map_button_3a.png",
-            unselect: "static/images/map_button_3.png"
-          },
-          type: "type1",
-          layer: L.layerGroup([]).setZIndex(10)
-        },
-        党性教育基地: {
-          label: "党性教育基地",
-          images: {
-            select: "static/images/map_button_4a.png",
-            unselect: "static/images/map_button_4.png"
-          },
-          type: "type1",
-          layer: L.layerGroup([]).setZIndex(10)
-        }
-      },
-      cachedOptionLayer: "区党建服务中心",
+      cachedOptionLayer: "",
       currentOptionLayer: "",
       currentHoverLayer:"",
       currentLayer: "",
@@ -209,7 +173,9 @@ export default {
       config: {
         lat: 31.373630999999999,
         lng: 121.14348000000001,
-        zoom: 12
+        zoom: 12,
+        homeButtons: [],
+        spotTypes: []
       },
       svgElements: [],
       modal1: false,
@@ -276,6 +242,22 @@ export default {
     },
     currentModalData() {
       return this.spots[this.currentModalIndex] || {};
+    },
+    OptionLayers() {
+      const optionLayers = {};
+      this.config.spotTypes.forEach((type, index) => {
+        optionLayers[type.text] = {
+          label: type.text,
+          icon: type.icon,
+          type: 'type1',
+          buttonIndex: type.buttonIndex,
+          layer: L.layerGroup([]).setZIndex(10)
+        };
+        if (index === 0) {
+          optionLayers[type.text].children = {};
+        }
+      });
+      return optionLayers;
     }
   },
   methods: {
@@ -407,7 +389,7 @@ export default {
           //   this.resetHighlight(e);
           // },
           click: e => {
-            if (this.currentOptionLayer === '街镇社区党建服务中心')
+            if (this.currentOptionLayer === this.config.spotTypes[1].text)
             this.zoomToFeature(e, { Name })
           }
         });
@@ -429,6 +411,12 @@ export default {
       iconSize: [40, 40],
       iconAnchor: [20, 20],
     });
+
+    const mapConfig = await request.getMapConfig();
+
+    Object.assign(this.config, mapConfig);
+
+    this.cachedOptionLayer = this.config.spotTypes[0].text;
 
     this.map = L.map("map", {
       center: [this.config.lat, this.config.lng],
@@ -472,21 +460,18 @@ export default {
         this.showModal(id);
       });
       if (type == "服务中心" && !town) {
-        this.OptionLayers["区党建服务中心"].layer.addLayer(marker);
+        _.find(this.OptionLayers, {buttonIndex:1}).layer.addLayer(marker);
       }
-      if (type == "服务中心" && town) {
+      else if (type == "服务中心" && town) {
         let customData = this.customDatas[town];
         customData.spotId = id;
 
-        this.OptionLayers["街镇社区党建服务中心"].layer.addLayer(marker);
+        _.find(this.OptionLayers, {buttonIndex:2}).layer.addLayer(marker);
       }
-      if (type == "组织生活现场开放点") {
-        this.OptionLayers["组织生活现场开放点"].layer.addLayer(marker);
+      else if (this.OptionLayers[type]) {
+        this.OptionLayers[type].layer.addLayer(marker);
       }
-      if (type == "党性教育基地") {
-        this.OptionLayers["党性教育基地"].layer.addLayer(marker);
-      }
-      if (type == "服务站") {
+      else {
         let customData = this.customDatas[town];
         if (customData) {
           customData.childLayer.addLayer(marker);
@@ -558,8 +543,33 @@ export default {
 .popup
   color red
 .menu-img
-  width 29vw
+  width 31.5vw
   margin 10px 0
+  background url("~@/assets//image/map_spot_type_btn_bg.png") no-repeat
+  height 6vw
+  background-size contain
+  &.active
+    background url('~@/assets//image/map_spot_type_btn_bg_a.png') no-repeat
+    background-size contain
+    .label
+      color #c44328
+    .icon
+      filter: grayscale(100%) brightness(20);
+  .icon
+    width 2.5vw
+    height 2.5vw
+    object-fit contain
+    margin-left 1vw
+    margin-top 1.1vw
+  .label
+    color white
+    display inline-block
+    font-size 1.8vw
+    font-weight bold
+    margin-left 1.7vw
+    position relative
+    top -0.27vw
+    
 .modal1
   z-index 10001
   .ivu-modal-header-inner
@@ -749,7 +759,6 @@ export default {
   width 150px
   z-index 1
 .town-title
-  width 816px
   height 163px
   left 0
   top 60px
