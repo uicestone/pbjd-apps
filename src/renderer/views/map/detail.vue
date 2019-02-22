@@ -6,7 +6,9 @@
         div.menu-img(:class="{active: currentOptionLayer == key}")
           img.icon(:src="value.icon")
           span.label {{value.label}}
-      img.menu-img-detail(v-if="currentLayer " @click="showTownModal" src="static/images/map_button_5.png")
+      .menu-img-detail(v-if="currentLayer" @click="showTownModal")
+        span.first {{ config.centerIntroText.substr(0,1) }}
+        span {{ config.centerIntroText.substr(1) }}
     div(v-if="currentModalData.id")
       Modal.modal1(v-model="modal1" :title="currentModalData.name" @on-visible-change="hideNavQrcode")
         div.modal1-content
@@ -543,10 +545,12 @@ export default {
 .popup
   color red
 .menu-img
-  width 31.5vw
-  margin 10px 0
+  font-family STZhongsong
+  font-weight bold
+  width 40vw
+  margin 1.2vw 0
   background url("~@/assets//image/map_spot_type_btn_bg.png") no-repeat
-  height 6vw
+  height 5vw
   background-size contain
   &.active
     background url('~@/assets//image/map_spot_type_btn_bg_a.png') no-repeat
@@ -568,7 +572,7 @@ export default {
     font-weight bold
     margin-left 1.7vw
     position relative
-    top -0.27vw
+    top -0.5vw
     
 .modal1
   z-index 10001
@@ -659,9 +663,21 @@ export default {
       align-items center
       padding 0 20px
 .menu-img-detail
-  width 24vw
-  margin-top 6.8vh
-  margin-left 1.2vw
+  width 30vw
+  height 13vw
+  margin-top 1vw
+  margin-left 1vw
+  background url('~/static/images/map_button_5.png') no-repeat
+  background-size contain
+  padding-left 4vw
+  padding-top 4vw
+  font-size 3.3vw
+  font-weight bold
+  font-family STZhongsong
+  color white
+  .first
+    margin-right 2.2vw
+    color #d43616
 .modal2
   z-index 10001
   .ivu-modal-header-inner
