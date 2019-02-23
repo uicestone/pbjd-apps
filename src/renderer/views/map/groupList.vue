@@ -54,18 +54,21 @@ ul {
     height 60vh;
     overflow auto;
     li {
-        width 39vw;
-        margin-right 5vw;
+        font-family STZhongSong;
+        width 43vw;
         float left;
-        height 6vh;
-        line-height 6vh;
-        margin-bottom 4vh;
-        background-color rgb(161,0,5);
-        border-radius 10px;
-        padding-left 5vw;
-        font-size 30px;
+        height 4vw;
+        line-height 4vw;
+        margin-bottom 2vw;
+        background-color rgba(0, 0, 0, 0.35);
+        border-radius 0.75vw;
+        padding-left 3vw;
+        font-size 1.95vw;
         color #fff;
         cursor pointer
+        &:nth-child(2n-1) {
+            margin-right 3vw
+        }
     }
 }
 .back {
@@ -83,14 +86,14 @@ ul {
     align-items center;
     justify-content center;
     img {
-        margin-right 20px;
-        width 80px;
+        margin-right 1.5vw;
+        width 10vw;
     }
 }
 .shoushu {
     font-family:shoushu;
     color:#fff;
-    font-size:60px;
+    font-size:7vw;
 }
 
 </style>

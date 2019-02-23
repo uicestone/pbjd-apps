@@ -182,7 +182,7 @@ export default {
     height 10vw
     width 9vw
     object-position 0 0
-    object-fit cover
+    object-fit contain
 img.lotus
   right -6vw
   position absolute

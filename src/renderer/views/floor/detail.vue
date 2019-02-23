@@ -68,14 +68,16 @@ export default {
   width: 12vw;
   height: 8vh;
   border-radius: 0 5vh 5vh 0;
-  font-size: 40px;
+  font-size: 3vw;
+  font-family: STZhongSong;
+  font-weight: bold;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   top: 5vh;
   left: 0;
-  letter-spacing: 4px;
+  letter-spacing: 0.3vw;
 }
 
 .floorTitle {
@@ -83,19 +85,19 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   top: 10vh;
-  font-size: 60px;
+  font-size: 4.5vw;
   font-weight: bold;
 }
 
 .content {
   width: 100%;
-  height: 58vh;
+  height: 60vh;
   display: flex;
   justify-content: space-between;
   margin-top: 5vh;
   padding: 0 5vw;
   position: absolute;
-  bottom: 20vh;
+  bottom: 15vh;
 
   div {
     width: 48%;
@@ -103,14 +105,19 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     color: #000;
-    font-size: 30px;
+    font-size: 2.25vw;
     letter-spacing: 1px;
     white-space: pre-line;
-    letter-spacing: 2px;
+    letter-spacing: 0.15vw;
   }
 
   .left {
-    background-color: #fff;
+    // background-color: #fff;
+  }
+  
+  /deep/ img {
+    width 100%
+    height auto
   }
 }
 

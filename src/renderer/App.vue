@@ -81,20 +81,20 @@ body::-webkit-scrollbar {
 }
 
 .fade-enter-active {
-  animation: fade-in .5s;
+  animation: fade-in 1s;
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 .fade-leave-active {
-  animation: fade-in .5s reverse;
+  animation: fade-in 1s reverse;
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 @keyframes fade-in {
   0% {
-    opacity: 0.5;
+    opacity: 0;
   }
   100% {
     opacity: 1;

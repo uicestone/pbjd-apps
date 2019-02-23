@@ -65,13 +65,13 @@ ul {
 
   li {
     float: left;
-    width: 28vw;
+    width: 33.33%;
     height: 30vh;
     display: flex;
     align-items: center;
 
     img {
-      margin-right: 20px;
+      margin-right: 1.5vw;
     }
 
     cursor: pointer;
@@ -89,7 +89,7 @@ ul {
 .shoushu {
   font-family: shoushu;
   color: #fff;
-  font-size: 60px;
+  font-size: 4.5vw;
 }
 </style>
 

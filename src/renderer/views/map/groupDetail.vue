@@ -60,13 +60,13 @@ export default {
 }
 
 .detailtitle {
-    height 8vh;
+    height 6.5vw;
     display flex;
     align-items center;
     color #fff;
-    font-size 25px;
+    font-size 1.875vw;
     position relative;
-    margin-top 30px;
+    margin-top 2.25vw;
     img {
         position absolute;
         height 100%;
@@ -74,14 +74,23 @@ export default {
         left 0;
     }
     span {
+        font-family STZhongSong;
+        font-size 3.7vw;
         z-index 99;
         color #fff;
-        display flex;
         height 100%;
-        padding 0 2vw;
-        background-color rgb(44,166,224);
+        padding-left 3vw;
+        background-color #51a5db;
         align-items center;
-        border-radius 8px;
+        border-radius 1.5vw 1.5vw 0 1.5vw;
+        min-width 27vw;
+        line-height 7vw;
+    }
+}
+.content {
+    /deep/ img {
+        width: 100%;
+        height: auto;
     }
 }
 .back {
@@ -94,8 +103,8 @@ export default {
 
 .line {
     width 75vw;
-    height 6px;
-    margin-top 10px;
+    height 0.45vw;
+    margin-top 0.75vw;
     background-color rgb(44,166,224);
 } 
 
@@ -118,7 +127,7 @@ export default {
         overflow-x hidden;
         overflow-y auto;
         color rgb(89,87,87);
-        font-size 26px;
+        font-size 1.95vw;
         letter-spacing 1px;
         white-space: pre-line;
     }

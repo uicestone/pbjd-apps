@@ -18,7 +18,7 @@
                         li(v-for="item in rightRooms" :key="item.id"  @click="goRoomsDetail(item)") 
                             
                             span.triangle_border_right(:class='colorClass')
-                            span.ellipse(:class='colorClass') {{ item.title }}
+                            span.ellipse(:class='colorClass') {{ item.number}} {{ item.title }}
             img(src="~@/assets//image/back-dark.png" @click='goBack1')
 </template>
 <script>
@@ -112,28 +112,30 @@ export default {
 
 .floorItem {
   position: absolute;
-  width: 12vw;
-  height: 12vw;
+  width: 14vw;
+  height: 14vw;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 50px;
+  font-size: 5vw;
+  font-family: STZhongSong;
+  font-weight: bold;
   color: #fff;
-  letter-spacing: 4px;
+  letter-spacing: 0.3vw;
   cursor: pointer;
 }
 
 .floorItem1 {
-  background-color: rgb(229, 0, 18);
+  background-color: #d32c26;
   top: 20vh;
-  left: 30vw;
+  left: 29vw;
 }
 
 .floorItem2 {
   background-color: rgb(3, 110, 183);
   top: 20vh;
-  right: 30vw;
+  right: 29vw;
 }
 
 .back {
@@ -147,20 +149,20 @@ export default {
 .floorItem3 {
   background-color: rgb(164, 11, 94);
   bottom: 20vh;
-  left: 30vw;
+  left: 29vw;
 }
 
 .floorItem4 {
   background-color: rgb(0, 145, 58);
   bottom: 20vh;
-  right: 30vw;
+  right: 29vw;
 }
 
 .dialog-box {
   position: fixed;
   width: 90vw;
   height: 90vh;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.8);
   top: 5vh;
   left: 5vw;
   border-radius: 5vh;
@@ -184,14 +186,16 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 3vw;
+    font-weight: bold;
+    font-family: STZhongSong;
     color: #fff;
   }
 
   .content {
     width: 80vw;
     height: 60vh;
-    padding-left: 10vw;
+    padding-top: 2vw;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -200,7 +204,7 @@ export default {
     justify-content: center;
 
     div.left, div.right {
-      width: 50%;
+      // width: 50%;
       height: 100%;
         overflow-x hidden;
         overflow-y auto;
@@ -213,29 +217,35 @@ export default {
           height: 10vh;
           display: flex;
           align-items: center;
-          font-size: 30px;
+          font-size: 2.5vw;
+          font-weight: bold;
             cursor pointer;
           .triangle_border_right {
             display: block;
             width: 0;
             height: 0;
-            border-width: 28px 0 28px 28px;
+            border-width: 1.5vw 0 1.5vw 2.25vw;
             border-style: solid;
-            margin-right: 20px;
+            margin-right: 1.5vw;
           }
         }
       }
+    }
+    
+    /deep/ img {
+      width: 100%
+      height: auto
     }
   }
 }
 
 .color1 {
-  color: rgb(229, 0, 18);
-  border-color: transparent transparent transparent rgb(229, 0, 18); /* 透明 透明 透明 黄 */
+  color: #d32c26;
+  border-color: transparent transparent transparent #d32c26; /* 透明 透明 透明 黄 */
 }
 
 .bgColor1 {
-  background-color: rgb(229, 0, 18);
+  background-color: #d32c26;
 }
 
 .bgColor2 {
@@ -280,7 +290,7 @@ export default {
 }
 
 .triangle_border_right {
-  width: 56px;
+  width: 4.2vw;
 }
 </style>
 
