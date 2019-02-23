@@ -13,10 +13,10 @@
       img.bg-element(:src="'static/images/slides/'+currentSlide+'.jpg'" @click="nextSlide")
       //- Icon.slide-close(type="ios-close-empty" v-if="currentSlide" @click="closeSlides")
     div.buttonGroup
-      img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
-      img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
-      img.glow.delay-2(src="~@/assets//image/map_index_button3.png")
-      img.glow.delay-3(src="~@/assets//image/map_index_button4.png")
+      img.glow(@click="showSlides" :src="homeButtons[0]")
+      img.glow.delay-1(@click="goDetail" :src="homeButtons[1]")
+      img.glow.delay-2(:src="homeButtons[2]")
+      img.glow.delay-3(:src="homeButtons[3]")
     div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
@@ -38,7 +38,8 @@ export default {
       slideSections: ['1', '7', '16', '31'],
       lastSlide: '32',
       currentSlide: null,
-      showingOpening: null
+      showingOpening: null,
+      homeButtons:[]
     };
   },
   watch: {
@@ -102,6 +103,12 @@ export default {
     },
     closeSlides() {
       this.currentSlide = null;
+    },
+    getSpotConfig() {
+      request.spotsConfig().then(res => {
+        console.log(res,'spotsconfig')
+        this.homeButtons = res.homeButtons;
+      });
     }
   },
   async mounted() {
@@ -117,6 +124,7 @@ export default {
       }
     };
     window.addEventListener('keyup', window.keyboardListener);
+    this.getSpotConfig()
   },
   destroyed() {
     window.removeEventListener('keyup', window.keyboardListener);

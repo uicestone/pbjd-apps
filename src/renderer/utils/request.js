@@ -70,6 +70,12 @@ export const getUserCountTotal = () => {
   });
 };
 
+export const spotsConfig = () => {
+  return request(`spots/config`, {
+    method: "GET"
+  });
+};
+
 export const getCpcReview = ({ type, month, day }) => {
   return request(`cpc-review/${type}/${month}/${day}`, {
     method: "GET"
@@ -97,6 +103,7 @@ export const UploadSpeechMovie = datas => {
     body: formData
   });
 };
+
 
 export const getSpeechMove = datas => {
   const { id } = datas;
