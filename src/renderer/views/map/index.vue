@@ -16,10 +16,10 @@
       img.bg-element(:src="slides[currentSlideSection][currentSlide]" @click="nextSlide")
       //- Icon.slide-close(type="ios-close-empty" v-if="currentSlide" @click="closeSlides")
     div.buttonGroup
-      img.glow(@click="showSlides" src="~@/assets//image/map_index_button1.png")
-      img.glow.delay-1(@click="goDetail" src="~@/assets//image/map_index_button2.png")
-      img.glow.delay-2(src="~@/assets//image/map_index_button3.png")
-      img.glow.delay-3(src="~@/assets//image/map_index_button4.png")
+      img.glow(@click="showSlides" :src="homeButtons[0]")
+      img.glow.delay-1(@click="goDetail" :src="homeButtons[2]")
+      img.glow.delay-2(@click="goGroup" :src="homeButtons[1]")
+      img.glow.delay-3(@click="goFloor" :src="homeButtons[3]")
     div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
@@ -41,7 +41,8 @@ export default {
       slides:[[]],
       currentSlideSection: null,
       currentSlide: null,
-      showingOpening: null
+      showingOpening: null,
+      homeButtons:[]
     };
   },
   watch: {
@@ -58,6 +59,12 @@ export default {
   methods: {
     goDetail() {
       this.$router.push({ name: "mapDetail" });
+    },
+    goGroup() {
+      this.$router.push({ name: "mapGroup" });
+    },
+    goFloor() {
+      this.$router.push({ name:'floorIndex'});
     },
     showOpening() {
       if (!this.showingOpening) {
@@ -128,6 +135,11 @@ export default {
     closeSlides() {
       this.currentSlideSection = null;
       this.currentSlide = null;
+    },
+    getSpotConfig() {
+      request.spotsConfig().then(res => {
+        this.homeButtons = res.homeButtons;
+      });
     }
   },
   async mounted() {
@@ -143,6 +155,7 @@ export default {
       }
     };
     window.addEventListener('keyup', window.keyboardListener);
+    this.getSpotConfig()
   },
   destroyed() {
     window.removeEventListener('keyup', window.keyboardListener);
@@ -195,7 +208,7 @@ export default {
     height 10vw
     width 9vw
     object-position 0 0
-    object-fit cover
+    object-fit contain
 img.lotus
   right -6vw
   position absolute

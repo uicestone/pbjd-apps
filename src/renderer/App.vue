@@ -140,6 +140,13 @@ li {
   font-size: 3.3vw;
   font-weight: bold;
 }
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+.scroll-bar-hidden::-webkit-scrollbar {display:none};
 .button-back {
   border: none;
   z-index: 10000;

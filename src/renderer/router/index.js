@@ -125,6 +125,53 @@ export default new Router({
           meta: {
             homeName: 'mapIndex'
           }
+        },
+        {
+          path: "group",
+          name: "mapGroup",
+          component: require("@/views/map/group").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
+        },
+        {
+          path: "groupList",
+          name: "mapGroupList",
+          component: require("@/views/map/groupList").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
+        },
+        {
+          path: "groupDetail",
+          name: "mapGroupDetail",
+          component: require("@/views/map/groupDetail").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
+        }
+      ]
+    },
+    // floor
+    {
+      path: "/floor",
+      name: "floor",
+      component: require("@/views/floor/root").default,
+      children: [
+        {
+          path: "index",
+          name: "floorIndex",
+          component: require("@/views/floor/index").default
+        },
+        {
+          path: "guide",
+          name: "floorGuide",
+          component: require("@/views/floor/guide").default
+        },
+        {
+          path: "detail",
+          name: "floorDetail",
+          component: require("@/views/floor/detail").default
         }
       ]
     },

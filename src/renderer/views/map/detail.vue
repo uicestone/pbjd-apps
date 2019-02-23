@@ -321,6 +321,7 @@ export default {
     setLayer(key) {
       this.resetMap();
       this.currentOptionLayer = key;
+
     },
     parseSVG(s) {
       var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
@@ -397,6 +398,11 @@ export default {
         });
         // }
       }
+    },
+    getSpotConfig() {
+      request.spotsConfig().then(res => {
+        this.spotTyeps = res.spotTyeps;
+      });
     }
   },
   async mounted() {
@@ -451,7 +457,6 @@ export default {
 
     let _spots;
     _spots = await request.getSpots();
-
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images, live, liveVideoUrl } = spot;
       this.spots[id] = spot;
@@ -497,7 +502,7 @@ export default {
         hiddenMarker.addTo(this.map)
         val.hiddenMarker = hiddenMarker
     }
-  
+
 
     var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
       defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
@@ -519,6 +524,8 @@ export default {
     //   radius: 100
     // }).addTo(this.map);
     //  L.marker([this.config.lat, this.config.lng], { icon }).addTo(this.map);
+
+    this.getSpotConfig();
 
   }
 };

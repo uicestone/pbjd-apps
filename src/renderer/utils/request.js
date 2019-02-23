@@ -70,6 +70,30 @@ export const getUserCountTotal = () => {
   });
 };
 
+export const spotsConfig = () => {
+  return request(`spots/config`, {
+    method: "GET"
+  });
+};
+
+export const postsBuilding = () => {
+  return request(`posts/building`, {
+    method: "GET"
+  });
+};
+
+export const rooms = () => {
+  return request(`rooms`, {
+    method: "GET"
+  });
+};
+
+export const organizations = () => {
+  return request(`organizations`, {
+    method: "GET"
+  });
+};
+
 export const getCpcReview = ({ type, month, day }) => {
   return request(`cpc-review/${type}/${month}/${day}`, {
     method: "GET"
@@ -98,9 +122,17 @@ export const UploadSpeechMovie = datas => {
   });
 };
 
+
 export const getSpeechMove = datas => {
   const { id } = datas;
   return request(`speeches/${id}`, {
+    method: "GET"
+  });
+};
+
+export const postsDetail = datas => {
+  const { id } = datas;
+  return request(`posts/${id}`, {
     method: "GET"
   });
 };
