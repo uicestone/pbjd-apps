@@ -81,20 +81,20 @@ body::-webkit-scrollbar {
 }
 
 .fade-enter-active {
-  animation: fade-in 1s;
+  animation: fade-in .5s;
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 .fade-leave-active {
-  animation: fade-in 1s reverse;
+  animation: fade-in .5s reverse;
   position: absolute;
   width: 100vw;
   height: 100vh;
 }
 @keyframes fade-in {
   0% {
-    opacity: 0;
+    opacity: 0.5;
   }
   100% {
     opacity: 1;
@@ -146,6 +146,7 @@ li {
   text-overflow: ellipsis;
   white-space: nowrap
 }
+.scroll-bar-hidden::-webkit-scrollbar {display:none};
 .button-back {
   border: none;
   z-index: 10000;
