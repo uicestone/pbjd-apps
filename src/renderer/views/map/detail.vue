@@ -335,7 +335,6 @@ export default {
       this.showingNavQrcode = false;
     },
     setLayer(key) {
-      console.log(key)
       this.resetMap();
       this.currentOptionLayer = key;
 
@@ -418,7 +417,6 @@ export default {
     },
     getSpotConfig() {
       request.spotsConfig().then(res => {
-        console.log(res,'spotsconfig')
         this.spotTyeps = res.spotTyeps;
       });
     }
@@ -469,7 +467,6 @@ export default {
 
     let _spots;
     _spots = await request.getSpots();
-    console.log(_spots)
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images, live, liveVideoUrl } = spot;
       this.spots[id] = spot;

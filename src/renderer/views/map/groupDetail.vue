@@ -22,7 +22,6 @@ export default {
     mounted() {
         const { query } = this.$route;
         const { item } = query;
-        console.log(item);
         this.groupDetailData = item;
         this.postsDetail();
     },
@@ -40,7 +39,6 @@ export default {
         postsDetail() {
             const id = this.groupDetailData.id;
             request.postsDetail({id}).then(res => {
-                console.log(res,'potsDetail')
                 this.groupDetail = res;
             })
         }

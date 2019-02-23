@@ -24,7 +24,6 @@ export default {
     },
     getOrganizations() {
       request.organizations().then(res => {
-        console.log(res);
         this.Organizations = res;
       });
     },

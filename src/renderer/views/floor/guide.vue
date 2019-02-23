@@ -45,7 +45,6 @@ export default {
     },
     getRooms() {
       request.rooms().then(res => {
-        console.log(res);
         this.rooms = res;
       });
     },
@@ -90,7 +89,6 @@ export default {
       });
     },
     goRoomsDetail(item) {
-      console.log(item,'sitemm')
        this.$router.push({ name: "floorDetail", query: { item:item } });
     }
   }

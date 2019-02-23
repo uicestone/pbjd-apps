@@ -26,7 +26,6 @@ export default {
         },
         getPostsBuilding() {
             request.postsBuilding().then(res => {
-                console.log(res);
                 this.floorContent = res.content;
             })
         }

@@ -18,7 +18,6 @@ export default {
   mounted() {
     const { query } = this.$route;
     const { item } = query;
-    console.log(item);
     this.floorData = item;
     const val = item.floor;
     if (val == 1) {
