@@ -4,7 +4,7 @@
             img(:src="groupListData.posterUrl")
             span.shoushu {{ groupListData.title }}
         ul
-          li(v-for="item in groupListData.departments" :key="item.id" @click='goGroupDetail(item)') {{ item.title }}
+          li.ellipse(v-for="item in groupListData.departments" :key="item.id" @click='goGroupDetail(item)') {{ item.title }}
          
         img.back(src="~@/assets//image/back-light.png" @click='goBack')
 </template>
@@ -19,14 +19,15 @@ export default {
     mounted() {
         const { query } = this.$route;
         const { item } = query;
-        console.log(item);
         this.groupListData = item;
+        window.localStorage.setItem('groupListData',JSON.stringify(item));
     },
     methods:{
         goBack() {
             this.$router.push("group")
         },
         goGroupDetail(item) {
+            window.localStorage.setItem('fromGroupList','1');
              this.$router.push({ name: "mapGroupDetail", query: { item:item } });
         }
     }

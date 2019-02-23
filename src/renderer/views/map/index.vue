@@ -16,7 +16,7 @@
       img.glow(@click="showSlides" :src="homeButtons[0]")
       img.glow.delay-1(@click="goDetail" :src="homeButtons[2]")
       img.glow.delay-2(@click="goGroup" :src="homeButtons[1]")
-      img.glow.delay-3(:src="homeButtons[3]")
+      img.glow.delay-3(@click="goFloor" :src="homeButtons[3]")
     div.title-circle.fill(@click="showOpening")
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
@@ -59,6 +59,9 @@ export default {
     },
     goGroup() {
       this.$router.push({ name: "mapGroup" });
+    },
+    goFloor() {
+      this.$router.push({ name:'floorIndex'});
     },
     showOpening() {
       if (!this.showingOpening) {

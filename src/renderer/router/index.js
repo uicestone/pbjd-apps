@@ -152,6 +152,29 @@ export default new Router({
         }
       ]
     },
+    // floor
+    {
+      path: "/floor",
+      name: "floor",
+      component: require("@/views/floor/root").default,
+      children: [
+        {
+          path: "index",
+          name: "floorIndex",
+          component: require("@/views/floor/index").default
+        },
+        {
+          path: "guide",
+          name: "floorGuide",
+          component: require("@/views/floor/guide").default
+        },
+        {
+          path: "detail",
+          name: "floorDetail",
+          component: require("@/views/floor/detail").default
+        }
+      ]
+    },
     {
       path: "*",
       redirect: "/"
