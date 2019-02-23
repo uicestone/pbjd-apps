@@ -1,8 +1,8 @@
 <template lang="pug">
     div.page-map-groupDetail
         img.titleImg(:src="groupDetailData.posterUrl")
-        .title 
-            img(src="~@/assets//image/bg-department-title.png")
+        .detailtitle 
+            //- img(src="~@/assets//image/bg-department-title.png")
             span {{ groupDetailData.title }}
         .line
         .content
@@ -28,7 +28,14 @@ export default {
     },
     methods: {
         goBack() {
-            this.$router.back(-1);
+            const groupList = window.localStorage.getItem('fromGroupList');
+            if(groupList == 1) {
+                this.$router.push({ name: "mapGroupList", query: { item:JSON.parse(window.localStorage.getItem('groupListData')) } })
+            }
+            else {
+                this.$router.back(-1);
+            }
+
         },
         postsDetail() {
             const id = this.groupDetailData.id;
@@ -52,12 +59,10 @@ export default {
   position relative;
 }
 
-.title {
-    width 20vw;
+.detailtitle {
     height 8vh;
     display flex;
     align-items center;
-    padding-left 2vw;
     color #fff;
     font-size 25px;
     position relative;
@@ -65,12 +70,18 @@ export default {
     img {
         position absolute;
         height 100%;
-        width auto;
+        width 100%;
         left 0;
     }
     span {
         z-index 99;
         color #fff;
+        display flex;
+        height 100%;
+        padding 0 2vw;
+        background-color rgb(44,166,224);
+        align-items center;
+        border-radius 8px;
     }
 }
 .back {
@@ -116,6 +127,8 @@ export default {
         background-color #fff;
     }
 }
+
+
 
 
 </style>

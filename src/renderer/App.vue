@@ -140,6 +140,12 @@ li {
   font-size: 3.3vw;
   font-weight: bold;
 }
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
 .button-back {
   border: none;
   z-index: 10000;
