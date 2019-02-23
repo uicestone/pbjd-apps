@@ -6,7 +6,7 @@
             span {{ groupDetailData.title }}
         .line
         .content
-            .left(v-html="groupDetail.content")
+            .left.scroll-bar-hidden(v-html="groupDetail.content")
             .right(v-html="groupDetail.excerpt")
         img.back(src="~@/assets//image/back-dark.png" @click='goBack')
 </template>

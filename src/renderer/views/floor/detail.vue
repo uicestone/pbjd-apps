@@ -3,7 +3,7 @@
         .floorNum(:class='bgClass') {{ floorTitle }}
         .floorTitle(:class='colorClass') {{ floorData.title }}
         .content
-            .left(v-html="floorData.content")
+            .left.scroll-bar-hidden(v-html="floorData.content")
             .right(v-html="floorData.hint")
         img.back(src="~@/assets//image/back-dark.png" @click='goBack')
 </template>

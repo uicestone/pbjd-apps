@@ -1,17 +1,21 @@
 <template lang="pug">
      div.page-floor-index
         .contanier
-            .left 洪德楼位于上海市嘉定区洪德路50号，建筑面积近3000平方米，是嘉定建党中心、嘉定区群团服务中心的主要办公场所和活动阵地。
+            .left.scroll-bar-hidden(v-html="floorContent")
             .right
                 .floor-guide(@click="goGuide") 楼层指引
                 img(src="~@/assets//image/back-dark.png" @click="goBack")
 </template>
 <script>
+import * as request from "../../utils/request";
 export default {
     data() {
         return {
-
+           floorContent:''
         }
+    },
+    mounted() {
+        this.getPostsBuilding();
     },
     methods:{
         goBack() {
@@ -19,6 +23,12 @@ export default {
         },
         goGuide() {
             this.$router.push('guide');
+        },
+        getPostsBuilding() {
+            request.postsBuilding().then(res => {
+                console.log(res);
+                this.floorContent = res.content;
+            })
         }
     }
 }

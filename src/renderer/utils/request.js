@@ -76,6 +76,12 @@ export const spotsConfig = () => {
   });
 };
 
+export const postsBuilding = () => {
+  return request(`posts/building`, {
+    method: "GET"
+  });
+};
+
 export const rooms = () => {
   return request(`rooms`, {
     method: "GET"
