@@ -46,7 +46,7 @@ export default {
   background: url('~@/assets//image/bg-organizations.png') center center no-repeat;
   background-size: cover;
   padding: 0 5vw;
-  position relative;
+  // position relative;
 }
 
 ul {

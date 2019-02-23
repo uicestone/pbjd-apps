@@ -51,10 +51,10 @@ export default {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: url('~@/assets//image/bg-floor-detail.png') center center no-repeat;
+  background: url('~@/assets//image/bg-department-detail.png') center center no-repeat;
   background-size: cover;
   padding: 5vh 5vw;
-  position relative;
+  // position relative;
 }
 
 .detailtitle {
@@ -83,12 +83,6 @@ export default {
         border-radius 1.5vw 1.5vw 0 1.5vw;
         min-width 27vw;
         line-height 7vw;
-    }
-}
-.content {
-    /deep/ img {
-        width: 100%;
-        height: auto;
     }
 }
 .back {
@@ -132,6 +126,12 @@ export default {
 
     .left {
         background-color #fff;
+        border 1vw #fff solid;
+        /deep/ img {
+            width: 100%;
+            height: auto;
+            border 0.5vw solid #ccc;
+        }
     }
 }
 
