@@ -161,19 +161,31 @@ export default new Router({
         {
           path: "index",
           name: "floorIndex",
-          component: require("@/views/floor/index").default
+          component: require("@/views/floor/index").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
         },
         {
           path: "guide",
           name: "floorGuide",
-          component: require("@/views/floor/guide").default
+          component: require("@/views/floor/guide").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
         },
         {
           path: "detail",
           name: "floorDetail",
-          component: require("@/views/floor/detail").default
+          component: require("@/views/floor/detail").default,
+          meta: {
+            homeName: 'mapIndex'
+          }
         }
-      ]
+      ],
+      meta: {
+        homeName: 'mapIndex'
+      }
     },
     {
       path: "*",
