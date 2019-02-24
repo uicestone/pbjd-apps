@@ -1,7 +1,7 @@
 <template lang="pug">
   div.page-map-groupList
     div.title
-      img(:src="groupListData.posterUrl")
+      img(v-if="groupListData.posterUrl" :src="groupListData.posterUrl")
       span.shoushu {{ groupListData.title }}
     ul.scroll-bar-hidden
       li.ellipse(v-for="item in groupListData.departments" :key="item.id" @click='goGroupDetail(item)') {{ item.title }}

@@ -6,7 +6,7 @@
       span {{ groupDetailData.title }}
     .line
     .content
-      .left.scroll-bar-hidden(v-html="groupDetail.content")
+      .left.scroll-bar-hidden(v-if="groupDetail.content" v-html="groupDetail.content")
       .right(v-html="groupDetail.excerpt")
     img.back(src="~@/assets//image/back-dark.png" @click='goBack')
 </template>
@@ -70,12 +70,13 @@ export default {
       width 100%
       left 0
     span
-      font-family STZhongSong
+      font-family Dasong
       font-size 3.7vw
       z-index 99
       color #fff
       height 100%
       padding-left 3vw
+      padding-right 2vw
       background-color #51a5db
       align-items center
       border-radius 1.5vw 1.5vw 0 1.5vw
@@ -89,7 +90,7 @@ export default {
     cursor pointer
 
   .line
-    width 75vw
+    width 77.5vw
     height 0.45vw
     margin-top 0.75vw
     background-color rgb(44,166,224)
@@ -97,12 +98,15 @@ export default {
   .titleImg
     position absolute
     right 5vw
-    top 4vh
+    top 4.8vh
     width 10vw
+    height 10vw
+    object-fit contain
+    object-position bottom
 
   .content
-    width 100%
-    height 58vh
+    width 90vw
+    height 53vh
     display flex
     justify-content space-between
     margin-top 5vh
@@ -118,12 +122,14 @@ export default {
     
     .left
       background-color #fff
-      border 1vw #fff solid
+      border .4vw #fff solid
       img,figure
         width 100% !important
         height auto
-        border 0.5vw solid #ccc
+        border 0.25vw solid #ccc
       figure>img
         border none
+    .right
+      font-weight bold
 
 </style>

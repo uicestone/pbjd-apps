@@ -82,7 +82,7 @@ export const postsBuilding = () => {
   });
 };
 
-export const rooms = () => {
+export const getRooms = () => {
   return request(`rooms`, {
     method: "GET"
   });

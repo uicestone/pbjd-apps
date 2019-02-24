@@ -18,7 +18,7 @@
             li(v-for="item in rightRooms" :key="item.id"  @click="goRoomsDetail(item)")                 
               span.triangle_border_right(:class='colorClass')
               span.ellipse(:class='colorClass') {{ item.number}} {{ item.title }}
-      img(src="~@/assets//image/back-dark.png" @click='goBack1')
+      img(src="~@/assets//image/back-dark.png" @click='closeFloor')
 </template>
 <script>
 import * as request from "../../utils/request";
@@ -32,22 +32,26 @@ export default {
       rightRooms: []
     };
   },
-  mounted() {
-    this.getRooms();
+  async mounted() {
+    await this.getRooms();
+    const showingFloor = localStorage.getItem('showingFloor');
+    if (showingFloor) {
+      this.clickFloor(showingFloor);
+    }
   },
   methods: {
     goBack() {
       this.$router.push("index");
     },
-    goBack1() {
+    closeFloor() {
       this.dialogShow = false;
+      localStorage.removeItem('showingFloor');
     },
-    getRooms() {
-      request.rooms().then(res => {
-        this.rooms = res;
-      });
+    async getRooms() {
+      this.rooms = await request.getRooms();
     },
     clickFloor(val) {
+      localStorage.setItem('showingFloor', val);
       this.dialogShow = true;
       this.leftRooms = [];
       this.rightRooms = [];
@@ -115,7 +119,7 @@ export default {
     justify-content center
     align-items center
     font-size 5vw
-    font-family STZhongSong
+    font-family Dasong
     font-weight bold
     color #fff
     letter-spacing 0.3vw

@@ -1,10 +1,11 @@
 <template lang="pug">
-  div.page-map-groupDetail
+  div.page-map-floorDetail
     .floorNum(:class='bgClass') {{ floorTitle }}
     .floorTitle(:class='colorClass') {{ floorData.title }}
     .content
-      .left.scroll-bar-hidden(v-html="floorData.content")
-      .right(v-html="floorData.hint")
+      .left.scroll-bar-hidden
+        img(:src="floorImage")
+      .right(v-html="floorContent")
     img.back(src="~@/assets//image/back-dark.png" @click='goBack')
 </template>
 <script>
@@ -12,7 +13,9 @@ export default {
   data() {
     return {
       floorData: "",
-      floorTitle: ""
+      floorTitle: "",
+      bgClass: "",
+      colorClass: ""
     };
   },
   mounted() {
@@ -40,11 +43,32 @@ export default {
     goBack() {
       this.$router.push("guide");
     }
+  },
+  computed: {
+    floorImage() {
+      if (!this.floorData || !this.floorData.content) {
+        return false;
+      }
+      const contentImageMatch = this.floorData.content.match(/\<img.*? src="(.*?)"/);
+      if (contentImageMatch) {
+        return contentImageMatch[1];
+      }
+      else {
+        console.log(this.floorData.thumbnail);
+        return this.floorData.thumbnail;
+      }
+    },
+    floorContent() {
+      if (!this.floorData || !this.floorData.content) {
+        return false;
+      }
+      return this.floorData.content.replace(/(<p>)?<img.*?\/>(<\/p>)?/g, '');
+    }
   }
 };
 </script>
 <style lang="stylus">
-.page-map-groupDetail
+.page-map-floorDetail
   position absolute
   height 100vh
   width 100vw
@@ -66,7 +90,7 @@ export default {
     height 8vh
     border-radius 0 5vh 5vh 0
     font-size 3vw
-    font-family STZhongSong
+    font-family Dasong
     font-weight bold
     color #fff
     display flex
@@ -104,7 +128,9 @@ export default {
       letter-spacing 1px
       white-space pre-line
       letter-spacing 0.15vw
-    
+      align-items flex-start
+      display flex
+        
     .left
       // background-color #fff
       
