@@ -32,7 +32,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page-floor-index
   display flex
   flex-direction column
@@ -44,47 +44,47 @@ export default {
   overflow hidden
   background url('~@/assets//image/build-intro.png') top center no-repeat
   background-size contain
-.container
-  width 72vw
-  height 33vh
-  position absolute
-  right 0
-  bottom 0
-  display flex
-  .left
-    flex 2
-    overflow-y auto
-    padding-top3vh
-    font-size 2.25vw
-    font-weight bold
-    color #000
-    line-height 8vh
-    .right
-    flex 1
-    position relative
-    .floor-guide
-      position absolute
-      width 17vw
-      height 13vh
-      background-color rgb(195,13,35)
-      border-radius 0.6vw
-      box-shadow 0 0.75vw 0.75vw rgb(218,108,122)
-      top 4vh
-      display flex
-      justify-content center
-      align-items center
-      color #fff
-      font-size 3.5vw
-      // font-weight bold
-      cursor pointer
-      left 50%
-      transform translateX(-50%)
-    
-    img
-      position absolute
-      bottom 3vh
-      left 50%
-      transform translateX(-50%)
-      width 9vw
-      cursor pointer
+  .container
+    width 72vw
+    height 33vh
+    position absolute
+    right 0
+    bottom 0
+    display flex
+    .left
+      flex 2
+      overflow-y auto
+      padding-top3vh
+      font-size 2.25vw
+      font-weight bold
+      color #000
+      line-height 8vh
+      .right
+      flex 1
+      position relative
+      .floor-guide
+        position absolute
+        width 17vw
+        height 13vh
+        background-color rgb(195,13,35)
+        border-radius 0.6vw
+        box-shadow 0 0.75vw 0.75vw rgb(218,108,122)
+        top 4vh
+        display flex
+        justify-content center
+        align-items center
+        color #fff
+        font-size 3.5vw
+        // font-weight bold
+        cursor pointer
+        left 50%
+        transform translateX(-50%)
+      
+      img
+        position absolute
+        bottom 3vh
+        left 50%
+        transform translateX(-50%)
+        width 9vw
+        cursor pointer
 </style>

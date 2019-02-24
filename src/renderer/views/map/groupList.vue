@@ -33,7 +33,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page-map-groupList
   display: flex;
   flex-direction: column;
@@ -48,45 +48,45 @@ export default {
   padding: 0 5vw;
   // position relative;
 
-ul
-  width 90vw;
-  height 60vh;
-  overflow auto;
-  li
-    font-family STZhongSong;
-    width 43vw;
-    float left;
-    height 4vw;
-    line-height 4vw;
-    margin-bottom 2vw;
-    background-color rgba(0, 0, 0, 0.35);
-    border-radius 0.75vw;
-    padding-left 3vw;
-    font-size 1.95vw;
-    color #fff;
-    cursor pointer
-    &:nth-child(2n-1)
-      margin-right 3vw
-.back
-  position absolute;
-  left 50%;
-  transform translateX(-50%);
-  bottom 5vh;
-  cursor pointer;
+  ul
+    width 90vw;
+    height 60vh;
+    overflow auto;
+    li
+      font-family STZhongSong;
+      width 43vw;
+      float left;
+      height 4vw;
+      line-height 4vw;
+      margin-bottom 2vw;
+      background-color rgba(0, 0, 0, 0.35);
+      border-radius 0.75vw;
+      padding-left 3vw;
+      font-size 1.95vw;
+      color #fff;
+      cursor pointer
+      &:nth-child(2n-1)
+        margin-right 3vw
+  .back
+    position absolute;
+    left 50%;
+    transform translateX(-50%);
+    bottom 5vh;
+    cursor pointer;
 
-.title
-  width 100vw;
-  height 25vh;
-  display flex;
-  align-items center;
-  justify-content center;
-  img
-    margin-right 1.5vw;
-    width 10vw;
-.shoushu
-  font-family:shoushu;
-  color:#fff;
-  font-size:7vw;
+  .title
+    width 100vw;
+    height 25vh;
+    display flex;
+    align-items center;
+    justify-content center;
+    img
+      margin-right 1.5vw;
+      width 10vw;
+  .shoushu
+    font-family:shoushu;
+    color:#fff;
+    font-size:7vw;
 
 </style>
 

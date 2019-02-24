@@ -93,7 +93,7 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page-floor-guide
   display flex
   flex-direction column
@@ -106,160 +106,160 @@ export default {
   background url('~@/assets//image/bg-floors.png') center center no-repeat
   background-size cover
 
-.floorItem
-  position absolute
-  width 14vw
-  height 14vw
-  border-radius 50%
-  display flex
-  justify-content center
-  align-items center
-  font-size 5vw
-  font-family STZhongSong
-  font-weight bold
-  color #fff
-  letter-spacing 0.3vw
-  cursor pointer
-
-.floorItem1
-  background-color #d32c26
-  top 20vh
-  left 29vw
-
-.floorItem2
-  background-color rgb(3, 110, 183)
-  top 20vh
-  right 29vw
-
-.back
-  position absolute
-  left 50%
-  transform translateX(-50%)
-  bottom 5vh
-  cursor pointer
-
-.floorItem3
-  background-color rgb(164, 11, 94)
-  bottom 20vh
-  left 29vw
-
-.floorItem4
-  background-color rgb(0, 145, 58)
-  bottom 20vh
-  right 29vw
-
-.dialog-box
-  position fixed
-  width 90vw
-  height 90vh
-  background-color rgba(255, 255, 255, 0.8)
-  top 5vh
-  left 5vw
-  border-radius 5vh
-
-  img
+  .floorItem
     position absolute
-    bottom 5vh
-    right 5vw
-    width 8vw
-    cursor pointer
-  
-  .floorNum
-    position absolute
-    left 50%
-    transform translateX(-50%)
-    top 8vh
-    width 8vw
-    height 8vw
+    width 14vw
+    height 14vw
     border-radius 50%
     display flex
-    align-items center
     justify-content center
-    font-size 3vw
-    font-weight bold
+    align-items center
+    font-size 5vw
     font-family STZhongSong
+    font-weight bold
     color #fff
-  
-  .content
-    width 80vw
-    height 60vh
-    padding-top 2vw
+    letter-spacing 0.3vw
+    cursor pointer
+
+  .floorItem1
+    background-color #d32c26
+    top 20vh
+    left 29vw
+
+  .floorItem2
+    background-color rgb(3, 110, 183)
+    top 20vh
+    right 29vw
+
+  .back
     position absolute
     left 50%
     transform translateX(-50%)
     bottom 5vh
-    display flex
-    justify-content center
+    cursor pointer
 
-    div.left, div.right
-      // width 50%
-      height 100%
-        overflow-x hidden
-        overflow-y auto
-      ul
-        width 100%
+  .floorItem3
+    background-color rgb(164, 11, 94)
+    bottom 20vh
+    left 29vw
+
+  .floorItem4
+    background-color rgb(0, 145, 58)
+    bottom 20vh
+    right 29vw
+
+  .dialog-box
+    position fixed
+    width 90vw
+    height 90vh
+    background-color rgba(255, 255, 255, 0.8)
+    top 5vh
+    left 5vw
+    border-radius 5vh
+
+    img
+      position absolute
+      bottom 5vh
+      right 5vw
+      width 8vw
+      cursor pointer
+    
+    .floorNum
+      position absolute
+      left 50%
+      transform translateX(-50%)
+      top 8vh
+      width 8vw
+      height 8vw
+      border-radius 50%
+      display flex
+      align-items center
+      justify-content center
+      font-size 3vw
+      font-weight bold
+      font-family STZhongSong
+      color #fff
+    
+    .content
+      width 80vw
+      height 60vh
+      padding-top 2vw
+      position absolute
+      left 50%
+      transform translateX(-50%)
+      bottom 5vh
+      display flex
+      justify-content center
+
+      div.left, div.right
+        // width 50%
         height 100%
-
-        li
+          overflow-x hidden
+          overflow-y auto
+        ul
           width 100%
-          height 10vh
-          display flex
-          align-items center
-          font-size 2.5vw
-          font-weight bold
-            cursor pointer
-          .triangle_border_right
-            display block
-            width 0
-            height 0
-            border-width 1.5vw 0 1.5vw 2.25vw
-            border-style solid
-            margin-right 1.5vw
-                                
-    /deep/ img
-      width 100%
-      height auto
-      
-.color1
-  color #d32c26
-  border-color transparent transparent transparent #d32c26 /* 透明 透明 透明 黄 */
+          height 100%
 
-.bgColor1
-  background-color #d32c26
+          li
+            width 100%
+            height 10vh
+            display flex
+            align-items center
+            font-size 2.5vw
+            font-weight bold
+              cursor pointer
+            .triangle_border_right
+              display block
+              width 0
+              height 0
+              border-width 1.5vw 0 1.5vw 2.25vw
+              border-style solid
+              margin-right 1.5vw
+                                  
+      /deep/ img
+        width 100%
+        height auto
+        
+  .color1
+    color #d32c26
+    border-color transparent transparent transparent #d32c26
 
-.bgColor2
-  background-color rgb(3, 110, 183)
+  .bgColor1
+    background-color #d32c26
 
-.bgColor3
-  background-color rgb(164, 11, 94)
+  .bgColor2
+    background-color rgb(3, 110, 183)
 
-.bgColor4
-  background-color rgb(0, 145, 58)
+  .bgColor3
+    background-color rgb(164, 11, 94)
 
-.color2
-  color rgb(3, 110, 183)
-  border-color transparent transparent transparent rgb(3, 110, 183) /* 透明 透明 透明 黄 */
+  .bgColor4
+    background-color rgb(0, 145, 58)
 
-.color3
-  color rgb(164, 11, 94)
-  border-color transparent transparent transparent rgb(164, 11, 94) /* 透明 透明 透明 黄 */
+  .color2
+    color rgb(3, 110, 183)
+    border-color transparent transparent transparent rgb(3, 110, 183)
 
-.color4
-  color rgb(0, 145, 58)
-  border-color transparent transparent transparent rgb(0, 145, 58) /* 透明 透明 透明 黄 */
+  .color3
+    color rgb(164, 11, 94)
+    border-color transparent transparent transparent rgb(164, 11, 94)
 
-@keyframes fade-in
-  0%
-    opacity 0
-  
-  100%
-    opacity 1
-  
-.fade
-  animation fade-in 1s
+  .color4
+    color rgb(0, 145, 58)
+    border-color transparent transparent transparent rgb(0, 145, 58)
 
-.triangle_border_right
-  width 4.2vw
+  @keyframes fade-in
+    0%
+      opacity 0
+    
+    100%
+      opacity 1
+    
+  .fade
+    animation fade-in 1s
+
+  .triangle_border_right
+    width 4.2vw
 </style>
 
 

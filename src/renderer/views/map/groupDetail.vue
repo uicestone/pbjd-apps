@@ -45,7 +45,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page-map-groupDetail
   position absolute
   height 100vh
@@ -56,72 +56,74 @@ export default {
   padding 5vh 5vw
   // position relative
 
-.detailtitle
-  height 6.5vw
-  display flex
-  align-items center
-  color #fff
-  font-size 1.875vw
-  position relative
-  margin-top 2.25vw
-  img
-    position absolute
-    height 100%
-    width 100%
-    left 0
-  span
-    font-family STZhongSong
-    font-size 3.7vw
-    z-index 99
-    color #fff
-    height 100%
-    padding-left 3vw
-    background-color #51a5db
+  .detailtitle
+    height 6.5vw
+    display flex
     align-items center
-    border-radius 1.5vw 1.5vw 0 1.5vw
-    min-width 27vw
-    line-height 7vw
-.back
-  position absolute
-  left 50%
-  transform translateX(-50%)
-  bottom 5vh
-  cursor pointer
-
-.line
-  width 75vw
-  height 0.45vw
-  margin-top 0.75vw
-  background-color rgb(44,166,224)
-
-.titleImg
-  position absolute
-  right 5vw
-  top 4vh
-  width 10vw
-
-.content
-  width 100%
-  height 58vh
-  display flex
-  justify-content space-between
-  margin-top 5vh
-  div
-    width 48%
-    height 100%
-    overflow-x hidden
-    overflow-y auto
-    color rgb(89,87,87)
-    font-size 1.95vw
-    letter-spacing 1px
-    white-space pre-line
-  
-  .left
-    background-color #fff
-    border 1vw #fff solid
-    /deep/ img
+    color #fff
+    font-size 1.875vw
+    position relative
+    margin-top 2.25vw
+    img
+      position absolute
+      height 100%
       width 100%
-      height auto
-      border 0.5vw solid #ccc
+      left 0
+    span
+      font-family STZhongSong
+      font-size 3.7vw
+      z-index 99
+      color #fff
+      height 100%
+      padding-left 3vw
+      background-color #51a5db
+      align-items center
+      border-radius 1.5vw 1.5vw 0 1.5vw
+      min-width 27vw
+      line-height 7vw
+  .back
+    position absolute
+    left 50%
+    transform translateX(-50%)
+    bottom 5vh
+    cursor pointer
+
+  .line
+    width 75vw
+    height 0.45vw
+    margin-top 0.75vw
+    background-color rgb(44,166,224)
+
+  .titleImg
+    position absolute
+    right 5vw
+    top 4vh
+    width 10vw
+
+  .content
+    width 100%
+    height 58vh
+    display flex
+    justify-content space-between
+    margin-top 5vh
+    div
+      width 48%
+      height 100%
+      overflow-x hidden
+      overflow-y auto
+      color rgb(89,87,87)
+      font-size 1.95vw
+      letter-spacing 1px
+      white-space pre-line
+    
+    .left
+      background-color #fff
+      border 1vw #fff solid
+      img,figure
+        width 100% !important
+        height auto
+        border 0.5vw solid #ccc
+      figure>img
+        border none
 
 </style>

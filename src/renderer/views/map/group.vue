@@ -41,7 +41,7 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .page-map-group
   display flex
   flex-direction column
@@ -56,34 +56,34 @@ export default {
   padding 0 5vw
   // position relative
 
-ul
-  width 90vw
-  height 90vh
-  overflow auto
+  ul
+    width 90vw
+    height 90vh
+    overflow auto
 
-  li
-    float left
-    width 33.33%
-    height 30vh
-    display flex
-    align-items center
+    li
+      float left
+      width 33.33%
+      height 30vh
+      display flex
+      align-items center
 
-    img
-      margin-right 1.5vw
+      img
+        margin-right 1.5vw
+      
+      cursor pointer
     
+  .back
+    position absolute
+    left 50%
+    transform translateX(-50%)
+    bottom 5vh
     cursor pointer
-  
-.back
-  position absolute
-  left 50%
-  transform translateX(-50%)
-  bottom 5vh
-  cursor pointer
 
-.shoushu
-  font-family shoushu
-  color #fff
-  font-size 4.5vw
+  .shoushu
+    font-family shoushu
+    color #fff
+    font-size 4.5vw
 </style>
 
 
