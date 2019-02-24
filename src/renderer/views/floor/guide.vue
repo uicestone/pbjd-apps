@@ -190,7 +190,6 @@ export default {
       bottom 5vh
       display flex
       justify-content center
-
       div.left, div.right
         // width 50%
         height 100%
@@ -206,13 +205,14 @@ export default {
             display flex
             align-items center
             font-size 2.5vw
-            font-weight bold
-              cursor pointer
+            font-family Lingxin
+            // font-weight bold
+            cursor pointer
             .triangle_border_right
               display block
               width 0
               height 0
-              border-width 1.5vw 0 1.5vw 2.25vw
+              border-width 1vw 0 1vw 2vw
               border-style solid
               margin-right 1.5vw
                                   

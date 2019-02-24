@@ -74,7 +74,7 @@ export default {
 <style lang="less">
 @import "~iview/src/styles/index.less";
 @import "~leaflet/dist/leaflet.css";
-@import "./assets/fonts/Guoxiang.css";
+@import "./assets/fonts/fontfaces.css";
 
 body::-webkit-scrollbar {
   display: none;

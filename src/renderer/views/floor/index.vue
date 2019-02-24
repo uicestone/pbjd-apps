@@ -54,12 +54,12 @@ export default {
     .left
       flex 2
       overflow-y auto
-      padding-top3vh
+      padding-top 3vh
       font-size 2.25vw
       font-weight bold
       color #000
       line-height 8vh
-      .right
+    .right
       flex 1
       position relative
       .floor-guide
