@@ -4,7 +4,7 @@
   "version": "1.1.0",
   "author": "nano <ncysatnaf@gmail.com>",
   "description": "嘉定区党建中心的党建地图、党建声音和历史上的今天互动应用",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js",
@@ -21,12 +21,7 @@
     "postinstall": ""
   },
   "dependencies": {
-    "@types/fastclick": "^1.0.28",
-    "@types/glob": "^5.0.35",
-    "@types/uuid": "^3.4.3",
-    "adapter": "^0.0.1",
     "axios": "^0.18.0",
-    "buefy": "^0.6.5",
     "geojson2svg": "^1.2.3",
     "glob": "^7.1.2",
     "hls.js": "^0.10.1",
@@ -45,9 +40,9 @@
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
-    "vue-socket.io": "^2.1.1-b",
+    "vue-socket.io": "^3.0.5",
     "vuex": "^2.3.1",
-    "webrtc-adapter": "^6.1.5"
+    "webrtc-adapter": "^4.1.1"
   },
   "devDependencies": {
     "@types/electron-packager": "^10.1.0",
