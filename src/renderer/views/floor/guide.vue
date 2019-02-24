@@ -6,7 +6,7 @@
     .floorItem.floorItem4(@click='clickFloor(4)') 四楼
     img.back(src="~@/assets//image/back-dark.png" @click='goBack')
     .dialog-box(v-if="dialogShow" :class='{fade:dialogShow}')
-      .floorNum(:class='bgClass'){{ floorTitle }}
+      .floorNum(:class='bgClass') {{ floorTitle }}
       .content
         .left(v-if="leftRooms.length>0")
           ul
