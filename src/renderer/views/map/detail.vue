@@ -552,7 +552,7 @@ export default {
 .popup
   color red
 .menu-img
-  font-family STZhongsong
+  font-family Dasong
   font-weight bold
   width 40vw
   margin 1.2vw 0
@@ -591,7 +591,7 @@ export default {
     align-items center
     padding 0 0 0 10px
     line-height 40px
-    font-family STZhongSong
+    font-family Dasong
   .ivu-modal
     width 55vw !important
     margin-right 5vw
@@ -674,13 +674,13 @@ export default {
   height 13vw
   margin-top 1vw
   margin-left 1vw
-  background url('~/static/images/map_button_5.png') no-repeat
+  background url('~@/assets//image/map_button_5.png') no-repeat
   background-size contain
   padding-left 4vw
   padding-top 4vw
   font-size 3.3vw
   font-weight bold
-  font-family STZhongsong
+  font-family Dasong
   color white
   .first
     margin-right 2.2vw
@@ -695,7 +695,7 @@ export default {
     align-items center
     padding 0 0 0 10px
     line-height 40px
-    font-family STZhongSong
+    font-family Dasong
   .ivu-modal-close
     top 14px
     z-index 1
@@ -789,7 +789,7 @@ export default {
   background url('~@/assets//image/town_title_bg.png') no-repeat
   background-size contain
   font-size 60px
-  font-family STZhongSong
+  font-family Dasong
   color #c44328
   padding-left 70px
   line-height 1.2
