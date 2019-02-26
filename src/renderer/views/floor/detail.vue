@@ -102,11 +102,12 @@ export default {
 
   .floorTitle
     position absolute
-    left 50%
-    transform translateX(-50%)
+    left 0
+    width 100%
     top 10vh
     font-size 4.5vw
     font-weight bold
+    text-align center
 
   .content
     width 100%

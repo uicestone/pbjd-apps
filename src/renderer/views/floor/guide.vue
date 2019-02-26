@@ -181,7 +181,7 @@ export default {
       justify-content center
       font-size 3vw
       font-weight bold
-      font-family STZhongSong
+      font-family Dasong
       color #fff
     
     .content
@@ -219,8 +219,11 @@ export default {
               border-width 1vw 0 1vw 2vw
               border-style solid
               margin-right 1.5vw
-                                  
-      /deep/ img
+      
+      .left
+        margin-right 1vw
+
+      img
         width 100%
         height auto
         
