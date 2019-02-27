@@ -4,7 +4,7 @@
     video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
     //- Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
     div.slides(v-if="currentSlideSection!==null&&currentSlide!==null")
-      .menu-links(v-if="currentSlide==0")
+      .menu-links(v-if="currentSlideSection==0")
         a.section-1(@click="goToSlide(1, 0)")
         a.section-2(@click="goToSlide(2, 0)")
         a.section-3(@click="goToSlide(3, 0)")
