@@ -35,6 +35,7 @@ export default {
   async mounted() {
     await this.getRooms();
     const showingFloor = localStorage.getItem('showingFloor');
+    console.log(this.intro);
     if (showingFloor) {
       this.clickFloor(showingFloor);
     }

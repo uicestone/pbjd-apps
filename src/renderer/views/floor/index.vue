@@ -1,5 +1,8 @@
 <template lang="pug">
   div.page-floor-index
+    .poster
+      img(:src="poster")
+      img(src="~@/assets//image/floor-logo.png").floor-logo
     .container
       .left.scroll-bar-hidden(v-html="floorContent")
       .right
@@ -11,7 +14,8 @@ import * as request from "../../utils/request";
 export default {
   data() {
     return {
-       floorContent:''
+       floorContent: '',
+       poster: ''
     }
   },
   mounted() {
@@ -26,6 +30,7 @@ export default {
     },
     getPostsBuilding() {
       request.postsBuilding().then(res => {
+        this.poster = res.posterUrl;
         this.floorContent = res.content;
       })
     }
@@ -42,8 +47,11 @@ export default {
   height 100vh
   width 100vw
   overflow hidden
-  background url('~@/assets//image/build-intro.png') top center no-repeat
-  background-size contain
+  .floor-logo
+    position absolute
+    left 5vw
+    top 56vh
+    border 1vw white solid
   .container
     width 72vw
     height 33vh
