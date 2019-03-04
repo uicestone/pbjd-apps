@@ -6,7 +6,7 @@
       span {{ groupDetailData.title }}
     .line
     .content
-      .left.scroll-bar-hidden(v-if="groupDetail.content" v-html="groupDetail.content")
+      .left.scroll-bar-hidden(v-html="groupDetail.content")
       .right(v-html="groupDetail.excerpt")
     img.back(src="~@/assets//image/back-dark.png" @click='goBack')
 </template>
@@ -121,7 +121,7 @@ export default {
       white-space pre-line
     
     .left
-      background-color #fff
+      // background-color #fff
       border .4vw #fff solid
       img,figure
         width 100% !important
