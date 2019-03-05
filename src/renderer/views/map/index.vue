@@ -3,6 +3,9 @@
     img.bg-element.opening(v-if="showingOpening=='image'" src="static/map/opening.jpg" @click="showOpening" @keyup.enter="test")
     video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
     //- Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
+    div.slides-content-cache(v-for="section in slides")
+      div(v-for="slide in section")
+        img(:src="slide")
     div.slides(v-if="currentSlideSection!==null&&currentSlide!==null")
       .menu-links(v-if="currentSlideSection==0")
         a.section-1(@click="goToSlide(1, 0)")
@@ -193,6 +196,8 @@ export default {
 .slides
   img
     z-index 15
+.slides-content-cache
+  display none
 .hidden
   visibility hidden
 .buttonGroup
