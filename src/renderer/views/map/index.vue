@@ -1,7 +1,7 @@
 <template lang="pug">
   div.page-map-index
-    img.bg-element.opening(v-if="showingOpening=='image'" src="static/map/opening.jpg" @click="showOpening" @keyup.enter="test")
-    video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
+    //- img.bg-element.opening(v-if="showingOpening=='image'" src="static/map/opening.jpg" @click="showOpening" @keyup.enter="test")
+    //- video.video(:class="{hidden: !isPlaying}" ref="video" src="static/map/opening.mp4" @ended="videoEnded" @click="closeVideo")
     //- Icon.video-close(type="ios-close-empty" v-if="isPlaying" @click="closeVideo")
     div.slides-content-cache(v-for="section in slides")
       div(v-for="slide in section")
@@ -23,7 +23,7 @@
       img.glow.delay-1(@click="goDetail" :src="homeButtons[2]")
       img.glow.delay-2(@click="goGroup" :src="homeButtons[1]")
       img.glow.delay-3(@click="goFloor" :src="homeButtons[3]")
-    div.title-circle.fill(@click="showOpening")
+    div.title-circle.fill
     div.title-circle.no-2.fill.delay-1
     div.title-circle.no-3.fill.delay-2
     div.title-circle.no-4.fill.delay-3
