@@ -130,6 +130,7 @@ export default {
     .subTitle
       margin-top 40px
     .content
+      overflow-y scroll
       margin-top 63px
       font-size 21px
       font-family SourceHanSansCN-Normal-GBpc-EUC-H
@@ -145,6 +146,7 @@ export default {
       width 858px
     .list
       margin 20px 45px 0
+      padding-right 20px
       flex 1
       overflow-y scroll
       font-size 27px
@@ -269,4 +271,24 @@ export default {
   .first
     margin-right 2.2vw
     color #d43616
+::-webkit-scrollbar{
+  width: 8px;
+  height: 5px;
+  background-color: transparent;
+}
+/*滚动条的轨道*/
+::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+/*滚动条的滑块按钮*/
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  height: 5px;
+  background-color: white;
+}
+/*滚动条的上下两端的按钮*/
+::-webkit-scrollbar-button{
+  height: 5px;
+  background-color: transparent;
+}
 </style>
