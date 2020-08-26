@@ -188,6 +188,21 @@ export default new Router({
       }
     },
     {
+      path: "/road",
+      name: "road",
+      component: require("@/views/road/root").default,
+      children: [
+        {
+          path: "index",
+          name: "roadIndex",
+          component: require("@/views/road/index").default,
+          meta: {
+            homeName: "mapIndex"
+          }
+        }
+      ]
+    },
+    {
       path: "*",
       redirect: "/"
     }

@@ -9,6 +9,15 @@
       .menu-img-detail(v-if="currentLayer" @click="showTownModal")
         span.first {{ config.centerIntroText.substr(0,1) }}
         span {{ config.centerIntroText.substr(1) }}
+      li(@click="currentOptionLayer = -1")
+        div.menu-img(:class="{active: currentOptionLayer == -1}" style="position: relative")
+          img.icon(src="~@/assets/image/icon_road.png")
+          span.label 区“四史”学习教育学习路图
+          div.road-panel(v-if="currentOptionLayer == -1")
+            div.road-item(v-for="(road,index) in roads" :key="index" :style="{background: road.background}" @click="goRoad(road.id)")
+              img.img(:src="road.img")
+
+
     div(v-if="currentModalData.id")
       Modal.modal1(v-model="modal1" :title="currentModalData.name" @on-visible-change="hideNavQrcode")
         div.modal1-content
@@ -86,6 +95,7 @@ export default {
       currentOptionLayer: "",
       currentHoverLayer:"",
       currentLayer: "",
+      roads:[{img: require("../../assets/image/road_1_title.png"), background: "#a21e0a", id: "hs"},{img: require("../../assets/image/road_2_title.png"), background: "#ac8759", id: "fd"},{img: require("../../assets/image/road_3_title.png"), background: "#37569f", id: "qc"}],
       customDatas: {
         华亭镇: {
           hiddenMarkerPoint: [121.302905, 31.497195],
@@ -190,6 +200,7 @@ export default {
   },
   watch: {
     currentOptionLayer(val, prev) {
+      if(val == -1) return
       this.cachedOptionLayer = prev;
       this.resetLayers(this.OptionLayers);
       if (val) {
@@ -403,6 +414,14 @@ export default {
       request.spotsConfig().then(res => {
         this.spotTyeps = res.spotTyeps;
       });
+    },
+    goRoad(id){
+      this.$router.push({
+        name: "roadIndex",
+        query: {
+          id
+        }
+      })
     }
   },
   async mounted() {
@@ -527,7 +546,8 @@ export default {
 
     this.getSpotConfig();
 
-  }
+  },
+
 };
 </script>
 
@@ -580,6 +600,24 @@ export default {
     margin-left 1.7vw
     position relative
     top -0.5vw
+  .road-panel
+    position absolute
+    background white
+    border-radius 2px
+    box-shadow 2px 2px 20px 5px #999
+    top -7vw
+    right -12vw
+    padding 0px 10px 10px 10px
+    .road-item
+      height 5vw
+      width 20vw
+      display flex
+      justify-content flex-end
+      align-items center
+      padding-right 20px
+      margin-top 15px
+      .img
+        height 4vw
     
 .modal1
   z-index 10001
