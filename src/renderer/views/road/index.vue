@@ -2,28 +2,31 @@
 .road(:style="{ background: road.background }")
   .left
     img.img.title(:src="road.title_img")
-    img.img.subTitle(
-      :src="road.subTitle_img",
-      :style="{ height: road.subTitle_img_height }"
-    )
+    img.img.subTitle(:src="road.subTitle_img", :style="{ height: road.subTitle_img_height }")
     .content(v-if="road.content.content", v-html="road.content.content")
   .right(:style="{ color: road.background }")
     img.img.road-image(:src="road.img", :style="{ height: road.img_height }")
     .list
-      .item(v-for="(item, index) in road.list", :key="index" @click="showModal(index)")
+      .item(v-for="(item, index) in road.list", :key="index", @click="showModal(index)")
         div 
           span {{ index > 8 ? index + 1 : `0${index + 1}` }}
           span(style="margin-left: 20px") {{ item.title }}
   .back(@click="$router.go(-1)")
     img(src="~@/assets/image/road_arrow.png")
   div(v-if="currentModalData.id")
-    Modal.modal1(v-model="modal1" :title="currentModalData.title")
-      div.modal1-content
-        div.desc-container
-          div.desc(v-html="currentModalData.content") 
-      div.modal-footer(slot="footer")
-        div.modal-footer-left
-        div.modal-footer-right
+    Modal.modal1(v-model="modal1", :title="currentModalData.title")
+      .modal1-content
+        .modal1-content-left
+          Carousel(indicator-position="outside", autoplay, v-if="modal1", :height="720")
+            CarouselItem(v-for="item in currentModalData.images", v-if="modal1")
+              img.img(:src="item")
+        .modal1-content-right
+          .desc-container
+            .desc(v-html="currentModalData.content") 
+            img.img(:src="currentModalData.posterUrl", style="width: 100%")
+      .modal-footer(slot="footer")
+        .modal-footer-left
+        .modal-footer-right
 </template>
 
 <script>
@@ -45,9 +48,9 @@ export default {
           subTitle_img_height: "131px",
           background: "#a21e0a",
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-hs",
-          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-hs&limit=-1",
+          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-hs&limit=-1&standaloneContentImages=1",
           content: {},
-          list: []
+          list: [],
         },
         fd: {
           title_img: require("../../assets/image/road_2_title.png"),
@@ -57,9 +60,9 @@ export default {
           subTitle_img_height: "131px",
           background: "#ac8759",
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-fd",
-          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-fd&limit=-1",
+          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-fd&limit=-1&standaloneContentImages=1",
           content: {},
-          list: []
+          list: [],
         },
         qc: {
           title_img: require("../../assets/image/road_3_title.png"),
@@ -69,11 +72,11 @@ export default {
           subTitle_img_height: "66px",
           background: "#37569f",
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-qc",
-          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-qc&limit=-1",
+          listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-qc&limit=-1&standaloneContentImages=1",
           content: {},
-          list: []
-        }
-      }
+          list: [],
+        },
+      },
     };
   },
   mounted() {
@@ -88,7 +91,7 @@ export default {
     },
     currentModalData() {
       return this.road.list[this.currentModalIndex] || {};
-    }
+    },
   },
   methods: {
     showModal(index) {
@@ -103,8 +106,8 @@ export default {
       if (roadRes.data) {
         this.road.list = roadRes.data;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -116,9 +119,6 @@ export default {
   display flex
   justify-content space-between
   position relative
-  .img
-    display block
-    object-fit contain
   .left
     width 650px
     display flex
@@ -174,9 +174,9 @@ export default {
     line-height 40px
     font-family Dasong
   .ivu-modal
-    width 55vw !important
-    margin-right 25vw
-    margin-top 5vh
+    width 88vw !important
+    // margin-right 5vw
+    // margin-top 5vh
   .ivu-modal-close
     top 14px
     z-index 2
@@ -231,14 +231,24 @@ export default {
       line-height 50px
       margin-top 2vh
   .modal1-content
-    height auto
+    height 74vh
     padding 2vw
     font-size 1vw
+    display flex
+    justify-content space-between
     p
       img
         width 100%
         display block
         text-align center
+    .modal1-content-left
+      width 60%
+      .img
+        width 100%
+        height auto
+    .modal1-content-right
+      width 35%
+      overflow-y scroll
   .modal-footer
     display flex
     justify-content space-between
@@ -255,6 +265,10 @@ export default {
       display flex
       align-items center
       padding 0 20px
+  .swiper
+    width 60%
+    .img
+      width 100%
 .menu-img-detail
   width 30vw
   height 13vw
@@ -271,24 +285,23 @@ export default {
   .first
     margin-right 2.2vw
     color #d43616
-::-webkit-scrollbar{
-  width: 8px;
-  height: 5px;
-  background-color: transparent;
-}
-/*滚动条的轨道*/
-::-webkit-scrollbar-track{
-  background-color: transparent;
-}
-/*滚动条的滑块按钮*/
-::-webkit-scrollbar-thumb{
-  border-radius: 10px;
-  height: 5px;
-  background-color: white;
-}
-/*滚动条的上下两端的按钮*/
-::-webkit-scrollbar-button{
-  height: 5px;
-  background-color: transparent;
-}
+.img
+  display block
+  object-fit contain
+::-webkit-scrollbar
+  width 8px
+  height 5px
+  background-color transparent
+/* 滚动条的轨道 */
+::-webkit-scrollbar-track
+  background-color transparent
+/* 滚动条的滑块按钮 */
+::-webkit-scrollbar-thumb
+  border-radius 10px
+  height 5px
+  background-color white
+/* 滚动条的上下两端的按钮 */
+::-webkit-scrollbar-button
+  height 5px
+  background-color transparent
 </style>
