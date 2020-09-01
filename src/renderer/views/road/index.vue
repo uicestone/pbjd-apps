@@ -224,6 +224,7 @@ export default {
       color #515253
       p
         text-indent 2em
+        text-align justify
       table
         width 100%
         td
