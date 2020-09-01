@@ -67,15 +67,14 @@
     
 </template>
 
-
 <script>
 import geoJson from "@/assets/json/geo.json";
 // import rawJson from "@/assets/json/raw.json";
 import L from "leaflet";
 import * as request from "../../utils/request";
-import Hls from 'hls.js';
-import QRCode from 'qrcode';
-import _ from 'lodash';
+import Hls from "hls.js";
+import QRCode from "qrcode";
+import _ from "lodash";
 
 global.L = L;
 
@@ -93,9 +92,13 @@ export default {
       },
       cachedOptionLayer: "",
       currentOptionLayer: "",
-      currentHoverLayer:"",
+      currentHoverLayer: "",
       currentLayer: "",
-      roads:[{img: require("../../assets/image/road_1_title.png"), background: "#a21e0a", id: "hs"},{img: require("../../assets/image/road_2_title.png"), background: "#ac8759", id: "fd"},{img: require("../../assets/image/road_3_title.png"), background: "#37569f", id: "qc"}],
+      roads: [
+        { img: require("../../assets/image/road_1_title.png"), background: "#a21e0a", id: "hs" },
+        { img: require("../../assets/image/road_2_title.png"), background: "#ac8759", id: "fd" },
+        { img: require("../../assets/image/road_3_title.png"), background: "#37569f", id: "qc" }
+      ],
       customDatas: {
         华亭镇: {
           hiddenMarkerPoint: [121.302905, 31.497195],
@@ -105,7 +108,7 @@ export default {
           }
         },
         徐行镇: {
-          hiddenMarkerPoint: [ 121.21434799999999, 31.479182],
+          hiddenMarkerPoint: [121.21434799999999, 31.479182],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(218,161,118)"
@@ -140,42 +143,42 @@ export default {
           }
         },
         安亭镇: {
-          hiddenMarkerPoint: [121.20115799999999,31.336383],
+          hiddenMarkerPoint: [121.20115799999999, 31.336383],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(250,203,135)"
           }
         },
         马陆镇: {
-          hiddenMarkerPoint: [ 121.308802, 31.407790000000002],
+          hiddenMarkerPoint: [121.308802, 31.407790000000002],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(233,192,102)"
           }
         },
         新成路街道: {
-          hiddenMarkerPoint: [ 121.27557999999999, 31.402249],
+          hiddenMarkerPoint: [121.27557999999999, 31.402249],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(121,188,112)"
           }
         },
         嘉定镇街道: {
-          hiddenMarkerPoint: [ 121.249546, 31.39321],
+          hiddenMarkerPoint: [121.249546, 31.39321],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(82,161,80)"
           }
         },
         菊园新区: {
-          hiddenMarkerPoint: [ 121.259914, 31.414283],
+          hiddenMarkerPoint: [121.259914, 31.414283],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(235,194,162)"
           }
         },
         嘉定工业区: {
-          hiddenMarkerPoint: [ 121.23277499999999,31.371815],
+          hiddenMarkerPoint: [121.23277499999999, 31.371815],
           childLayer: L.layerGroup([]).setZIndex(10),
           style: {
             fillColor: "rgb(177,210,165)"
@@ -200,7 +203,7 @@ export default {
   },
   watch: {
     currentOptionLayer(val, prev) {
-      if(val == -1) return
+      if (val == -1) return;
       this.cachedOptionLayer = prev;
       this.resetLayers(this.OptionLayers);
       if (val) {
@@ -208,23 +211,23 @@ export default {
         this.map.addLayer(layer);
       }
     },
-    currentHoverLayer(_val){
+    currentHoverLayer(_val) {
       if (_val) {
         for (let [key, val] of Object.entries(this.customDatas)) {
           if (key != _val) {
             // this.map.removeLayer(val.childLayer);
             // this.map.removeLayer(val.layer);
-            val.hiddenMarker.closePopup()            
+            val.hiddenMarker.closePopup();
           } else {
             // console.log(val)
             // this.map.addLayer(val.childLayer);
             // console.log(val.hiddenMarker)
-            val.hiddenMarker.openPopup()
+            val.hiddenMarker.openPopup();
           }
         }
       } else {
         Object.values(this.customDatas).forEach(val => {
-          val.hiddenMarker.closePopup()
+          val.hiddenMarker.closePopup();
         });
       }
     },
@@ -259,10 +262,11 @@ export default {
     OptionLayers() {
       const optionLayers = {};
       this.config.spotTypes.forEach((type, index) => {
+        if (index >= 2) return;
         optionLayers[type.text] = {
           label: type.text,
           icon: type.icon,
-          type: 'type1',
+          type: "type1",
           buttonIndex: type.buttonIndex,
           layer: L.layerGroup([]).setZIndex(10)
         };
@@ -306,8 +310,8 @@ export default {
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
           this.playingLiveVideo = true;
           liveVideoPlayer.play();
-          liveVideoPlayer.addEventListener('timeupdate', () => {
-            document.dispatchEvent(new Event('videotimeupdate'));
+          liveVideoPlayer.addEventListener("timeupdate", () => {
+            document.dispatchEvent(new Event("videotimeupdate"));
           });
         });
       }
@@ -332,19 +336,17 @@ export default {
     setLayer(key) {
       this.resetMap();
       this.currentOptionLayer = key;
-
     },
     parseSVG(s) {
       var div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
       div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
       var frag = document.createDocumentFragment();
-      while (div.firstChild.firstChild)
-        frag.appendChild(div.firstChild.firstChild);
+      while (div.firstChild.firstChild) frag.appendChild(div.firstChild.firstChild);
       return frag;
     },
     highlightFeature(e, { Name }) {
       let layer = e.target;
-      this.currentHoverLayer = Name
+      this.currentHoverLayer = Name;
       // layer.setStyle({
       //   weight: 3,
       //   color: "#c44328",
@@ -360,7 +362,7 @@ export default {
       this.geojson.resetStyle(e.target);
     },
     zoomToFeature(e, { Name }) {
-      this.map.fitBounds(e.target.getBounds(), {paddingTopLeft:[400, 0]});
+      this.map.fitBounds(e.target.getBounds(), { paddingTopLeft: [400, 0] });
       // this.resetLayers(this.OptionLayers);
       this.currentOptionLayer = "";
       Name && (this.currentLayer = Name);
@@ -395,7 +397,7 @@ export default {
         // if (type == "type2") {
         layer.on({
           contextmenu: e => {
-            this.highlightFeature(e, { Name })
+            this.highlightFeature(e, { Name });
           },
           // mouseout: e => {
           //   console.log(`Mouseout ${Name}.`)
@@ -403,8 +405,7 @@ export default {
           //   this.resetHighlight(e);
           // },
           click: e => {
-            if (this.currentOptionLayer === this.config.spotTypes[1].text)
-            this.zoomToFeature(e, { Name })
+            if (this.currentOptionLayer === this.config.spotTypes[1].text) this.zoomToFeature(e, { Name });
           }
         });
         // }
@@ -415,13 +416,13 @@ export default {
         this.spotTyeps = res.spotTyeps;
       });
     },
-    goRoad(id){
+    goRoad(id) {
       this.$router.push({
         name: "roadIndex",
         query: {
           id
         }
-      })
+      });
     }
   },
   async mounted() {
@@ -430,13 +431,13 @@ export default {
     const defaultIcon = L.icon({
       iconUrl: "static/images/map_marker.png",
       iconSize: [35, 50],
-      iconAnchor: [17, 45],
+      iconAnchor: [17, 45]
     });
 
     const cameraIcon = L.icon({
       iconUrl: "static/images/map_marker_video.png",
       iconSize: [40, 40],
-      iconAnchor: [20, 20],
+      iconAnchor: [20, 20]
     });
 
     const mapConfig = await request.getMapConfig();
@@ -466,7 +467,7 @@ export default {
           color: "white",
           fillColor,
           weight: 3,
-          fillOpacity: 0.7,
+          fillOpacity: 0.7
         };
       },
       onEachFeature: this.onEachFeature
@@ -479,25 +480,22 @@ export default {
     _spots.forEach(spot => {
       const { id, town, type, latitude, longitude, name, images, live, liveVideoUrl } = spot;
       this.spots[id] = spot;
-      const icon = liveVideoUrl ? cameraIcon : defaultIcon
+      const icon = liveVideoUrl ? cameraIcon : defaultIcon;
 
       let marker = L.marker([latitude, longitude], { icon });
       marker.on("click", () => {
         this.showModal(id);
       });
       if (type == "服务中心" && !town) {
-        _.find(this.OptionLayers, {buttonIndex:1}).layer.addLayer(marker);
-      }
-      else if (type == "服务中心" && town) {
+        _.find(this.OptionLayers, { buttonIndex: 1 }).layer.addLayer(marker);
+      } else if (type == "服务中心" && town) {
         let customData = this.customDatas[town];
         customData.spotId = id;
 
-        _.find(this.OptionLayers, {buttonIndex:2}).layer.addLayer(marker);
-      }
-      else if (this.OptionLayers[type]) {
+        _.find(this.OptionLayers, { buttonIndex: 2 }).layer.addLayer(marker);
+      } else if (this.OptionLayers[type]) {
         this.OptionLayers[type].layer.addLayer(marker);
-      }
-      else {
+      } else {
         let customData = this.customDatas[town];
         if (customData) {
           customData.childLayer.addLayer(marker);
@@ -505,33 +503,32 @@ export default {
       }
     });
 
-    for (let[key,val] of Object.entries(this.customDatas)){
-      const {hiddenMarkerPoint} = val
-      const [a,b] = hiddenMarkerPoint
+    for (let [key, val] of Object.entries(this.customDatas)) {
+      const { hiddenMarkerPoint } = val;
+      const [a, b] = hiddenMarkerPoint;
 
-       let hiddenMarker = L.circle([b,a],{
-          color: 'transparent',
-          fillColor: 'transparent',
-          fillOpacity: 0.1,
-          radius: 1
-        }).addTo(this.map)
-        hiddenMarker.bindPopup(key,{
-          closeButton: false,
-        })
-        hiddenMarker.addTo(this.map)
-        val.hiddenMarker = hiddenMarker
+      let hiddenMarker = L.circle([b, a], {
+        color: "transparent",
+        fillColor: "transparent",
+        fillOpacity: 0.1,
+        radius: 1
+      }).addTo(this.map);
+      hiddenMarker.bindPopup(key, {
+        closeButton: false
+      });
+      hiddenMarker.addTo(this.map);
+      val.hiddenMarker = hiddenMarker;
     }
 
-
     var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-      defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
+    defs.innerHTML = `<filter id="shadow" x="0" y="0" width="200%" height="200%">
       <feOffset result="offOut" in="SourceGraphic" dx="50" dy="30" />
       <feColorMatrix result="matrixOut" in="offOut" type="matrix"
       values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
       <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
       <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-    </filter>`
-    document.querySelector(".leaflet-zoom-animated").prepend(defs)
+    </filter>`;
+    document.querySelector(".leaflet-zoom-animated").prepend(defs);
 
     // for (let [key, val] of Object.entries(this.customDatas)) {
     //   this.map.addLayer(val.childLayer);
@@ -545,9 +542,7 @@ export default {
     //  L.marker([this.config.lat, this.config.lng], { icon }).addTo(this.map);
 
     this.getSpotConfig();
-
-  },
-
+  }
 };
 </script>
 
@@ -576,7 +571,7 @@ export default {
   font-weight bold
   width 40vw
   margin 1.2vw 0
-  background url("~@/assets//image/map_spot_type_btn_bg.png") no-repeat
+  background url('~@/assets//image/map_spot_type_btn_bg.png') no-repeat
   height 5vw
   background-size contain
   &.active
@@ -585,7 +580,7 @@ export default {
     .label
       color #c44328
     .icon
-      filter: grayscale(100%) brightness(20);
+      filter grayscale(100%) brightness(20)
   .icon
     width 2.5vw
     height 2.5vw
@@ -618,7 +613,6 @@ export default {
       margin-top 15px
       .img
         height 4vw
-    
 .modal1
   z-index 10001
   .ivu-modal-header-inner
@@ -760,7 +754,7 @@ export default {
     box-shadow 0 0 15px 3px rgba(183, 25, 25, 0.5)
   .modal2-content-left
     width 60%
-    object-fit: cover
+    object-fit cover
   .desc-container
     max-height 61vh
     overflow-y scroll
@@ -839,22 +833,21 @@ export default {
   margin 0 10px
 .leaflet-popup-tip
   width 10px
-
 .leaflet-popup-content-wrapper
   border-radius 5px
-  box-shadow 0.5vw 0.5vw 1vw rgba(127,0,0,.4)
+  box-shadow 0.5vw 0.5vw 1vw rgba(127, 0, 0, 0.4)
 .leaflet-popup-content
   margin 6px
-  text-align center  
+  text-align center
   color #c44328
-  font-weight  600
+  font-weight 600
   width auto !important
   height 1.8vw
   font-size 1.3vw
   white-space nowrap
-  padding 0 .5vw
+  padding 0 0.5vw
 div.leaflet-overlay-pane svg > g
-  filter: url(#shadow)
+  filter url('#shadow')
 #live-video
   position absolute
   top 0
@@ -869,7 +862,7 @@ div.leaflet-overlay-pane svg > g
   left 96.5vw
   top 0
   z-index 1011
-  text-shadow .1vw .1vw .3vw black
+  text-shadow 0.1vw 0.1vw 0.3vw black
 .nav-button
   position relative
   .nav-qrcode
@@ -890,5 +883,4 @@ div.leaflet-overlay-pane svg > g
     opacity 1
 .glow
   animation glow 1s ease-in-out infinite
-
 </style>

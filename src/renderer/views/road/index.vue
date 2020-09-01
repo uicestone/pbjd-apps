@@ -14,13 +14,13 @@
   .back(@click="$router.go(-1)")
     img(src="~@/assets/image/road_arrow.png")
   div(v-if="currentModalData.id")
-    Modal.modal1(v-model="modal1", :title="currentModalData.title")
-      .modal1-content
-        .modal1-content-left
-          Carousel(indicator-position="outside", autoplay, v-if="modal1", :height="720")
-            CarouselItem(v-for="item in currentModalData.images", v-if="modal1")
+    Modal.modal3(v-model="modal3", :title="currentModalData.title")
+      .modal3-content
+        .modal3-content-left
+          Carousel(indicator-position="outside", autoplay, v-if="modal3", :height="720")
+            CarouselItem(v-for="item in currentModalData.images.slice(0, -1)", v-if="modal3")
               img.img(:src="item")
-        .modal1-content-right
+        .modal3-content-right
           .desc-container
             .desc(v-html="currentModalData.content") 
             img.img(:src="currentModalData.posterUrl", style="width: 100%")
@@ -38,7 +38,7 @@ export default {
     return {
       id: "hs",
       currentModalIndex: 0,
-      modal1: false,
+      modal3: false,
       roads: {
         hs: {
           title_img: require("../../assets/image/road_1_title.png"),
@@ -50,7 +50,7 @@ export default {
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-hs",
           listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-hs&limit=-1&standaloneContentImages=1",
           content: {},
-          list: [],
+          list: []
         },
         fd: {
           title_img: require("../../assets/image/road_2_title.png"),
@@ -62,7 +62,7 @@ export default {
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-fd",
           listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-fd&limit=-1&standaloneContentImages=1",
           content: {},
-          list: [],
+          list: []
         },
         qc: {
           title_img: require("../../assets/image/road_3_title.png"),
@@ -74,9 +74,9 @@ export default {
           contentAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts/route-qc",
           listAPI: "http://jddj.hbird.com.cn/wp-json/jddj/v1/posts?category=route-qc&limit=-1&standaloneContentImages=1",
           content: {},
-          list: [],
-        },
-      },
+          list: []
+        }
+      }
     };
   },
   mounted() {
@@ -91,12 +91,12 @@ export default {
     },
     currentModalData() {
       return this.road.list[this.currentModalIndex] || {};
-    },
+    }
   },
   methods: {
     showModal(index) {
       this.currentModalIndex = index;
-      this.modal1 = true;
+      this.modal3 = true;
     },
     async getData() {
       const [contentRes, roadRes] = await Promise.all([axios.get(this.road.contentAPI), axios.get(this.road.listAPI)]);
@@ -106,8 +106,8 @@ export default {
       if (roadRes.data) {
         this.road.list = roadRes.data;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -162,7 +162,7 @@ export default {
     position fixed
     left 48px
     bottom 48px
-.modal1
+.modal3
   z-index 10001
   .ivu-modal-header-inner
     font-size 2.2vw
@@ -200,6 +200,10 @@ export default {
   .ivu-modal-content
     background transparent
     box-shadow 0 0px 20px rgba(255, 0, 0, 0.5)
+    .ivu-carousel-item
+      display flex
+      justify-content center
+      align-items center
   .ivu-icon-ios-close-empty
     color #b80000
     border-radius 2px
@@ -230,7 +234,7 @@ export default {
       font-weight normal
       line-height 50px
       margin-top 2vh
-  .modal1-content
+  .modal3-content
     height 74vh
     padding 2vw
     font-size 1vw
@@ -241,12 +245,12 @@ export default {
         width 100%
         display block
         text-align center
-    .modal1-content-left
+    .modal3-content-left
       width 60%
       .img
         width 100%
         height auto
-    .modal1-content-right
+    .modal3-content-right
       width 35%
       overflow-y scroll
   .modal-footer
