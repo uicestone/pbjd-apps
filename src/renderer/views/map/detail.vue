@@ -9,13 +9,14 @@
       .menu-img-detail(v-if="currentLayer" @click="showTownModal")
         span.first {{ config.centerIntroText.substr(0,1) }}
         span {{ config.centerIntroText.substr(1) }}
-      li(@click="currentOptionLayer = -1")
+      li(@click="currentOptionLayer = -2")
         div.menu-img(:class="{active: currentOptionLayer == -1}" style="position: relative")
           img.icon(src="~@/assets/image/icon_road.png")
           span.label 区“四史”学习教育学习路图
           div.road-panel(v-if="currentOptionLayer == -1")
             div.road-item(v-for="(road,index) in roads" :key="index" :style="{background: road.background}" @click="goRoad(road.id)")
               img.img(:src="road.img")
+    iframe(v-if="currentOptionLayer == -2" src="https://4.u.mgd5.com/c/mgl-/ujmv/index.html?t=23079075&custom=&crid=&s=2&prev=kqhcyyh3h9oth9ffcixqxmk0aaghdrpxkqkk5v1a&time=1624932773598")
 
 
     div(v-if="currentModalData.id")
@@ -812,7 +813,7 @@ export default {
   bottom 50px
   right 50px
   width 150px
-  z-index 1
+  z-index 1010
 .town-title
   height 163px
   left 0
@@ -883,4 +884,12 @@ div.leaflet-overlay-pane svg > g
     opacity 1
 .glow
   animation glow 1s ease-in-out infinite
+iframe
+  position fixed
+  top 0
+  left 0
+  width 100vw
+  height 100vh
+  border 0
+  z-index 1000
 </style>
