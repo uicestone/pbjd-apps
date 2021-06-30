@@ -12,7 +12,7 @@
       li(@click="currentOptionLayer = -2")
         div.menu-img(:class="{active: currentOptionLayer == -1}" style="position: relative")
           img.icon(src="~@/assets/image/icon_road.png")
-          span.label 区“四史”学习教育学习路图
+          span.label 嘉定百年先锋路图
           div.road-panel(v-if="currentOptionLayer == -1")
             div.road-item(v-for="(road,index) in roads" :key="index" :style="{background: road.background}" @click="goRoad(road.id)")
               img.img(:src="road.img")
